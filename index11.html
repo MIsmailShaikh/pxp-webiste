@@ -1,0 +1,2390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeopleXplus | The OS for Business</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lenis for Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #111;
+        }
+
+        /* Custom Scrollbar hide for clean UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Smooth reveal animation classes */
+        .reveal-text {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* The 'Connector' dots on the layout lines */
+        .connector-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #E5E7EB; /* gray-200 */
+            border: 2px solid white;
+            border-radius: 50%;
+            position: absolute;
+            z-index: 10;
+        }
+
+        /* STYLES FOR THE SCROLL TEXT REVEAL */
+        .reveal-word {
+            opacity: 0.2; /* Initial dimmed state */
+            transition: opacity 0.3s ease; /* Smooth transition */
+            color: white;
+            display: inline-block;
+            margin-right: 0.25em; /* Space between words */
+        }
+
+        /* MARQUEE ANIMATION (Parallax Bubbles) */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        
+        .marquee-track {
+            display: flex;
+            gap: 1rem;
+            width: max-content;
+        }
+
+        .marquee-left {
+            animation: scrollLeft 20s linear infinite;
+        }
+
+        .marquee-right {
+            animation: scrollRight 20s linear infinite;
+        }
+
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes scrollRight {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* FOLDER SPREAD ANIMATION */
+        .folder-stack {
+            position: relative;
+            height: 180px; /* Adjust based on folder height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .folder-card {
+            position: absolute;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: bottom center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Initial State: Stacked together */
+        .folder-card.left, .folder-card.right {
+            transform: translateX(0) rotate(0) scale(0.95);
+            opacity: 0; 
+            z-index: 10;
+        }
+        .folder-card.center {
+            z-index: 20;
+            transform: translateY(0);
+        }
+
+        /* Active State: Fanned out */
+        .folder-stack.active .folder-card.left {
+            transform: translateX(-120px) rotate(-10deg) scale(0.9);
+            opacity: 1;
+        }
+        .folder-stack.active .folder-card.right {
+            transform: translateX(120px) rotate(10deg) scale(0.9);
+            opacity: 1;
+        }
+        .folder-stack.active .folder-card.center {
+            transform: translateY(-10px) scale(1);
+        }
+
+        /* Navbar Blur Fix */
+        .glass-nav {
+            background-color: rgba(255, 255, 255, 0.85); /* Slightly more opaque */
+            -webkit-backdrop-filter: blur(20px); /* Safari support */
+            backdrop-filter: blur(20px); /* Standard */
+        }
+
+        /* Payroll Engine Card Animations */
+        @keyframes scanLine {
+            0% { transform: translateY(-10px); }
+            100% { transform: translateY(150px); }
+        }
+        .animate-scan {
+            animation: scanLine 2s linear infinite;
+        }
+
+        @keyframes scanLineLarge {
+            0% { transform: translateY(-10px); }
+            100% { transform: translateY(500px); }
+        }
+        .animate-scan-large {
+            animation: scanLineLarge 3s linear infinite;
+        }
+
+        /* Metallic Text Animation */
+        @keyframes shine {
+            0% { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+        .metallic-text {
+            background: linear-gradient(
+                120deg,
+                #64748b 0%,
+                #cbd5e1 20%,
+                #ffffff 40%,
+                #94a3b8 60%,
+                #475569 80%,
+                #cbd5e1 100%
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes slideUpFade {
+            0% { transform: translateY(20px) scale(0.95); opacity: 0; }
+            20% { transform: translateY(0) scale(1); opacity: 1; }
+            80% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-20px) scale(0.95); opacity: 0; }
+        }
+        .animate-payslip {
+            animation: slideUpFade 3s ease-in-out infinite;
+        }
+        .delay-1500 {
+            animation-delay: 1.5s;
+        }
+
+        /* HRM Pipeline Animations */
+        @keyframes pulseBorder { 0% { box-shadow: 0 0 0 0px rgba(59,130,246,0.3); } 100% { box-shadow: 0 0 0 20px rgba(59,130,246,0); } }
+        .pulse-border-blue { animation: pulseBorder 2s infinite; }
+        @keyframes pulseBorderPurple { 0% { box-shadow: 0 0 0 0px rgba(168,85,247,0.3); } 100% { box-shadow: 0 0 0 20px rgba(168,85,247,0); } }
+        .pulse-border-purple { animation: pulseBorderPurple 2s infinite 0.4s; }
+        @keyframes pulseBorderYellow { 0% { box-shadow: 0 0 0 0px rgba(234,179,8,0.3); } 100% { box-shadow: 0 0 0 20px rgba(234,179,8,0); } }
+        .pulse-border-yellow { animation: pulseBorderYellow 2s infinite 0.8s; }
+        @keyframes pulseBorderRed { 0% { box-shadow: 0 0 0 0px rgba(239,68,68,0.3); } 100% { box-shadow: 0 0 0 20px rgba(239,68,68,0); } }
+        .pulse-border-red { animation: pulseBorderRed 2s infinite 1.2s; }
+        @keyframes pulseBorderGreen { 0% { box-shadow: 0 0 0 0px rgba(34,197,94,0.3); } 100% { box-shadow: 0 0 0 20px rgba(34,197,94,0); } }
+        .pulse-border-green { animation: pulseBorderGreen 2s infinite 1.6s; }
+
+        @keyframes pop1 { 0%, 1%, 10%, 100% {opacity:0; transform:translateY(10px) scale(0.9);} 3%, 8% {opacity:1; transform:translateY(0) scale(1);} }
+        .animate-pop-1 { animation: pop1 10s linear infinite; }
+        @keyframes pop2 { 0%, 23%, 31%, 100% {opacity:0; transform:translateY(10px) scale(0.9);} 25%, 29% {opacity:1; transform:translateY(0) scale(1);} }
+        .animate-pop-2 { animation: pop2 10s linear infinite; }
+        @keyframes pop3 { 0%, 46%, 54%, 100% {opacity:0; transform:translateY(10px) scale(0.9);} 48%, 52% {opacity:1; transform:translateY(0) scale(1);} }
+        .animate-pop-3 { animation: pop3 10s linear infinite; }
+        @keyframes pop4 { 0%, 69%, 77%, 100% {opacity:0; transform:translateY(10px) scale(0.9);} 71%, 75% {opacity:1; transform:translateY(0) scale(1);} }
+        .animate-pop-4 { animation: pop4 10s linear infinite; }
+        @keyframes pop5 { 0%, 90%, 99%, 100% {opacity:0; transform:translateY(10px) scale(0.9);} 92%, 97% {opacity:1; transform:translateY(0) scale(1);} }
+        .animate-pop-5 { animation: pop5 10s linear infinite; }
+
+        .flow-line { stroke-dasharray: 12; animation: dashFlow 40s linear infinite; }
+        @keyframes dashFlow { to { stroke-dashoffset: -1000; } }
+
+        /* Mail Server Animations */
+        @keyframes shieldPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+            50% { box-shadow: 0 0 0 30px rgba(59, 130, 246, 0); }
+        }
+        .animate-shield-pulse { animation: shieldPulse 2s infinite; }
+
+        @keyframes envelopeTravel {
+            0% { transform: translateX(0); opacity: 0; }
+            10% { transform: translateX(0); opacity: 1; }
+            45% { transform: translateX(250px); opacity: 1; }
+            55% { transform: translateX(250px); opacity: 0; }
+            100% { transform: translateX(500px); opacity: 0; }
+        }
+        .animate-envelope { animation: envelopeTravel 4s linear infinite; }
+
+        @keyframes encryptedTravel {
+            0% { transform: translateX(0); opacity: 0; }
+            45% { transform: translateX(250px); opacity: 0; }
+            55% { transform: translateX(250px); opacity: 1; }
+            90% { transform: translateX(500px); opacity: 1; }
+            100% { transform: translateX(500px); opacity: 0; }
+        }
+        .animate-encrypted { animation: encryptedTravel 4s linear infinite; }
+
+        @keyframes lockRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .animate-lock { animation: lockRotate 4s linear infinite; }
+
+        .delay-1000 { animation-delay: 1s; }
+        .delay-2000 { animation-delay: 2s; }
+        .delay-3000 { animation-delay: 3s; }
+    </style>
+</head>
+<body class="antialiased selection:bg-black selection:text-white">
+
+    <!-- Floating Pill Navbar (Fixed at top-1) -->
+    <!-- MOVED OUTSIDE WRAPPER to ensure correct Z-Index stacking over all other content -->
+    <nav class="glass-nav fixed top-1 left-1/2 -translate-x-1/2 w-[95%] max-w-[1400px] rounded-full border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-16 md:h-20 flex items-center justify-between px-4 md:px-8 z-[100] transition-all duration-300">
+        
+        <div class="flex items-center gap-2">
+            <img src="./pxp-logo.png" alt="People X Plus Logo" class="h-8 w-auto">
+            <span class="font-bold text-lg tracking-tight text-gray-900 hidden sm:block">People X Plus</span>
+        </div>
+
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-500">
+            <!-- Platform Dropdown -->
+            <div class="relative group h-full flex items-center py-5">
+                <a href="#features" class="hover:text-black transition-colors flex items-center gap-1">
+                    Platform
+                    <i data-lucide="chevron-down" class="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-200"></i>
+                </a>
+                <!-- Dropdown Menu -->
+                <div class="absolute top-14 left-1/2 -translate-x-1/2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 p-3 flex flex-col gap-1 z-[200]">
+                    <a href="workforce-os.html" class="flex flex-col px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="text-gray-900 font-bold mb-0.5">Workforce OS</span>
+                        <span class="text-xs text-gray-500">Core HR & Attendance Hub</span>
+                    </a>
+                    <a href="#" class="flex flex-col px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="text-gray-900 font-bold mb-0.5">Payroll Engine</span>
+                        <span class="text-xs text-gray-500">Automated compensation</span>
+                    </a>
+                    <a href="#" class="flex flex-col px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="text-gray-900 font-bold mb-0.5">Access Control</span>
+                        <span class="text-xs text-gray-500">Hardware & security sync</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Solutions Dropdown -->
+            <div class="relative group h-full flex items-center py-5">
+                <a href="#solutions" class="hover:text-black transition-colors flex items-center gap-1">
+                    Solutions
+                    <i data-lucide="chevron-down" class="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-200"></i>
+                </a>
+                <!-- Dropdown Menu -->
+                <div class="absolute top-14 left-1/2 -translate-x-1/2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 p-3 flex flex-col gap-1 z-[200]">
+                    <a href="#" class="flex flex-col px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="text-gray-900 font-bold mb-0.5">For Enterprise</span>
+                        <span class="text-xs text-gray-500">Scale your operations</span>
+                    </a>
+                    <a href="#" class="flex flex-col px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="text-gray-900 font-bold mb-0.5">White-Label</span>
+                        <span class="text-xs text-gray-500">Brand it as your own</span>
+                    </a>
+                    <a href="#" class="flex flex-col px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="text-gray-900 font-bold mb-0.5">Custom Development</span>
+                        <span class="text-xs text-gray-500">Bespoke integrations</span>
+                    </a>
+                </div>
+            </div>
+
+            <a href="pricing.html" class="hover:text-black transition-colors flex items-center py-5">Pricing</a>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <a href="#" class="hidden sm:block text-sm font-medium hover:opacity-70 px-4">Log in</a>
+            <a href="#" class="bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-gray-800 transition-all flex items-center gap-2 group shadow-lg shadow-black/20">
+                Get started
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform opacity-50"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Wrapper for Top Hero Section -->
+    <div class="px-2 md:px-4 lg:px-6 pt-24 md:pt-28 pb-6 relative z-10 bg-white">
+        
+        <!-- Main Gray Container -->
+        <!-- Container is w-full (full width) but content inside is constrained -->
+        <div class="w-full mx-auto bg-[#F3F5F7] rounded-[40px] md:rounded-[60px] relative overflow-hidden flex flex-col items-center border border-gray-100 shadow-sm min-h-[90vh]">
+            
+            <!-- Connector Dots Decoration -->
+            <div class="connector-dot top-1/2 left-0 -translate-x-1/2"></div>
+            <div class="connector-dot top-1/2 right-0 translate-x-1/2"></div>
+
+            <!-- Hero Text Content -->
+            <div class="text-center max-w-4xl px-6 relative z-10 mt-32 mb-16">
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-8 reveal-text leading-[1.1]">
+                    Your Corporate Software, <br/>
+                    <span class="text-gray-900">Built Exactly How You Want It.</span>
+                </h1>
+                <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-10 reveal-text reveal-delay-1 leading-relaxed">
+                    From intelligent HRMS and secure corporate mail servers to fully bespoke applications. You state your requirements, and we take care of the rest.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal-text reveal-delay-2">
+                    <button class="bg-black text-white px-8 py-3.5 rounded-full font-medium hover:scale-105 transition-transform flex items-center gap-2 shadow-lg shadow-black/20">
+                        Get started
+                        <i data-lucide="sparkles" class="w-4 h-4 text-gray-400"></i>
+                    </button>
+                    <button class="bg-white text-black border border-gray-200 px-8 py-3.5 rounded-full font-medium hover:bg-gray-50 transition-colors flex items-center gap-2">
+                        View Demo
+                        <i data-lucide="play-circle" class="w-4 h-4 text-gray-400"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Image Area -->
+            <div class="w-full max-w-6xl px-4 md:px-12 relative z-10 reveal-text reveal-delay-3 mt-auto group/hero cursor-default">
+                <div class="w-full h-[400px] md:h-[600px] rounded-t-3xl overflow-hidden relative shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1)] bg-[#f8fafc] flex border border-gray-200 border-b-0 transition-shadow duration-500 p-2 md:p-4 pb-0 group-hover/hero:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)]">
+                    <!-- Inner Container -->
+                    <div class="w-full h-full bg-white rounded-t-2xl shadow-sm border border-gray-100 border-b-0 flex overflow-hidden relative z-10">
+                        
+                        <!-- Sidebar -->
+                        <div class="w-24 md:w-48 bg-gray-50 border-r border-gray-100 flex flex-col items-center py-6 md:py-10 gap-6 md:gap-10 shrink-0 z-20">
+                            <!-- Animated PXP Logo -->
+                            <div class="relative group-hover/hero:scale-110 transition-transform duration-700 drop-shadow-md">
+                                <img src="./pxp-logo.png" alt="PXP Logo" class="h-10 md:h-14 w-auto object-contain">
+                                <!-- Glow behind logo -->
+                                <div class="absolute inset-0 bg-blue-400/20 blur-2xl -z-10 rounded-full transform scale-150"></div>
+                            </div>
+                            <div class="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest -mt-4 md:-mt-6">Dashboard</div>
+                            
+                            <!-- Menu Items -->
+                            <div class="w-full flex flex-col gap-2 px-3 md:px-6 mt-4 relative z-50">
+                                <div id="tab-dashboard" onclick="switchHeroTab('dashboard')" class="hero-sidebar-tab w-full bg-white shadow-sm border border-gray-100 rounded-lg md:rounded-xl p-2 md:p-3 flex items-center gap-3 text-xs md:text-sm font-semibold text-gray-700 cursor-pointer">
+                                    <i data-lucide="layout-dashboard" class="w-4 h-4 text-blue-500 pointer-events-none"></i> <span class="hidden md:inline pointer-events-none">Dashboard</span>
+                                </div>
+                                <div id="tab-hr" onclick="switchHeroTab('hr')" class="hero-sidebar-tab w-full hover:bg-gray-100 rounded-lg md:rounded-xl p-2 md:p-3 flex items-center gap-3 text-xs md:text-sm font-medium text-gray-500 transition-colors cursor-pointer">
+                                    <i data-lucide="bar-chart-2" class="w-4 h-4 pointer-events-none"></i> <span class="hidden md:inline pointer-events-none">HR Analytics</span>
+                                </div>
+                                <div id="tab-mail" onclick="switchHeroTab('mail')" class="hero-sidebar-tab w-full hover:bg-gray-100 rounded-lg md:rounded-xl p-2 md:p-3 flex items-center gap-3 text-xs md:text-sm font-medium text-gray-500 transition-colors cursor-pointer">
+                                    <i data-lucide="mail" class="w-4 h-4 pointer-events-none"></i> <span class="hidden md:inline pointer-events-none">Mail Server</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Dashboard Area -->
+                        <div class="flex-1 bg-white p-4 md:p-10 flex flex-col gap-4 md:gap-6 overflow-hidden relative">
+                            <!-- Header -->
+                            <div class="flex justify-between items-center border-b border-gray-100 pb-2 md:pb-4 shrink-0">
+                                <div>
+                                    <h4 class="text-2xl md:text-3xl font-bold text-gray-900 mb-1 md:mb-2">Welcome, Sarah J.</h4>
+                                    <p class="text-xs md:text-sm text-gray-400 font-medium">Enterprise Overview - Sept 2023</p>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-100 flex items-center justify-center relative">
+                                        <i data-lucide="bell" class="w-4 h-4 md:w-5 md:h-5 text-gray-500"></i>
+                                        <div class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></div>
+                                    </div>
+                                    <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-tr from-blue-100 to-purple-100 rounded-full border-2 border-gray-200"></div>
+                                </div>
+                            </div>
+
+                            <!-- VIEWS CONTAINER -->
+                            <div class="flex-1 relative w-full">
+                                
+                                <!-- DASHBOARD VIEW (Default) -->
+                                <div id="view-dashboard" class="hero-tab-view group/hero-tab absolute inset-0 flex flex-col gap-4 md:gap-6 transition-opacity duration-500 opacity-100 z-10 active">
+                                    <!-- KPIs -->
+                                    <div class="grid grid-cols-3 gap-4 md:gap-6 shrink-0">
+                                        <div class="bg-gray-50 rounded-2xl p-4 md:p-6 border border-gray-100 group-hover/hero:-translate-y-2 transition-transform duration-700 delay-100">
+                                            <div class="text-xs md:text-sm text-gray-500 font-medium mb-2">Total Employees</div>
+                                            <div class="flex flex-col xl:flex-row xl:items-end gap-1 xl:gap-3">
+                                                <div class="text-2xl md:text-4xl font-bold text-gray-900">1,850</div>
+                                                <div class="text-[10px] md:text-xs bg-green-100 text-green-600 px-2 py-1 rounded-md font-bold w-fit">+4.2% ↑</div>
+                                            </div>
+                                        </div>
+                                        <div class="bg-gray-50 rounded-2xl p-4 md:p-6 border border-gray-100 group-hover/hero:-translate-y-2 transition-transform duration-700 delay-200">
+                                            <div class="text-xs md:text-sm text-gray-500 font-medium mb-2">Employee Attrition</div>
+                                            <div class="flex flex-col xl:flex-row xl:items-end gap-1 xl:gap-3">
+                                                <div class="text-2xl md:text-4xl font-bold text-gray-900">3.1%</div>
+                                                <div class="text-[10px] md:text-xs bg-red-100 text-red-600 px-2 py-1 rounded-md font-bold w-fit">-0.5% ↓</div>
+                                            </div>
+                                        </div>
+                                        <div class="bg-gray-50 rounded-2xl p-4 md:p-6 border border-gray-100 group-hover/hero:-translate-y-2 transition-transform duration-700 delay-300">
+                                            <div class="text-xs md:text-sm text-gray-500 font-medium mb-2">Employee Sentiment</div>
+                                            <div class="text-2xl md:text-4xl font-bold text-gray-900">88%</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Charts Area -->
+                                    <div class="flex-1 flex flex-col lg:flex-row gap-4 md:gap-6 mt-2 relative min-h-[150px]">
+                                        <div class="flex-[2] bg-gray-50 rounded-2xl border border-gray-100 p-4 md:p-6 relative overflow-hidden group/chart">
+                                            <div class="text-xs md:text-sm font-bold text-gray-700 mb-6">Employee Growth (12 Months)</div>
+                                            <!-- Animated Line Chart SVG Simulation -->
+                                            <div class="absolute bottom-0 left-0 w-full h-[65%] flex items-end">
+                                                <style>
+                                                    @keyframes drawFillGraph {
+                                                        0% { transform: scaleY(0); }
+                                                        100% { transform: scaleY(1); }
+                                                    }
+                                                    @keyframes drawLineGraph {
+                                                        0% { stroke-dashoffset: 150; }
+                                                        100% { stroke-dashoffset: 0; }
+                                                    }
+                                                    @keyframes fadeInDot {
+                                                        0% { opacity: 0; transform: scale(0); }
+                                                        100% { opacity: 1; transform: scale(1); }
+                                                    }
+                                                </style>
+                                                <svg viewBox="0 0 100 50" class="w-full h-full preserve-aspect-ratio-none overflow-visible px-4">
+                                                    <defs>
+                                                        <linearGradient id="chartGradientHero" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                            <stop offset="0%" stop-color="rgba(59,130,246,0.4)" />
+                                                            <stop offset="100%" stop-color="rgba(59,130,246,0)" />
+                                                        </linearGradient>
+                                                        <filter id="glow">
+                                                            <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+                                                            <feMerge>
+                                                                <feMergeNode in="coloredBlur"/>
+                                                                <feMergeNode in="SourceGraphic"/>
+                                                            </feMerge>
+                                                        </filter>
+                                                    </defs>
+                                                    
+                                                    <!-- Fill -->
+                                                    <path d="M0,50 L0,40 Q20,35 40,20 T80,10 L100,5 L100,50 Z" fill="url(#chartGradientHero)" class="transform origin-bottom scale-y-0 opacity-0 group-[.active]/hero-tab:opacity-100 group-[.active]/hero-tab:animate-[drawFillGraph_1.5s_ease-out_forwards]" />
+                                                    
+                                                    <!-- Line -->
+                                                    <path d="M0,40 Q20,35 40,20 T80,10 L100,5" fill="none" stroke="#3b82f6" stroke-width="1.5" filter="url(#glow)" class="[stroke-dasharray:150] [stroke-dashoffset:150] group-[.active]/hero-tab:animate-[drawLineGraph_1.5s_ease-out_forwards_0.2s]" />
+                                                    
+                                                    <!-- Dots -->
+                                                    <circle cx="40" cy="20" r="2.5" fill="white" stroke="#3b82f6" stroke-width="1.5" class="opacity-0 origin-[40px_20px] group-[.active]/hero-tab:animate-[fadeInDot_0.5s_ease-out_forwards_1.2s]" />
+                                                    <circle cx="80" cy="10" r="2.5" fill="white" stroke="#3b82f6" stroke-width="1.5" class="opacity-0 origin-[80px_10px] group-[.active]/hero-tab:animate-[fadeInDot_0.5s_ease-out_forwards_1.5s]" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex-1 bg-gray-50 rounded-2xl border border-gray-100 p-4 md:p-6 relative overflow-hidden hidden lg:block">
+                                            <div class="text-xs md:text-sm font-bold text-gray-700 mb-6">Mail Volume (24h)</div>
+                                            <style>
+                                                @keyframes drawBarGraph {
+                                                    0% { transform: scaleY(0); }
+                                                    100% { transform: scaleY(1); }
+                                                }
+                                            </style>
+                                            <div class="absolute bottom-0 left-0 w-full h-[65%] flex items-end gap-2 px-4 opacity-0 group-[.active]/hero-tab:opacity-100 transition-opacity duration-300">
+                                                <div class="w-full bg-purple-200 rounded-t h-[40%] origin-bottom scale-y-0 group-[.active]/hero-tab:animate-[drawBarGraph_1s_ease-out_forwards_0.2s]"></div>
+                                                <div class="w-full bg-purple-300 rounded-t h-[70%] origin-bottom scale-y-0 group-[.active]/hero-tab:animate-[drawBarGraph_1s_ease-out_forwards_0.4s]"></div>
+                                                <div class="w-full bg-purple-400 rounded-t h-[85%] origin-bottom scale-y-0 group-[.active]/hero-tab:animate-[drawBarGraph_1s_ease-out_forwards_0.6s]"></div>
+                                                <div class="w-full bg-purple-500 rounded-t h-[100%] origin-bottom scale-y-0 group-[.active]/hero-tab:animate-[drawBarGraph_1s_ease-out_forwards_0.8s]"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- HR ANALYTICS VIEW -->
+                                <div id="view-hr" class="hero-tab-view group/hero-tab absolute inset-0 flex flex-col gap-4 md:gap-6 transition-opacity duration-500 opacity-0 pointer-events-none z-0">
+                                    <div class="flex-1 bg-gray-50 rounded-2xl border border-gray-100 p-6 flex flex-col md:flex-row gap-8 relative overflow-hidden">
+                                        <div class="flex-1 flex flex-col justify-center gap-6 z-10">
+                                            <div class="text-sm font-bold text-gray-700">Department Distribution</div>
+                                            <div class="flex flex-col gap-3">
+                                                <div class="flex items-center gap-3 transform -translate-x-4 opacity-0 group-[.active]/hero-tab:translate-x-0 group-[.active]/hero-tab:opacity-100 transition-all duration-500 delay-100">
+                                                    <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                                                    <div class="text-sm font-medium text-gray-600 flex-1">Engineering</div>
+                                                    <div class="text-sm font-bold text-gray-900">45%</div>
+                                                </div>
+                                                <div class="flex items-center gap-3 transform -translate-x-4 opacity-0 group-[.active]/hero-tab:translate-x-0 group-[.active]/hero-tab:opacity-100 transition-all duration-500 delay-200">
+                                                    <div class="w-3 h-3 rounded-full bg-purple-500"></div>
+                                                    <div class="text-sm font-medium text-gray-600 flex-1">Sales</div>
+                                                    <div class="text-sm font-bold text-gray-900">30%</div>
+                                                </div>
+                                                <div class="flex items-center gap-3 transform -translate-x-4 opacity-0 group-[.active]/hero-tab:translate-x-0 group-[.active]/hero-tab:opacity-100 transition-all duration-500 delay-300">
+                                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                                    <div class="text-sm font-medium text-gray-600 flex-1">Marketing</div>
+                                                    <div class="text-sm font-bold text-gray-900">25%</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 flex items-center justify-center relative">
+                                            <!-- Animated Donut Chart -->
+                                            <div class="relative w-40 h-40 md:w-56 md:h-56 transform scale-90 opacity-0 group-[.active]/hero-tab:scale-100 group-[.active]/hero-tab:opacity-100 transition-all duration-700 delay-100">
+                                                <svg viewBox="0 0 100 100" class="w-full h-full transform -rotate-90 drop-shadow-xl">
+                                                    <!-- Background Track -->
+                                                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#f3f4f6" stroke-width="16" />
+                                                    <!-- Marketing (Green) -->
+                                                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#22c55e" stroke-width="16" stroke-dasharray="251.2" stroke-dashoffset="251.2" class="group-[.active]/hero-tab:[stroke-dashoffset:188.4] transition-all duration-1000 ease-out delay-500" style="transform: rotate(270deg); transform-origin: center;" />
+                                                    <!-- Sales (Purple) -->
+                                                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#a855f7" stroke-width="16" stroke-dasharray="251.2" stroke-dashoffset="251.2" class="group-[.active]/hero-tab:[stroke-dashoffset:175.8] transition-all duration-1000 ease-out delay-700" style="transform: rotate(162deg); transform-origin: center;" />
+                                                    <!-- Engineering (Blue) -->
+                                                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#3b82f6" stroke-width="16" stroke-dasharray="251.2" stroke-dashoffset="251.2" class="group-[.active]/hero-tab:[stroke-dashoffset:138.16] transition-all duration-1000 ease-out delay-900" />
+                                                </svg>
+                                                <!-- Center Stat -->
+                                                <div class="absolute inset-0 flex items-center justify-center flex-col">
+                                                    <div class="text-4xl font-black text-gray-900 transform scale-50 opacity-0 group-[.active]/hero-tab:scale-100 group-[.active]/hero-tab:opacity-100 transition-all duration-500 delay-[1200ms]">3</div>
+                                                    <div class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Depts</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- MAIL SERVER VIEW -->
+                                <div id="view-mail" class="hero-tab-view group/hero-tab absolute inset-0 flex flex-col gap-4 md:gap-6 transition-opacity duration-500 opacity-0 pointer-events-none z-0">
+                                    <div class="flex-1 bg-gray-50 rounded-2xl border border-gray-100 p-4 relative overflow-hidden flex flex-col gap-3">
+                                        <div class="h-10 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center px-4 shrink-0 justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
+                                                <div class="w-32 h-2 bg-gray-100 rounded-full"></div>
+                                            </div>
+                                            <div class="w-6 h-6 bg-blue-50 text-blue-500 rounded-md flex items-center justify-center"><i data-lucide="edit-3" class="w-3 h-3"></i></div>
+                                        </div>
+                                        
+                                        <!-- Inbox Items -->
+                                        <div class="relative flex-1">
+                                            <!-- Message 1 -->
+                                            <div class="absolute top-0 left-0 w-full h-16 md:h-20 bg-white rounded-xl shadow-md shadow-purple-500/5 border-l-4 border-l-purple-500 border border-gray-100 flex items-center px-4 gap-4 transform -translate-y-[40px] opacity-0 group-[.active]/hero-tab:translate-y-0 group-[.active]/hero-tab:opacity-100 transition-all duration-700 ease-out delay-[400ms] z-30">
+                                                <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center shrink-0"><span class="text-sm font-bold">P</span></div>
+                                                <div class="flex-1">
+                                                    <div class="flex justify-between items-center mb-2">
+                                                        <div class="w-32 h-2.5 bg-gray-800 rounded-full"></div>
+                                                        <div class="w-10 h-2 bg-purple-200 rounded-full"></div>
+                                                    </div>
+                                                    <div class="w-[80%] h-2 bg-gray-400 rounded-full"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Message 2 -->
+                                            <div class="absolute top-0 left-0 w-full h-16 md:h-20 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center px-4 gap-4 transform translate-y-0 group-[.active]/hero-tab:translate-y-[76px] md:group-[.active]/hero-tab:translate-y-[92px] transition-all duration-700 ease-in-out delay-200 z-20">
+                                                <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0"><span class="text-sm font-bold">X</span></div>
+                                                <div class="flex-1">
+                                                    <div class="flex justify-between items-center mb-2">
+                                                        <div class="w-40 h-2 bg-gray-400 rounded-full"></div>
+                                                        <div class="w-10 h-1.5 bg-gray-200 rounded-full"></div>
+                                                    </div>
+                                                    <div class="w-[60%] h-1.5 bg-gray-200 rounded-full"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Message 3 -->
+                                            <div class="absolute top-0 left-0 w-full h-16 md:h-20 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center px-4 gap-4 transform translate-y-[76px] md:translate-y-[92px] group-[.active]/hero-tab:translate-y-[152px] md:group-[.active]/hero-tab:translate-y-[184px] transition-all duration-700 ease-in-out delay-100 z-10">
+                                                <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0"><span class="text-sm font-bold">P</span></div>
+                                                <div class="flex-1">
+                                                    <div class="flex justify-between items-center mb-2">
+                                                        <div class="w-24 h-2 bg-gray-400 rounded-full"></div>
+                                                        <div class="w-10 h-1.5 bg-gray-200 rounded-full"></div>
+                                                    </div>
+                                                    <div class="w-[70%] h-1.5 bg-gray-200 rounded-full"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Floating Mouse Cursor Animation (Dashboard Only) -->
+                            <div id="hero-cursor" class="absolute top-[40%] left-[30%] w-6 h-6 text-black transform group-hover/hero:translate-x-[200px] group-hover/hero:translate-y-[80px] transition-transform duration-1000 ease-in-out z-50 pointer-events-none drop-shadow-xl delay-[800ms] opacity-0 group-hover/hero:opacity-100 hidden md:block">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M7 2l12 11.2-5.8.5 3.3 7.3-2.2 1-3.2-7.4-4.4 4.8z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Abstract Glow -->
+                    <div class="absolute -top-20 -right-20 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-[80px] pointer-events-none z-0"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Text Reveal Section -->
+    <section class="px-2 md:px-4 lg:px-6 pb-6 bg-white">
+        <!-- Container w-full, inner content constrained -->
+        <div class="w-full mx-auto bg-[#0a0a0a] rounded-[40px] md:rounded-[60px] py-40 px-8 md:px-20 relative overflow-hidden flex items-center justify-center min-h-[80vh]">
+            
+            <div class="max-w-5xl text-center relative z-10">
+                <h2 id="scroll-reveal-text" class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight">
+                    We don't just sell software; we deliver solutions tailored to your DNA. Whether you need to add a feature or strip away the clutter, our platforms mold to your operational needs.
+                </h2>
+            </div>
+
+            <!-- Background subtle glow decoration -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-900/20 blur-[120px] rounded-full pointer-events-none"></div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: Platform Experience (Interactive Reveal) -->
+    <section class="px-2 md:px-4 lg:px-6 pb-32 bg-white">
+        <div class="max-w-[1400px] mx-auto">
+            
+            <!-- Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-6xl font-bold tracking-tight text-gray-900 mb-6">
+                    Experience the power of our platform.
+                </h2>
+                <p class="text-gray-500 text-lg max-w-2xl mx-auto">
+                    Our platform is crafted with a clean, user-friendly interface that ensures effortless navigation while delivering powerful capabilities under the hood.
+                </p>
+            </div>
+
+            <!-- Interactive Tablet Card -->
+            <div class="relative w-full aspect-[4/3] md:aspect-[16/9] lg:aspect-[2.4/1] bg-[#e5e5e5] rounded-[40px] overflow-hidden group cursor-pointer border border-gray-100 shadow-sm">
+                
+                <!-- Main Image (Simulating the 3D Composition) -->
+                <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center p-6 md:p-12 overflow-hidden transition-transform duration-1000 ease-out group-hover:scale-105">
+                    <!-- Decorative Background Elements -->
+                    <div class="absolute top-1/4 -right-20 w-96 h-96 bg-purple-400/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse"></div>
+                    <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-blue-400/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse" style="animation-delay: 2s;"></div>
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-400/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse" style="animation-delay: 4s;"></div>
+
+                    <!-- Glassmorphism Tablet Frame -->
+                    <div class="w-full max-w-5xl h-full bg-white/60 backdrop-blur-xl border border-white/80 rounded-3xl md:rounded-[40px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] p-4 md:p-6 flex flex-col relative z-10">
+                        <!-- Top Bar -->
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 md:w-4 md:h-4 rounded-full bg-red-400 shadow-sm"></div>
+                                <div class="w-3 h-3 md:w-4 md:h-4 rounded-full bg-amber-400 shadow-sm"></div>
+                                <div class="w-3 h-3 md:w-4 md:h-4 rounded-full bg-green-400 shadow-sm"></div>
+                            </div>
+                            <div class="h-6 w-32 bg-gray-200/50 rounded-full"></div>
+                        </div>
+                        
+                        <!-- Content Grid -->
+                        <div class="flex-1 flex gap-6">
+                            <!-- Sidebar -->
+                            <div class="hidden md:flex w-1/4 flex-col gap-4 border-r border-gray-100/50 pr-6">
+                                <div class="w-full h-10 bg-black rounded-xl shadow-md"></div>
+                                <div class="w-3/4 h-6 bg-gray-200/50 rounded-full mt-4"></div>
+                                <div class="w-2/3 h-6 bg-gray-200/50 rounded-full"></div>
+                                <div class="w-4/5 h-6 bg-gray-200/50 rounded-full"></div>
+                                <div class="w-1/2 h-6 bg-gray-200/50 rounded-full mt-auto mb-2"></div>
+                            </div>
+                            
+                            <!-- Main View -->
+                            <div class="flex-1 flex flex-col gap-6">
+                                <!-- Big Chart Area -->
+                                <div class="flex-[2] bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-100/50 relative overflow-hidden flex items-end shadow-inner">
+                                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxjaXJjbGUgY3g9IjEiIGN5PSIxIiByPSIxIiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-50"></div>
+                                    <!-- Simulated line chart -->
+                                    <svg viewBox="0 0 100 30" class="w-full h-[70%] preserve-aspect-ratio-none">
+                                        <path d="M0,30 L0,20 Q20,10 40,15 T80,5 L100,10 L100,30 Z" fill="rgba(59,130,246,0.2)"/>
+                                        <path d="M0,20 Q20,10 40,15 T80,5 L100,10" fill="none" stroke="#3b82f6" stroke-width="0.5"/>
+                                    </svg>
+                                </div>
+                                
+                                <!-- Bottom Cards -->
+                                <div class="flex-1 flex gap-4 md:gap-6">
+                                    <div class="flex-1 bg-white rounded-2xl shadow-sm border border-gray-100/50 p-4 flex flex-col justify-center">
+                                        <div class="flex justify-between items-start mb-3">
+                                            <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600"><i data-lucide="bar-chart-2" class="w-5 h-5"></i></div>
+                                            <div class="w-16 h-4 bg-green-100 rounded-full"></div>
+                                        </div>
+                                        <div class="w-full h-3 bg-gray-200/50 rounded-full mb-2"></div>
+                                        <div class="w-2/3 h-3 bg-gray-200/50 rounded-full"></div>
+                                    </div>
+                                    <div class="flex-1 bg-white rounded-2xl shadow-sm border border-gray-100/50 p-4 flex flex-col justify-center">
+                                        <div class="flex justify-between items-start mb-3">
+                                            <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center text-green-600"><i data-lucide="users" class="w-5 h-5"></i></div>
+                                            <div class="w-16 h-4 bg-green-100 rounded-full"></div>
+                                        </div>
+                                        <div class="w-full h-3 bg-gray-200/50 rounded-full mb-2"></div>
+                                        <div class="w-1/2 h-3 bg-gray-200/50 rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dark Overlay (Fades in on Hover) -->
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out z-10"></div>
+
+                <!-- Reveal Button (Slides up on Hover) -->
+                <div class="absolute inset-0 flex items-center justify-center z-20 overflow-hidden">
+                    <a href="#services" class="bg-[#d4f877] text-black px-8 py-3.5 rounded-full font-bold text-sm flex items-center gap-2 translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out shadow-2xl hover:scale-105">
+                        View details
+                        <div class="bg-black/10 p-1 rounded-full">
+                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </div>
+                    </a>
+                </div>
+                
+            </div>
+
+            <!-- Bottom Caption -->
+            <div class="flex flex-col md:flex-row justify-between items-start mt-10 px-2 md:px-4">
+                <div class="max-w-md mb-4 md:mb-0">
+                    <h3 class="text-2xl font-medium text-gray-900 leading-snug">
+                        Unified corporate operations <br> managed from one place
+                    </h3>
+                </div>
+                <div class="max-w-md text-left md:text-right">
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Empowering enterprises with intelligent HRMS, <br> robust mail servers, and custom toolkits.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- NEW SECTION: Detailed Services Grid (Zoom Effect on Hover) -->
+    <section id="services" class="px-2 md:px-4 lg:px-6 pb-32 bg-white">
+        <div class="max-w-[1400px] mx-auto">
+            
+            <!-- Header -->
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <div class="relative inline-flex items-center justify-center p-[1.5px] rounded-full mb-6 overflow-hidden group cursor-default hover:scale-105 transition-transform duration-300 shadow-sm">
+                    <span class="absolute inset-[-1000%] animate-[spinSlow_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#c084fc_0%,#3b82f6_50%,#c084fc_100%)]"></span>
+                    <span class="relative bg-[#F3F5F7] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-gray-700 w-full h-full flex items-center justify-center">
+                        Our Services
+                    </span>
+                </div>
+                <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
+                    Fully customizable solutions for <br> modern enterprises.
+                </h2>
+                <p class="text-gray-500 mt-6 text-lg">
+                    Everything you need to manage your operations, tailored specifically to your corporate identity and workflows.
+                </p>
+            </div>
+
+            <!-- Bento Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Card 1 (Full Width): Seamless Global Payroll -->
+                <div class="md:col-span-2 bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 flex flex-col lg:flex-row items-center gap-12 group overflow-hidden border border-gray-100 relative">
+                    <div class="flex-1 z-40 relative">
+                        <h3 class="text-3xl font-bold mb-4 text-gray-900">PXP Workforce OS</h3>
+                        <p class="text-gray-500 mb-8 leading-relaxed text-lg max-w-md">
+                            A complete, end-to-end human resource management system designed to eliminate manual work. From hiring to retiring, manage your entire workforce in one unified dashboard.
+                        </p>
+                        
+                        <div class="flex flex-wrap items-center gap-2 mb-8">
+                            <span class="bg-white px-3 py-1 rounded-md text-xs font-medium border border-gray-200">Real-Time Attendance</span>
+                            <span class="bg-white px-3 py-1 rounded-md text-xs font-medium border border-gray-200">Automated Payroll</span>
+                            <span class="bg-white px-3 py-1 rounded-md text-xs font-medium border border-gray-200">Shift Rostering</span>
+                            <span class="bg-white px-3 py-1 rounded-md text-xs font-medium border border-gray-200">Biometric Sync</span>
+                        </div>
+
+                        <a href="workforce-os.html" class="inline-flex items-center bg-black rounded-full text-white shadow-lg h-14 hover:bg-gray-800 transition-colors overflow-hidden">
+                            <div class="w-14 h-14 flex items-center justify-center shrink-0">
+                                <i data-lucide="arrow-right" class="w-6 h-6 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+                            </div>
+                            <div class="max-w-0 overflow-hidden group-hover:max-w-[150px] transition-all duration-500 ease-in-out">
+                                <span class="text-sm font-medium whitespace-nowrap pr-6 block opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">Explore Platform</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="flex-1 w-full h-[350px] lg:h-[450px] rounded-3xl overflow-hidden relative shadow-2xl bg-gray-50 flex border border-gray-100">
+                        <!-- Simulated Dashboard Animation -->
+                        
+                        <!-- Sidebar -->
+                        <div class="w-16 md:w-20 bg-white border-r border-gray-100 flex flex-col items-center py-6 gap-6 relative z-10 shrink-0 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white mb-4 shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-500"><i data-lucide="layers" class="w-5 h-5"></i></div>
+                            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center group-hover:-translate-y-1 transition-transform duration-300 delay-100"><i data-lucide="users" class="w-5 h-5"></i></div>
+                            <div class="w-10 h-10 rounded-xl bg-gray-50 text-gray-400 flex items-center justify-center group-hover:-translate-y-1 transition-transform duration-300 delay-200"><i data-lucide="calendar" class="w-5 h-5"></i></div>
+                            <div class="w-10 h-10 rounded-xl bg-gray-50 text-gray-400 flex items-center justify-center group-hover:-translate-y-1 transition-transform duration-300 delay-300"><i data-lucide="pie-chart" class="w-5 h-5"></i></div>
+                        </div>
+                        
+                        <!-- Main Content -->
+                        <div class="flex-1 p-6 md:p-8 flex flex-col gap-6 relative overflow-hidden bg-gradient-to-br from-gray-50 to-white/50">
+                            <!-- Header -->
+                            <div class="flex justify-between items-center z-10">
+                                <div class="w-32 h-6 rounded-full bg-gray-200/80"></div>
+                                <div class="flex gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-gray-200/80"></div>
+                                    <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 p-[2px]">
+                                        <div class="w-full h-full bg-white rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Stats Grid -->
+                            <div class="grid grid-cols-3 gap-4 z-10">
+                                <div class="h-24 bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col justify-between transform transition-transform group-hover:-translate-y-2 duration-500 delay-100">
+                                    <div class="w-8 h-8 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center"><i data-lucide="activity" class="w-4 h-4"></i></div>
+                                    <div class="w-20 h-2.5 rounded-full bg-gray-100"></div>
+                                </div>
+                                <div class="h-24 bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col justify-between transform transition-transform group-hover:-translate-y-2 duration-500 delay-200">
+                                    <div class="w-8 h-8 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center"><i data-lucide="clock" class="w-4 h-4"></i></div>
+                                    <div class="w-24 h-2.5 rounded-full bg-gray-100"></div>
+                                </div>
+                                <div class="h-24 bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col justify-between transform transition-transform group-hover:-translate-y-2 duration-500 delay-300">
+                                    <div class="w-8 h-8 rounded-full bg-green-50 text-green-500 flex items-center justify-center"><i data-lucide="check-circle" class="w-4 h-4"></i></div>
+                                    <div class="w-16 h-2.5 rounded-full bg-gray-100"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Animated Chart Area -->
+                            <div class="flex-1 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col gap-4 relative overflow-hidden z-10">
+                                <div class="w-32 h-3 rounded-full bg-gray-100 mb-2"></div>
+                                <!-- Animated bars -->
+                                <div class="flex-1 flex items-end gap-2 md:gap-4 mt-2">
+                                    <div class="w-full bg-blue-500 rounded-t-md h-[20%] group-hover:h-[70%] transition-all duration-1000 ease-out delay-100 relative overflow-hidden"><div class="absolute inset-0 bg-white/20 animate-pulse"></div></div>
+                                    <div class="w-full bg-indigo-400 rounded-t-md h-[40%] group-hover:h-[90%] transition-all duration-1000 ease-out delay-200 relative overflow-hidden"><div class="absolute inset-0 bg-white/20 animate-pulse delay-75"></div></div>
+                                    <div class="w-full bg-blue-500 rounded-t-md h-[30%] group-hover:h-[60%] transition-all duration-1000 ease-out delay-300 relative overflow-hidden"><div class="absolute inset-0 bg-white/20 animate-pulse delay-150"></div></div>
+                                    <div class="w-full bg-indigo-400 rounded-t-md h-[50%] group-hover:h-[80%] transition-all duration-1000 ease-out delay-400 relative overflow-hidden"><div class="absolute inset-0 bg-white/20 animate-pulse delay-300"></div></div>
+                                    <div class="w-full bg-blue-500 rounded-t-md h-[40%] group-hover:h-[100%] transition-all duration-1000 ease-out delay-500 relative overflow-hidden"><div class="absolute inset-0 bg-white/20 animate-pulse delay-500"></div></div>
+                                    <div class="w-full bg-indigo-400 rounded-t-md h-[20%] group-hover:h-[50%] transition-all duration-1000 ease-out delay-600 relative overflow-hidden"><div class="absolute inset-0 bg-white/20 animate-pulse delay-700"></div></div>
+                                </div>
+                            </div>
+
+                            <!-- Scanning Line -->
+                            <div class="absolute top-0 left-0 w-full h-full pointer-events-none z-20 overflow-hidden mix-blend-overlay">
+                                <div class="w-full h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-60 blur-[1px] animate-scan-large"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Notification -->
+                        <div class="absolute top-12 right-6 bg-white p-3 rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100 flex items-center gap-3 transform translate-x-20 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-700 delay-[800ms] z-30">
+                            <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-green-500">
+                                <i data-lucide="check" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <div class="w-20 h-2 bg-gray-200 rounded-full mb-1.5"></div>
+                                <div class="w-12 h-1.5 bg-gray-100 rounded-full"></div>
+                            </div>
+                        </div>
+
+                        <!-- Abstract Glow -->
+                        <div class="absolute inset-0 bg-gradient-to-tr from-blue-500/5 to-purple-500/5 mix-blend-overlay pointer-events-none z-0"></div>
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-400/20 rounded-full blur-[80px] pointer-events-none z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Automated Tax Compliance -->
+                <div class="bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 min-h-[500px] flex flex-col justify-between group overflow-hidden border border-gray-100 relative">
+                    <div class="z-40 relative max-w-sm">
+                        <h3 class="text-2xl font-bold mb-4 text-gray-900">Fully Branded Corporate Email</h3>
+                        <p class="text-gray-500 mb-8 leading-relaxed">
+                            Own your communications. We deploy highly secure corporate mail servers customized entirely with your company’s branding, logo, and a bespoke login page.
+                        </p>
+                        <button class="inline-flex items-center bg-black rounded-full text-white shadow-lg h-12 hover:bg-gray-800 transition-colors overflow-hidden">
+                            <div class="w-12 h-12 flex items-center justify-center shrink-0">
+                                <i data-lucide="arrow-right" class="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+                            </div>
+                            <div class="max-w-0 overflow-hidden group-hover:max-w-[150px] transition-all duration-500 ease-in-out">
+                                <span class="text-sm font-medium whitespace-nowrap pr-6 block opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">Learn More</span>
+                            </div>
+                        </button>
+                    </div>
+                    <!-- Animated Mail Server Graphic -->
+                    <div class="absolute bottom-0 right-0 w-[90%] md:w-[70%] lg:w-[60%] h-[55%] rounded-tl-3xl overflow-hidden shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border-t border-l border-gray-200 bg-slate-50 flex flex-col z-0">
+                        <!-- Mock Browser Header -->
+                        <div class="h-10 bg-white border-b border-gray-100 flex items-center px-4 gap-2 shrink-0 z-10">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                            <div class="ml-4 flex-1 h-5 bg-gray-50 rounded-md border border-gray-100 flex items-center px-2">
+                                <div class="w-20 h-2 bg-gray-200 rounded-full"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Email List Area -->
+                        <div class="flex-1 relative p-4 overflow-hidden">
+                            
+                            <!-- Message 3 (Oldest) -->
+                            <div class="absolute left-4 right-4 bg-white rounded-xl shadow-sm border border-gray-100 p-3 flex items-center gap-3 transform top-[136px] group-hover:translate-y-[60px] transition-transform duration-700 ease-in-out opacity-40">
+                                <div class="w-8 h-8 rounded-full bg-gray-100 flex shrink-0 items-center justify-center text-gray-400"><i data-lucide="user" class="w-4 h-4"></i></div>
+                                <div class="flex-1">
+                                    <div class="w-1/4 h-2 bg-gray-200 rounded-full mb-2"></div>
+                                    <div class="w-2/3 h-2 bg-gray-100 rounded-full"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Message 2 (Older) -->
+                            <div class="absolute left-4 right-4 bg-white rounded-xl shadow-sm border border-gray-100 p-3 flex items-center gap-3 transform top-[76px] group-hover:translate-y-[60px] transition-transform duration-700 ease-in-out opacity-70">
+                                <div class="w-8 h-8 rounded-full bg-blue-50 flex shrink-0 items-center justify-center text-blue-400"><i data-lucide="user" class="w-4 h-4"></i></div>
+                                <div class="flex-1">
+                                    <div class="w-1/3 h-2 bg-gray-200 rounded-full mb-2"></div>
+                                    <div class="w-3/4 h-2 bg-gray-100 rounded-full"></div>
+                                </div>
+                            </div>
+
+                            <!-- Message 1 (Current Top) -->
+                            <div class="absolute left-4 right-4 bg-white rounded-xl shadow-sm border border-gray-100 p-3 flex items-center gap-3 transform top-[16px] group-hover:translate-y-[60px] transition-transform duration-700 ease-in-out">
+                                <div class="w-8 h-8 rounded-full bg-purple-50 flex shrink-0 items-center justify-center text-purple-500"><i data-lucide="user" class="w-4 h-4"></i></div>
+                                <div class="flex-1">
+                                    <div class="w-1/3 h-2 bg-gray-300 rounded-full mb-2"></div>
+                                    <div class="w-full h-2 bg-gray-200 rounded-full"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- New Message (Slides in from top) -->
+                            <div class="absolute left-4 right-4 top-[16px] bg-white rounded-xl shadow-lg border border-blue-200 p-3 flex items-center gap-3 transform -translate-y-[100px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 ease-in-out z-20">
+                                <div class="w-8 h-8 rounded-full bg-green-100 flex shrink-0 items-center justify-center text-green-600"><i data-lucide="mail" class="w-4 h-4"></i></div>
+                                <div class="flex-1">
+                                    <div class="w-1/2 h-2.5 bg-gray-800 rounded-full mb-2"></div>
+                                    <div class="w-5/6 h-2 bg-gray-500 rounded-full"></div>
+                                </div>
+                                <div class="w-2 h-2 bg-blue-500 rounded-full shadow-[0_0_6px_rgba(59,130,246,0.8)] animate-pulse"></div>
+                            </div>
+
+                            <!-- Sending Paper Plane Icon -->
+                            <div class="absolute bottom-4 right-4 w-10 h-10 bg-black rounded-full flex items-center justify-center shadow-lg transform translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-500 z-30">
+                                <i data-lucide="send" class="w-4 h-4 text-white transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300 delay-700"></i>
+                            </div>
+
+                            <!-- Floating Abstract Elements -->
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-blue-400/10 rounded-full blur-[40px] pointer-events-none"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Payroll Engine -->
+                <div class="bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 min-h-[500px] flex flex-col justify-between group overflow-hidden border border-gray-100 relative">
+                    <div class="z-40 relative max-w-sm">
+                        <h3 class="text-2xl font-bold mb-4 text-gray-900">Payroll Engine</h3>
+                        <p class="text-gray-500 mb-8 leading-relaxed">
+                            Where financial data meets HR. Automatically calculate complex incentives, bonuses, overtime, and tax deductions based on precise attendance logs with zero manual data entry.
+                        </p>
+                        <button class="inline-flex items-center bg-black rounded-full text-white shadow-lg h-12 hover:bg-gray-800 transition-colors overflow-hidden">
+                            <div class="w-12 h-12 flex items-center justify-center shrink-0">
+                                <i data-lucide="arrow-right" class="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+                            </div>
+                            <div class="max-w-0 overflow-hidden group-hover:max-w-[150px] transition-all duration-500 ease-in-out">
+                                <span class="text-sm font-medium whitespace-nowrap pr-6 block opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">Explore Module</span>
+                            </div>
+                        </button>
+                    </div>
+                    <!-- Split layout animated graphic -->
+                    <div class="absolute top-0 right-0 w-[45%] h-full overflow-hidden border-l border-gray-200 bg-gradient-to-b from-emerald-50 to-teal-50/30">
+                        <div class="absolute inset-0 flex flex-col items-center justify-center p-6 transition-transform duration-700 ease-in-out group-hover:scale-105">
+                            
+                            <!-- Bouncing Icon -->
+                            <div class="w-14 h-14 bg-emerald-500 rounded-full flex items-center justify-center shadow-[0_8px_30px_rgba(16,185,129,0.4)] animate-bounce relative z-20 mb-6">
+                                <i data-lucide="circle-dollar-sign" class="w-7 h-7 text-white"></i>
+                            </div>
+
+                            <!-- Animated Payslips Stack -->
+                            <div class="relative w-full max-w-[160px] h-32">
+                                <!-- Payslip 1 -->
+                                <div class="absolute inset-0 bg-white rounded-xl shadow-lg border border-emerald-100 p-4 animate-payslip flex flex-col gap-3">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <div class="w-8 h-8 bg-emerald-50 text-emerald-500 rounded-lg flex items-center justify-center"><i data-lucide="file-text" class="w-4 h-4"></i></div>
+                                        <div class="w-12 h-4 bg-emerald-100 rounded-full"></div>
+                                    </div>
+                                    <div class="w-3/4 h-2 bg-gray-200 rounded-full"></div>
+                                    <div class="w-1/2 h-2 bg-gray-200 rounded-full"></div>
+                                    <!-- Scanning line -->
+                                    <div class="absolute top-0 left-0 w-full h-1 bg-emerald-400 opacity-60 blur-[2px] shadow-[0_0_8px_rgba(52,211,153,1)] animate-scan"></div>
+                                </div>
+
+                                <!-- Payslip 2 (delayed) -->
+                                <div class="absolute inset-0 bg-white rounded-xl shadow-lg border border-emerald-100 p-4 animate-payslip delay-1500 flex flex-col gap-3">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <div class="w-8 h-8 bg-teal-50 text-teal-500 rounded-lg flex items-center justify-center"><i data-lucide="calculator" class="w-4 h-4"></i></div>
+                                        <div class="w-12 h-4 bg-teal-100 rounded-full"></div>
+                                    </div>
+                                    <div class="w-3/4 h-2 bg-gray-200 rounded-full"></div>
+                                    <div class="w-1/2 h-2 bg-gray-200 rounded-full"></div>
+                                    <!-- Scanning line -->
+                                    <div class="absolute top-0 left-0 w-full h-1 bg-teal-400 opacity-60 blur-[2px] shadow-[0_0_8px_rgba(45,212,191,1)] animate-scan"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Abstract background circles -->
+                        <div class="absolute -top-10 -right-10 w-40 h-40 bg-emerald-400/10 rounded-full blur-2xl"></div>
+                        <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-teal-400/10 rounded-full blur-2xl"></div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Technical Assessment Portal -->
+                <div class="bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 min-h-[400px] flex flex-col md:flex-row items-center gap-8 group overflow-hidden border border-gray-100">
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold mb-3 text-gray-900">Technical Assessment Portal</h3>
+                        <p class="text-gray-500 mb-6 text-sm">
+                            Create customized skill assessments to evaluate candidate abilities. HR can set specific multiple-choice or written technical questions, and our platform automatically grades submissions in real-time.
+                        </p>
+                        <button class="inline-flex items-center bg-black rounded-full text-white shadow-lg h-10 hover:bg-gray-800 transition-colors overflow-hidden">
+                            <div class="w-10 h-10 flex items-center justify-center shrink-0">
+                                <i data-lucide="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+                            </div>
+                            <div class="max-w-0 overflow-hidden group-hover:max-w-[150px] transition-all duration-500 ease-in-out">
+                                <span class="text-sm font-medium whitespace-nowrap pr-5 block opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">Explore Portal</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="w-full md:w-1/2 h-56 rounded-2xl overflow-hidden shadow-sm relative bg-white border border-gray-100 flex items-center justify-center group-hover:shadow-md transition-shadow">
+                        <!-- Background Pattern -->
+                        <div class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
+                        
+                        <style>
+                            @keyframes slideUpTest {
+                                0% { transform: translateY(20px); opacity: 0; }
+                                10%, 90% { transform: translateY(0); opacity: 1; }
+                                100% { transform: translateY(-20px); opacity: 0; }
+                            }
+                            @keyframes selectOption {
+                                0%, 35% { background-color: white; border-color: #f3f4f6; color: #6b7280; }
+                                45%, 100% { background-color: #ecfdf5; border-color: #34d399; color: #059669; }
+                            }
+                            @keyframes checkPop {
+                                0%, 35% { transform: scale(0); opacity: 0; }
+                                45%, 100% { transform: scale(1); opacity: 1; }
+                            }
+                        </style>
+
+                        <!-- Test Interface -->
+                        <div class="w-64 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-gray-100 p-4 relative z-10 animate-[slideUpTest_6s_ease-in-out_infinite]">
+                            
+                            <!-- Timer & Header -->
+                            <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
+                                <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Question 1 of 10</span>
+                                <div class="flex items-center gap-1 text-rose-500 bg-rose-50 px-2 py-0.5 rounded text-[10px] font-semibold">
+                                    <i data-lucide="clock" class="w-3 h-3"></i> 14:59
+                                </div>
+                            </div>
+                            
+                            <!-- Question -->
+                            <p class="text-xs font-semibold text-gray-800 mb-4 leading-relaxed">
+                                What is the primary purpose of database indexing?
+                            </p>
+                            
+                            <!-- Options -->
+                            <div class="flex flex-col gap-2">
+                                <div class="w-full bg-white border border-gray-100 rounded-lg p-2 text-[10px] text-gray-500 flex items-center">
+                                    <div class="w-4 h-4 rounded-full border border-gray-200 mr-2 shrink-0"></div>
+                                    Reduces storage space
+                                </div>
+                                
+                                <div class="w-full rounded-lg p-2 text-[10px] flex items-center relative overflow-hidden animate-[selectOption_6s_ease-in-out_infinite] border bg-white border-gray-100 text-gray-500">
+                                    <!-- Selected Indicator (Radio Button) -->
+                                    <div class="w-4 h-4 rounded-full border mr-2 shrink-0 flex items-center justify-center border-gray-200 relative bg-white">
+                                        <div class="w-2 h-2 rounded-full bg-emerald-500 animate-[checkPop_6s_ease-in-out_infinite]"></div>
+                                    </div>
+                                    <span class="font-medium">Speeds up data retrieval</span>
+                                    <i data-lucide="check" class="w-3 h-3 text-emerald-500 absolute right-2 animate-[checkPop_6s_ease-in-out_infinite]"></i>
+                                </div>
+                                
+                                <div class="w-full bg-white border border-gray-100 rounded-lg p-2 text-[10px] text-gray-500 flex items-center">
+                                    <div class="w-4 h-4 rounded-full border border-gray-200 mr-2 shrink-0"></div>
+                                    Encrypts user data
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Floating decorative elements -->
+                        <div class="absolute top-4 left-4 w-10 h-10 bg-indigo-50 rounded-xl border border-indigo-100 shadow-sm flex items-center justify-center animate-[float-1_4s_ease-in-out_infinite] z-10">
+                            <i data-lucide="clipboard-list" class="w-5 h-5 text-indigo-600"></i>
+                        </div>
+                        <div class="absolute bottom-4 right-4 w-10 h-10 bg-emerald-50 rounded-xl border border-emerald-100 shadow-sm flex items-center justify-center animate-[float-2_5s_ease-in-out_infinite] z-10">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5: Built-in Team Chat -->
+                <div class="bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 min-h-[400px] flex flex-col md:flex-row-reverse items-center gap-8 group overflow-hidden border border-gray-100">
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold mb-3 text-gray-900">Built-in Team Chat</h3>
+                        <p class="text-gray-500 mb-6 text-sm">
+                            Keep your team connected with our built-in, open-source chat application. Enjoy a powerful, Slack-like communication experience natively integrated into your HR ecosystem—no third-party apps required.
+                        </p>
+                        <button class="inline-flex items-center bg-black rounded-full text-white shadow-lg h-10 hover:bg-gray-800 transition-colors overflow-hidden">
+                            <div class="w-10 h-10 flex items-center justify-center shrink-0">
+                                <i data-lucide="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+                            </div>
+                            <div class="max-w-0 overflow-hidden group-hover:max-w-[150px] transition-all duration-500 ease-in-out">
+                                <span class="text-sm font-medium whitespace-nowrap pr-5 block opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">Start Chatting</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="w-full md:w-1/2 h-56 rounded-2xl overflow-hidden shadow-sm relative bg-white border border-gray-100 flex items-stretch justify-start group-hover:shadow-md transition-shadow">
+                        
+                        <style>
+                            @keyframes slideUpMsg {
+                                0%, 20% { transform: translateY(10px); opacity: 0; }
+                                30%, 80% { transform: translateY(0); opacity: 1; }
+                                90%, 100% { transform: translateY(-10px); opacity: 0; }
+                            }
+                            @keyframes typingIndicator {
+                                0%, 100% { opacity: 0.2; }
+                                50% { opacity: 1; }
+                            }
+                        </style>
+
+                        <!-- Sidebar -->
+                        <div class="w-20 md:w-28 bg-gray-50 border-r border-gray-200 flex flex-col pt-4 pb-3 z-10 shadow-sm">
+                            <div class="text-[8px] font-bold text-gray-500 uppercase tracking-widest px-3 mb-3">Channels</div>
+                            <div class="text-[9px] text-gray-800 px-3 py-1.5 bg-blue-50 border-l-[3px] border-blue-500 font-medium flex items-center gap-1.5">
+                                <i data-lucide="hash" class="w-2.5 h-2.5"></i> general
+                            </div>
+                            <div class="text-[9px] text-gray-500 px-3 py-1.5 font-medium flex items-center gap-1.5 hover:bg-gray-100 hover:text-gray-800 transition-colors">
+                                <i data-lucide="hash" class="w-2.5 h-2.5"></i> hiring
+                            </div>
+                            <div class="text-[9px] text-gray-500 px-3 py-1.5 font-medium flex items-center gap-1.5 hover:bg-gray-100 hover:text-gray-800 transition-colors">
+                                <i data-lucide="hash" class="w-2.5 h-2.5"></i> engineering
+                            </div>
+                        </div>
+
+                        <!-- Main Chat Area -->
+                        <div class="flex-1 bg-white flex flex-col justify-end p-4 md:p-5 relative overflow-hidden">
+                            
+                            <!-- Header -->
+                            <div class="absolute top-0 left-0 w-full h-10 border-b border-gray-100 flex items-center px-4 bg-white/90 backdrop-blur-md z-10 shadow-sm">
+                                <span class="text-gray-900 text-xs font-bold flex items-center gap-1.5"><i data-lucide="hash" class="w-3.5 h-3.5 text-gray-400"></i> general</span>
+                            </div>
+
+                            <!-- Messages -->
+                            <div class="flex flex-col gap-4 relative z-0 mt-8">
+                                <!-- Message 1 -->
+                                <div class="flex gap-3">
+                                    <div class="w-7 h-7 rounded bg-emerald-500 shrink-0 flex items-center justify-center shadow-sm">
+                                        <span class="text-[10px] font-bold text-white">SJ</span>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-baseline gap-2 mb-0.5">
+                                            <span class="text-[11px] font-bold text-gray-900 tracking-wide">Sarah Jenkins</span>
+                                            <span class="text-[8px] text-gray-400">10:42 AM</span>
+                                        </div>
+                                        <div class="text-[10px] text-gray-700 leading-relaxed font-medium">
+                                            Has anyone reviewed the new candidate for the backend role?
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Message 2 (Animated) -->
+                                <div class="flex gap-3 animate-[slideUpMsg_6s_ease-in-out_infinite] opacity-0">
+                                    <div class="w-7 h-7 rounded bg-blue-500 shrink-0 flex items-center justify-center shadow-sm">
+                                        <span class="text-[10px] font-bold text-white">DC</span>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-baseline gap-2 mb-0.5">
+                                            <span class="text-[11px] font-bold text-gray-900 tracking-wide">David Chen</span>
+                                            <span class="text-[8px] text-gray-400">10:45 AM</span>
+                                        </div>
+                                        <div class="text-[10px] text-gray-800 leading-relaxed bg-gray-50 border border-gray-100 inline-block px-2.5 py-1.5 rounded-lg font-medium shadow-sm">
+                                            Yes, their assessment score was 95%. I'll schedule the interview now.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Chat Input -->
+                            <div class="w-full h-8 rounded-lg border border-gray-200 bg-white mt-4 flex items-center px-3 shadow-inner">
+                                <div class="w-1.5 h-4 border-r-2 border-gray-300 animate-[typingIndicator_1s_infinite]"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 (Full Width): The PXP Guarantee -->
+                <div class="md:col-span-2 bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 flex flex-col md:flex-row items-end gap-12 group overflow-hidden border border-gray-100 relative h-[400px]">
+                    <div class="flex-1 z-40 relative mb-4">
+                        <h3 class="text-3xl font-bold mb-4 text-gray-900">The PXP Guarantee</h3>
+                        <p class="text-gray-500 mb-8 leading-relaxed max-w-md">
+                            You simply outline your requirements, and our engineering team handles the heavy lifting. We deliver continuous customization, dedicated enterprise support, and seamless deployment to ensure our software molds perfectly to your operational DNA.
+                        </p>
+                        <button class="inline-flex items-center bg-black rounded-full text-white shadow-lg h-12 hover:bg-gray-800 transition-colors overflow-hidden">
+                            <div class="w-12 h-12 flex items-center justify-center shrink-0">
+                                <i data-lucide="arrow-right" class="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+                            </div>
+                            <div class="max-w-0 overflow-hidden group-hover:max-w-[150px] transition-all duration-500 ease-in-out">
+                                <span class="text-sm font-medium whitespace-nowrap pr-6 block opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">Our Guarantee</span>
+                            </div>
+                        </button>
+                    </div>
+                    
+                    <!-- Motion Graphics: Deployment Engine -->
+                    <div class="absolute bottom-0 right-0 w-[90%] md:w-[60%] h-[85%] md:h-[90%] rounded-tl-[32px] bg-white shadow-2xl border-t border-l border-gray-200 flex flex-col overflow-hidden group-hover:shadow-[0_0_60px_rgba(59,130,246,0.15)] transition-shadow duration-700">
+                        
+                        <!-- Window Header -->
+                        <div class="w-full h-10 bg-gray-50 flex items-center px-4 gap-2 border-b border-gray-200 shadow-sm relative z-10">
+                            <div class="w-3 h-3 rounded-full bg-rose-400"></div>
+                            <div class="w-3 h-3 rounded-full bg-amber-400"></div>
+                            <div class="w-3 h-3 rounded-full bg-emerald-400"></div>
+                            <div class="ml-3 text-[10px] text-gray-500 font-mono tracking-wider">PXP_Custom_Deployment_Engine</div>
+                        </div>
+                        
+                        <!-- Window Content -->
+                        <div class="flex-1 p-6 md:p-8 relative overflow-hidden flex flex-col justify-center">
+                            
+                            <style>
+                                @keyframes guaranteeProgress {
+                                    0% { width: 0%; }
+                                    50%, 100% { width: 100%; }
+                                }
+                                @keyframes guaranteeCodeType {
+                                    0%, 20% { opacity: 0; transform: translateY(10px); }
+                                    30%, 90% { opacity: 1; transform: translateY(0); }
+                                    100% { opacity: 0; transform: translateY(-10px); }
+                                }
+                                @keyframes spinSlow {
+                                    0% { transform: rotate(0deg); }
+                                    100% { transform: rotate(360deg); }
+                                }
+                            </style>
+                            
+                            <!-- Rotating Background Graphic -->
+                            <div class="absolute right-[-60px] top-[-60px] pointer-events-none">
+                                <i data-lucide="settings" class="w-96 h-96 text-gray-50 animate-[spinSlow_30s_linear_infinite]"></i>
+                            </div>
+                            
+                            <!-- Deployment Logs -->
+                            <div class="font-mono text-xs md:text-sm mb-8 relative z-10">
+                                <div class="text-blue-600 mb-3 font-semibold">> Analyzing client operational DNA...</div>
+                                <div class="text-gray-600 mb-2 flex items-center gap-2 animate-[guaranteeCodeType_6s_ease-in-out_infinite] opacity-0">
+                                    <div class="w-4 h-4 rounded bg-emerald-100 flex items-center justify-center shrink-0">
+                                        <i data-lucide="check" class="w-3 h-3 text-emerald-600"></i>
+                                    </div>
+                                    Requirements matched to architecture.
+                                </div>
+                                <div class="text-gray-600 flex items-center gap-2 animate-[guaranteeCodeType_6s_ease-in-out_infinite] [animation-delay:1.5s] opacity-0">
+                                    <div class="w-4 h-4 rounded bg-emerald-100 flex items-center justify-center shrink-0">
+                                        <i data-lucide="check" class="w-3 h-3 text-emerald-600"></i>
+                                    </div>
+                                    Custom workflows generated & deployed.
+                                </div>
+                            </div>
+                            
+                            <!-- Progress Bar -->
+                            <div class="mb-6 animate-[guaranteeCodeType_6s_ease-in-out_infinite] [animation-delay:2.5s] opacity-0 relative z-10">
+                                <div class="flex justify-between items-end mb-2">
+                                    <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">System Customization</span>
+                                    <span class="text-emerald-600 font-mono text-xs font-bold">100%</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-blue-500 to-emerald-400 rounded-full animate-[guaranteeProgress_6s_ease-in-out_infinite]"></div>
+                                </div>
+                            </div>
+
+                            <!-- Floating Support Badge -->
+                            <div class="absolute bottom-6 right-6 bg-emerald-50 border border-emerald-100 px-3 py-2 rounded-lg flex items-center gap-3 backdrop-blur-md shadow-lg z-20">
+                                <div class="relative w-2 h-2">
+                                    <div class="absolute inset-0 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
+                                    <div class="relative w-2 h-2 bg-emerald-500 rounded-full"></div>
+                                </div>
+                                <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Dedicated Support Online</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: Customization on Demand -->
+    <section id="services" class="px-2 md:px-4 lg:px-6 pb-24 bg-white">
+        <!-- Gray Container (Full Width) -->
+        <div class="w-full mx-auto bg-[#F3F5F7] rounded-[40px] md:rounded-[60px] p-8 md:p-12 lg:p-20 relative overflow-hidden">
+            
+            <div class="max-w-[1400px] mx-auto w-full">
+                <!-- Header -->
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <div class="relative inline-flex items-center justify-center p-[1.5px] rounded-full mb-6 overflow-hidden group cursor-default hover:scale-105 transition-transform duration-300 shadow-sm">
+                        <span class="absolute inset-[-1000%] animate-[spinSlow_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#c084fc_0%,#3b82f6_50%,#c084fc_100%)]"></span>
+                        <span class="relative bg-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-gray-800 w-full h-full flex items-center justify-center">
+                            Customization on Demand
+                        </span>
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6 leading-tight">
+                        Built for you. <br> Customized with you.
+                    </h2>
+                    <p class="text-gray-500 text-lg">
+                        Whether you need a brand-new operational tool or a modification to our existing software, we handle it rapidly.
+                    </p>
+                </div>
+
+                
+                <style>
+                    /* Looping Animations for Customization Section */
+                    @keyframes typeLineLoop { 0%, 10% { width: 0; } 40%, 90% { width: 100%; } 100% { width: 0; } }
+                    @keyframes typeLineShortLoop { 0%, 20% { width: 0; } 50%, 90% { width: 66%; } 100% { width: 0; } }
+                    @keyframes sendButtonPressLoop { 0%, 60% { transform: scale(1); background-color: #3b82f6; } 65% { transform: scale(0.9); } 70%, 90% { transform: scale(1); background-color: #22c55e; } 100% { transform: scale(1); background-color: #3b82f6; } }
+                    @keyframes flyAwayLoop { 0%, 70% { transform: rotate(45deg) translate(0, 0); opacity: 1; } 85%, 100% { transform: rotate(45deg) translate(20px, -20px); opacity: 0; } }
+                    @keyframes moveKanbanCardLoop { 0%, 10% { transform: translate(0, 0) rotate(0); z-index: 20; } 30% { transform: translate(20px, -20px) rotate(5deg); z-index: 30; } 60% { transform: translate(60px, -10px) rotate(-2deg); z-index: 30; } 80%, 95% { transform: translate(95px, 20px) rotate(0); z-index: 20; } 100% { transform: translate(0, 0) rotate(0); z-index: 20; } }
+                    @keyframes chatLoopLeft { 0%, 5% { opacity: 0; transform: translateX(-16px); } 15%, 95% { opacity: 1; transform: translateX(0); } 100% { opacity: 0; transform: translateX(-16px); } }
+                    @keyframes chatLoopRight { 0%, 30% { opacity: 0; transform: translateX(16px); } 40%, 95% { opacity: 1; transform: translateX(0); } 100% { opacity: 0; transform: translateX(16px); } }
+                    @keyframes typingIndicatorLoop { 0%, 50% { opacity: 0; transform: translateX(-16px); } 60%, 95% { opacity: 1; transform: translateX(0); } 100% { opacity: 0; transform: translateX(-16px); } }
+                    @keyframes codeLoop1 { 0%, 5% { opacity: 0; } 10%, 95% { opacity: 1; } 100% { opacity: 0; } }
+                    @keyframes codeLoop2 { 0%, 25% { opacity: 0; } 30%, 95% { opacity: 1; } 100% { opacity: 0; } }
+                    @keyframes fillProgressLoop { 0%, 40% { width: 0; } 60%, 95% { width: 100%; } 100% { width: 0; } }
+                    @keyframes codeLoop3 { 0%, 75% { opacity: 0; } 80%, 95% { opacity: 1; } 100% { opacity: 0; } }
+                    @keyframes rocketLaunchLoop { 0%, 40% { transform: translateY(48px) translateX(0); } 42% { transform: translateY(48px) translateX(-2px); } 44% { transform: translateY(48px) translateX(2px); } 46% { transform: translateY(48px) translateX(-2px); } 48% { transform: translateY(48px) translateX(2px); } 50% { transform: translateY(48px) translateX(0); } 70%, 90% { transform: translateY(-150px) translateX(0); } 100% { transform: translateY(48px) translateX(0); } }
+                    @keyframes fireFlickerLoop { 0%, 45% { transform: scaleY(1); opacity: 0; } 50%, 80% { transform: scaleY(1.2); opacity: 1; } 85%, 100% { transform: scaleY(1); opacity: 0; } }
+                    @keyframes smokeCloudLoop { 0%, 45% { transform: translateY(0) scale(0.8); opacity: 0; } 50% { transform: translateY(-5px) scale(1.2); opacity: 1; } 80%, 100% { transform: translateY(-10px) scale(1.5); opacity: 0; } }
+                </style>
+                <!-- 5 Steps Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-6 gap-8">
+                    
+                    <!-- Step 1: Request -->
+                    <div class="col-span-1 md:col-span-2 bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
+                        <div class="z-10 relative">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg mb-6">1</div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-900">Request Changes</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">
+                                Simply send us an email outlining the custom features or modifications your organization needs.
+                            </p>
+                        </div>
+                        
+                        <!-- Motion Graphic: Email -->
+                        <div class="absolute bottom-0 left-0 w-full h-[55%] bg-gradient-to-t from-blue-50 to-transparent flex items-end justify-center p-6">
+                            <div class="w-full max-w-[240px] bg-white rounded-t-xl shadow-lg border border-gray-200 flex flex-col overflow-hidden transform group-hover:-translate-y-4 transition-transform duration-500">
+                                <!-- Email Header -->
+                                <div class="bg-gray-50 border-b border-gray-100 px-3 py-2 flex items-center gap-2">
+                                    <div class="text-[9px] font-bold text-gray-400">To: build@pxp.com</div>
+                                </div>
+                                <!-- Email Body -->
+                                <div class="p-3 flex-1 flex flex-col gap-2 relative">
+                                    <!-- Typing Lines -->
+                                    <div class="w-0 h-2 bg-gray-200 rounded-full animate-[typeLineLoop_4s_steps(40,end)_infinite]"></div>
+                                    <div class="w-0 h-2 bg-gray-200 rounded-full animate-[typeLineLoop_4s_steps(40,end)_infinite]"></div>
+                                    <div class="w-0 h-2 bg-gray-200 rounded-full animate-[typeLineShortLoop_4s_steps(20,end)_infinite]"></div>
+                                    
+                                    <!-- Send Button -->
+                                    <div class="mt-auto w-12 h-4 bg-blue-500 rounded-md ml-auto flex items-center justify-center relative overflow-hidden animate-[sendButtonPressLoop_4s_linear_infinite]">
+                                        <div class="w-1.5 h-1.5 border-t border-r border-white transform rotate-45 animate-[flyAwayLoop_4s_ease-in-out_infinite]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Requirement Analysis (NEW) -->
+                    <div class="col-span-1 md:col-span-2 bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
+                        <div class="z-10 relative">
+                            <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg mb-6">2</div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-900">Requirement Analysis</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">
+                                Our analysts break down your request into actionable technical requirements and milestones.
+                            </p>
+                        </div>
+                        
+                        <!-- Motion Graphic: Kanban Board -->
+                        <div class="absolute bottom-0 left-0 w-full h-[55%] bg-gradient-to-t from-indigo-50 to-transparent flex items-end justify-center p-6">
+                            <div class="w-full h-[140px] bg-white rounded-xl shadow-lg border border-gray-200 p-3 grid grid-cols-2 gap-2 transform group-hover:-translate-y-2 transition-transform duration-500 relative">
+                                <!-- Column 1: Backlog -->
+                                <div class="bg-gray-50 rounded-lg p-2 flex flex-col gap-2 relative z-10">
+                                    <div class="text-[8px] font-bold text-gray-400 mb-1">BACKLOG</div>
+                                    <div class="w-full h-8 bg-white border border-gray-100 rounded-md shadow-sm"></div>
+                                    <!-- Moving Card -->
+                                    <div class="w-full h-8 bg-white border border-indigo-200 rounded-md shadow-md z-20 p-1.5 flex flex-col gap-1 animate-[moveKanbanCardLoop_4s_ease-in-out_infinite]">
+                                        <div class="w-1/2 h-1 bg-indigo-200 rounded-full"></div>
+                                        <div class="w-3/4 h-1 bg-gray-200 rounded-full"></div>
+                                    </div>
+                                </div>
+                                <!-- Column 2: In Progress -->
+                                <div class="bg-indigo-50/50 border border-indigo-100/50 rounded-lg p-2 flex flex-col gap-2 relative overflow-hidden">
+                                    <div class="text-[8px] font-bold text-indigo-400 mb-1">IN PROGRESS</div>
+                                    <!-- Target Area Pulse -->
+                                    <div class="absolute inset-x-2 top-8 h-8 rounded-md bg-indigo-100/0 border border-dashed border-indigo-300 opacity-0 animate-[pulseBorder_1.5s_infinite]"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Quick Alignment -->
+                    <div class="col-span-1 md:col-span-2 bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
+                        <div class="z-10 relative">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-lg mb-6">3</div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-900">Quick Alignment</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">
+                                We jump into a rapid consultation to align on the scope, budget, and delivery timeline.
+                            </p>
+                        </div>
+                        
+                        <!-- Motion Graphic: Chat -->
+                        <div class="absolute bottom-0 left-0 w-full h-[55%] bg-gradient-to-t from-purple-50 to-transparent flex flex-col justify-end p-6 gap-3">
+                            <!-- Left Bubble -->
+                            <div class="self-start max-w-[80%] bg-white border border-gray-200 rounded-2xl rounded-bl-sm p-3 shadow-sm animate-[chatLoopLeft_4s_ease-out_infinite]">
+                                <div class="w-24 h-2 bg-gray-200 rounded-full mb-1.5"></div>
+                                <div class="w-16 h-2 bg-gray-200 rounded-full"></div>
+                            </div>
+                            <!-- Right Bubble -->
+                            <div class="self-end max-w-[80%] bg-purple-500 text-white rounded-2xl rounded-br-sm p-3 shadow-md animate-[chatLoopRight_4s_ease-out_infinite]">
+                                <div class="w-20 h-2 bg-white/80 rounded-full mb-1.5"></div>
+                                <div class="w-12 h-2 bg-white/80 rounded-full"></div>
+                            </div>
+                            <!-- Typing Indicator -->
+                            <div class="self-start max-w-[80%] bg-white border border-gray-200 rounded-full px-3 py-2 shadow-sm animate-[typingIndicatorLoop_4s_ease-out_infinite] flex gap-1 items-center">
+                                <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
+                                <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-75"></div>
+                                <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-150"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Rapid Development (Bottom Row Centered) -->
+                    <div class="col-span-1 md:col-span-3 lg:col-span-2 lg:col-start-2 md:col-start-auto bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
+                        <div class="z-10 relative">
+                            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-lg mb-6">4</div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-900">Rapid Development</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">
+                                Our engineering team writes the code, utilizing our core platform components to speed up the build.
+                            </p>
+                        </div>
+                        
+                        <!-- Motion Graphic: Code Editor -->
+                        <div class="absolute bottom-0 left-0 w-full h-[55%] bg-gradient-to-t from-emerald-50 to-transparent flex items-end justify-center p-6">
+                            <div class="w-full h-[140px] bg-[#0F172A] rounded-xl shadow-2xl border border-gray-800 flex flex-col overflow-hidden relative transform group-hover:-translate-y-2 transition-transform duration-500">
+                                <!-- Editor Header -->
+                                <div class="bg-gray-900 px-3 py-2 flex gap-1.5 items-center">
+                                    <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                                    <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                    <div class="ml-2 text-[8px] text-gray-500 font-mono">build.sh</div>
+                                </div>
+                                <!-- Editor Body -->
+                                <div class="p-3 font-mono text-[8px] flex flex-col gap-1.5">
+                                    <div class="text-emerald-400 animate-[codeLoop1_4s_linear_infinite]">~ $ build custom_module</div>
+                                    <div class="text-blue-400 animate-[codeLoop2_4s_linear_infinite]">> Compiling dependencies...</div>
+                                    
+                                    <!-- Progress Bar -->
+                                    <div class="w-full h-1 bg-gray-800 rounded-full mt-1 overflow-hidden animate-[codeLoop2_4s_linear_infinite]">
+                                        <div class="h-full bg-blue-500 w-0 animate-[fillProgressLoop_4s_ease-out_infinite]"></div>
+                                    </div>
+                                    
+                                    <div class="text-emerald-400 animate-[codeLoop3_4s_linear_infinite]">> Build successful!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Seamless Deployment -->
+                    <div class="col-span-1 md:col-span-3 lg:col-span-2 md:col-start-auto bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
+                        <div class="z-10 relative">
+                            <div class="w-10 h-10 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center font-bold text-lg mb-6">5</div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-900">Seamless Deployment</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">
+                                We deliver the customized solution directly to your live workspace within 1 week to 1 month.
+                            </p>
+                        </div>
+                        
+                        <!-- Motion Graphic: Rocket Launch -->
+                        <div class="absolute bottom-0 left-0 w-full h-[55%] bg-gradient-to-t from-pink-50 to-transparent flex items-end justify-center p-6 overflow-hidden">
+                            <div class="relative w-full h-full flex items-end justify-center animate-none">
+                                <!-- Rocket Body -->
+                                <div class="w-12 h-24 bg-white border border-gray-200 rounded-t-full shadow-lg relative z-20 flex flex-col items-center pt-3 transform translate-y-12 animate-[rocketLaunchLoop_4s_ease-in_infinite]">
+                                    <!-- Window -->
+                                    <div class="w-4 h-4 rounded-full bg-pink-100 border border-pink-200 mb-2"></div>
+                                    <!-- Stripe -->
+                                    <div class="w-full h-2 bg-pink-500 mb-2"></div>
+                                    <!-- Fins -->
+                                    <div class="absolute -left-3 bottom-0 w-3 h-8 bg-gray-200 rounded-tl-lg skew-y-12"></div>
+                                    <div class="absolute -right-3 bottom-0 w-3 h-8 bg-gray-200 rounded-tr-lg -skew-y-12"></div>
+                                    <!-- Fire -->
+                                    <div class="absolute -bottom-6 w-6 h-8 bg-orange-500 rounded-b-full blur-[2px] opacity-0 animate-[fireFlickerLoop_4s_infinite]">
+                                        <div class="w-4 h-6 bg-yellow-400 mx-auto rounded-b-full blur-[1px]"></div>
+                                    </div>
+                                </div>
+                                <!-- Launch Pad -->
+                                <div class="absolute bottom-4 w-24 h-2 bg-gray-300 rounded-full z-10"></div>
+                                <!-- Smoke Clouds (Appear on launch) -->
+                                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-24 h-12 flex justify-center items-end animate-[smokeCloudLoop_4s_ease-out_infinite] z-30">
+                                    <div class="w-10 h-10 bg-white rounded-full blur-sm absolute -left-2 mix-blend-overlay"></div>
+                                    <div class="w-14 h-14 bg-white rounded-full blur-sm absolute mix-blend-overlay"></div>
+                                    <div class="w-10 h-10 bg-white rounded-full blur-sm absolute -right-2 mix-blend-overlay"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: What We Build -->
+    <section class="px-2 md:px-4 lg:px-6 pb-24 bg-white">
+        <div class="max-w-[1400px] mx-auto text-center w-full">
+            
+            <!-- Section Header -->
+            <div class="mb-16">
+                <div class="relative inline-flex items-center justify-center p-[1.5px] rounded-full mb-6 overflow-hidden group cursor-default hover:scale-105 transition-transform duration-300 shadow-sm">
+                    <span class="absolute inset-[-1000%] animate-[spinSlow_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#c084fc_0%,#3b82f6_50%,#c084fc_100%)]"></span>
+                    <span class="relative bg-[#F3F5F7] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-gray-800 w-full h-full flex items-center justify-center">
+                        What We Build
+                    </span>
+                </div>
+                <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">
+                    Any Software You Need.
+                </h2>
+                <p class="text-gray-500 max-w-2xl mx-auto text-lg">
+                    From static informational sites to complex, dynamic web applications, we build tailored solutions for your unique use case.
+                </p>
+            </div>
+
+            <!-- Cards Container -->
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 relative">
+                
+                <!-- Card 1: Static Sites -->
+                <div class="bg-[#d4f877] rounded-[32px] p-8 w-full md:w-1/3 h-[400px] flex flex-col items-center text-center relative group hover:scale-[1.02] transition-transform duration-500 overflow-hidden">
+                    <div class="z-10 relative flex flex-col items-center">
+                        <h3 class="text-xl font-bold mb-3 text-black">Static Websites</h3>
+                        <p class="text-black/60 text-sm leading-relaxed max-w-[220px]">
+                            Landing Pages, Portfolios, and Corporate Sites built for maximum speed and SEO.
+                        </p>
+                    </div>
+                    
+                    <!-- Motion Graphic: Building Webpage -->
+                    <div class="absolute bottom-0 left-0 w-full h-[55%] flex items-end justify-center p-6">
+                        <div class="w-full max-w-[200px] bg-white rounded-t-xl shadow-lg border border-black/10 overflow-hidden flex flex-col transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+                            <!-- Browser Bar -->
+                            <div class="h-4 border-b border-gray-100 flex items-center px-2 gap-1 bg-gray-50">
+                                <div class="w-1.5 h-1.5 rounded-full bg-red-400"></div>
+                                <div class="w-1.5 h-1.5 rounded-full bg-yellow-400"></div>
+                                <div class="w-1.5 h-1.5 rounded-full bg-green-400"></div>
+                            </div>
+                            <div class="p-3 flex flex-col gap-2 relative h-32">
+                                <!-- Skeleton Elements -->
+                                <div class="w-full h-8 bg-gray-100 rounded-md overflow-hidden relative">
+                                    <div class="absolute top-0 left-0 h-full bg-[#d4f877] w-0 group-hover:animate-[fillProgress_1s_ease-out_forwards_0.3s]"></div>
+                                </div>
+                                <div class="flex gap-2 h-10">
+                                    <div class="w-1/2 h-full bg-gray-100 rounded-md overflow-hidden relative">
+                                        <div class="absolute top-0 left-0 h-full w-full bg-gray-200 transform scale-y-0 origin-bottom group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_1s]"></div>
+                                    </div>
+                                    <div class="w-1/2 h-full bg-gray-100 rounded-md overflow-hidden relative">
+                                        <div class="absolute top-0 left-0 h-full w-full bg-gray-200 transform scale-y-0 origin-bottom group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_1.2s]"></div>
+                                    </div>
+                                </div>
+                                <div class="w-3/4 h-2 bg-gray-200 rounded-full opacity-0 group-hover:animate-[fadeIn_0.3s_ease-out_forwards_1.6s]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Animated Arrow 1 -->
+                <div class="z-20 -my-4 md:my-0 md:-mx-10 bg-white p-2 rounded-full shadow-lg border border-gray-100 flex-shrink-0 relative">
+                    <div class="w-10 h-10 bg-[#F3F5F7] rounded-full flex items-center justify-center">
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-black md:block hidden animate-arrow-flow"></i>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-black md:hidden block animate-arrow-flow-down"></i>
+                    </div>
+                </div>
+
+                <!-- Card 2: Dynamic Web Apps -->
+                <div class="bg-[#F3F5F7] rounded-[32px] p-8 w-full md:w-1/3 h-[400px] flex flex-col items-center text-center relative group hover:scale-[1.02] transition-transform duration-500 overflow-hidden">
+                    <div class="z-10 relative flex flex-col items-center">
+                        <h3 class="text-xl font-bold mb-3 text-black">Dynamic Web Apps</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed max-w-[220px]">
+                            E-Commerce platforms, SaaS tools, and Management Dashboards handling complex data.
+                        </p>
+                    </div>
+
+                    <!-- Motion Graphic: Dashboard -->
+                    <div class="absolute bottom-0 left-0 w-full h-[55%] flex items-end justify-center p-6">
+                        <div class="w-full max-w-[200px] bg-white rounded-t-xl shadow-lg border border-gray-200 overflow-hidden flex flex-col transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500 p-3 gap-3">
+                            <div class="w-full flex justify-between items-end h-16 border-b border-gray-100 pb-2 relative">
+                                <!-- Chart Bars -->
+                                <div class="w-3 bg-blue-100 rounded-t-sm h-4 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_0.3s]"></div>
+                                <div class="w-3 bg-blue-200 rounded-t-sm h-8 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_0.5s]"></div>
+                                <div class="w-3 bg-blue-300 rounded-t-sm h-6 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_0.7s]"></div>
+                                <div class="w-3 bg-blue-400 rounded-t-sm h-12 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_0.9s]"></div>
+                                <div class="w-3 bg-blue-500 rounded-t-sm h-10 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_1.1s]"></div>
+                                <!-- Rising Line -->
+                                <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                    <path d="M0,80 L25,60 L50,70 L75,20 L100,30" fill="none" stroke="#3b82f6" stroke-width="3" class="stroke-dasharray-[150] stroke-dashoffset-[150] group-hover:animate-[drawPath_1s_ease-out_forwards_1.3s]"></path>
+                                    <circle cx="75" cy="20" r="3" fill="#3b82f6" class="opacity-0 group-hover:animate-[fadeIn_0.3s_forwards_2.3s]"></circle>
+                                </svg>
+                            </div>
+                            <div class="flex gap-2">
+                                <div class="w-1/2 h-8 bg-gray-50 rounded-md border border-gray-100"></div>
+                                <div class="w-1/2 h-8 bg-gray-50 rounded-md border border-gray-100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Animated Arrow 2 -->
+                <div class="z-20 -my-4 md:my-0 md:-mx-10 bg-white p-2 rounded-full shadow-lg border border-gray-100 flex-shrink-0 relative">
+                    <div class="w-10 h-10 bg-[#F3F5F7] rounded-full flex items-center justify-center">
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-black md:block hidden animate-arrow-flow"></i>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-black md:hidden block animate-arrow-flow-down"></i>
+                    </div>
+                </div>
+
+                <!-- Card 3: Custom Tools -->
+                <div class="bg-[#d4f877] rounded-[32px] p-8 w-full md:w-1/3 h-[400px] flex flex-col items-center text-center relative group hover:scale-[1.02] transition-transform duration-500 overflow-hidden">
+                    <div class="z-10 relative flex flex-col items-center">
+                        <h3 class="text-xl font-bold mb-3 text-black">Custom Tools & APIs</h3>
+                        <p class="text-black/60 text-sm leading-relaxed max-w-[220px]">
+                            Bespoke internal CRMs, automated scripts, and robust API integrations.
+                        </p>
+                    </div>
+
+                    <!-- Motion Graphic: APIs / Server -->
+                    <div class="absolute bottom-0 left-0 w-full h-[55%] flex items-end justify-center p-6">
+                        <div class="w-full max-w-[200px] h-32 flex items-center justify-center relative">
+                            <!-- Server Stack -->
+                            <div class="w-20 flex flex-col gap-1.5 absolute left-4 bottom-2">
+                                <div class="w-full h-4 bg-white rounded-sm shadow-sm border border-black/10 relative overflow-hidden group-hover:-translate-y-1 transition-transform duration-300">
+                                    <div class="absolute left-1 top-1.5 w-1 h-1 rounded-full bg-green-500 group-hover:animate-[pulseOpacity_1s_infinite]"></div>
+                                </div>
+                                <div class="w-full h-4 bg-white rounded-sm shadow-sm border border-black/10 relative overflow-hidden group-hover:-translate-y-1 transition-transform duration-300 delay-75">
+                                    <div class="absolute left-1 top-1.5 w-1 h-1 rounded-full bg-green-500 group-hover:animate-[pulseOpacity_1s_infinite_0.2s]"></div>
+                                </div>
+                                <div class="w-full h-4 bg-white rounded-sm shadow-sm border border-black/10 relative overflow-hidden group-hover:-translate-y-1 transition-transform duration-300 delay-150">
+                                    <div class="absolute left-1 top-1.5 w-1 h-1 rounded-full bg-green-500 group-hover:animate-[pulseOpacity_1s_infinite_0.4s]"></div>
+                                </div>
+                            </div>
+                            <!-- API Gears -->
+                            <div class="absolute right-6 top-4 flex relative">
+                                <i data-lucide="settings" class="w-10 h-10 text-black/80 group-hover:animate-[spinSlow_3s_linear_infinite]"></i>
+                                <i data-lucide="settings" class="w-6 h-6 text-black/60 absolute -bottom-2 -left-3 group-hover:animate-[spinSlowReverse_3s_linear_infinite]"></i>
+                            </div>
+                            <!-- Data Flow Line -->
+                            <div class="absolute bottom-6 left-20 w-12 h-0.5 bg-black/20 overflow-hidden">
+                                <div class="w-4 h-full bg-black transform -translate-x-full group-hover:animate-[flowRight_1s_linear_infinite]"></div>
+                            </div>
+                            <div class="absolute bottom-10 left-20 w-12 h-0.5 bg-black/20 overflow-hidden">
+                                <div class="w-4 h-full bg-black transform translate-x-[48px] group-hover:animate-[flowLeft_1s_linear_infinite]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: Enterprise Security -->
+    <section class="px-2 md:px-4 lg:px-6 pb-24 bg-white">
+        <!-- Black Container -->
+        <div class="w-full mx-auto bg-[#131313] rounded-[40px] md:rounded-[60px] p-8 md:p-12 lg:p-20 relative overflow-hidden text-white shadow-lg border border-white/5">
+            <div class="max-w-[1400px] mx-auto w-full flex flex-col md:flex-row items-center gap-16">
+            
+            <!-- Left: Text & Features -->
+            <div class="w-full md:w-1/2 z-10 relative">
+                <div class="relative inline-flex items-center justify-center p-[1.5px] rounded-full mb-6 overflow-hidden group cursor-default hover:scale-105 transition-transform duration-300 shadow-sm">
+                    <span class="absolute inset-[-1000%] animate-[spinSlow_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#4ade80_0%,#3b82f6_50%,#4ade80_100%)]"></span>
+                    <span class="relative bg-[#131313] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-white w-full h-full flex items-center justify-center">
+                        Enterprise Security
+                    </span>
+                </div>
+                <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-6 leading-tight">
+                    Bank-Grade Security & <br> Data Integrity.
+                </h2>
+                <p class="text-gray-400 text-lg mb-10 max-w-lg">
+                    We build your software with security from the ground up. Your data is protected by industry-leading protocols at every layer.
+                </p>
+
+                <!-- Features Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="flex flex-col gap-2">
+                        <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 mb-2">
+                            <i data-lucide="lock" class="w-5 h-5"></i>
+                        </div>
+                        <h4 class="font-bold text-white">End-to-End Encryption</h4>
+                        <p class="text-sm text-gray-400">All data is encrypted in transit (TLS 1.3) and at rest (AES-256).</p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 mb-2">
+                            <i data-lucide="database" class="w-5 h-5"></i>
+                        </div>
+                        <h4 class="font-bold text-white">Data Integrity & Backups</h4>
+                        <p class="text-sm text-gray-400">Automated hourly backups with multi-region redundancy.</p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 mb-2">
+                            <i data-lucide="users" class="w-5 h-5"></i>
+                        </div>
+                        <h4 class="font-bold text-white">Role-based Access</h4>
+                        <p class="text-sm text-gray-400">Granular RBAC and mandatory Multi-Factor Authentication (MFA).</p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <div class="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-400 mb-2">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        </div>
+                        <h4 class="font-bold text-white">Compliance Ready</h4>
+                        <p class="text-sm text-gray-400">Architecture built to align with GDPR, SOC2, and HIPAA.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Motion Graphic Shield -->
+            <div class="w-full md:w-1/2 flex items-center justify-center relative min-h-[400px]">
+                <style>
+                    @keyframes laserScan {
+                        0% { top: 0%; opacity: 0; }
+                        10% { opacity: 1; }
+                        90% { opacity: 1; }
+                        100% { top: 100%; opacity: 0; }
+                    }
+                    @keyframes orbitRing1 {
+                        0% { transform: rotateX(70deg) rotateY(20deg) rotateZ(0deg); }
+                        100% { transform: rotateX(70deg) rotateY(20deg) rotateZ(360deg); }
+                    }
+                    @keyframes orbitRing2 {
+                        0% { transform: rotateX(70deg) rotateY(-20deg) rotateZ(0deg); }
+                        100% { transform: rotateX(70deg) rotateY(-20deg) rotateZ(-360deg); }
+                    }
+                    @keyframes floatShield {
+                        0%, 100% { transform: translateY(0px); }
+                        50% { transform: translateY(-15px); }
+                    }
+                    @keyframes pulseShield {
+                        0%, 100% { filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.4)); }
+                        50% { filter: drop-shadow(0 0 25px rgba(34, 197, 94, 0.8)); }
+                    }
+                    @keyframes drawPathLoop {
+                        0%, 10% { stroke-dashoffset: 100; opacity: 0; }
+                        20%, 90% { stroke-dashoffset: 0; opacity: 1; }
+                        100% { stroke-dashoffset: 0; opacity: 0; }
+                    }
+                </style>
+
+                <!-- Background Glow -->
+                <div class="absolute w-64 h-64 bg-green-500/20 rounded-full blur-[100px] animate-[pulseOpacity_4s_infinite]"></div>
+                
+                <!-- Shield Container -->
+                <div class="relative w-72 h-72 flex items-center justify-center z-10 animate-[floatShield_4s_ease-in-out_infinite]">
+                    
+                    <!-- 3D Orbiting Rings -->
+                    <div class="absolute inset-0 flex items-center justify-center animate-[orbitRing1_8s_linear_infinite]" style="transform-style: preserve-3d;">
+                        <div class="w-64 h-64 border border-green-500/30 rounded-full border-dashed relative">
+                            <div class="w-3 h-3 bg-green-400 rounded-full absolute -top-1.5 left-1/2 -translate-x-1/2 shadow-[0_0_10px_#4ade80]"></div>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center animate-[orbitRing2_8s_linear_infinite_reverse]" style="transform-style: preserve-3d;">
+                        <div class="w-64 h-64 border border-blue-500/30 rounded-full border-dashed relative">
+                            <div class="w-3 h-3 bg-blue-400 rounded-full absolute -bottom-1.5 left-1/2 -translate-x-1/2 shadow-[0_0_10px_#60a5fa]"></div>
+                        </div>
+                    </div>
+
+                    <!-- Glowing Proper Shield -->
+                    <div class="relative w-40 h-48 flex items-center justify-center animate-[pulseShield_3s_ease-in-out_infinite] overflow-hidden">
+                        <!-- Shield Base -->
+                        <svg viewBox="0 0 24 24" class="w-full h-full text-green-500/10 fill-current relative z-10">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        
+                        <!-- Drawing Outline -->
+                        <svg viewBox="0 0 24 24" class="w-full h-full text-green-400 absolute inset-0 z-20 pointer-events-none" fill="none" stroke="currentColor" stroke-width="0.3">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" pathLength="100" style="stroke-dasharray: 100; stroke-dashoffset: 100; animation: drawPathLoop 4s ease-in-out infinite;"></path>
+                        </svg>
+
+                        <!-- Laser Scanner -->
+                        <div class="absolute left-0 right-0 h-[1px] bg-green-400 z-30 shadow-[0_0_8px_#4ade80]" style="animation: laserScan 3s linear infinite;"></div>
+
+                        <!-- Inner Icon -->
+                        <div class="absolute inset-0 flex items-center justify-center z-30 opacity-60">
+                            <i data-lucide="shield-check" class="w-12 h-12 text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: Testimonials -->
+    <section class="px-2 md:px-4 lg:px-6 pb-32 bg-white">
+        <div class="max-w-[1400px] mx-auto">
+            
+            <!-- Header -->
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <div class="relative inline-flex items-center justify-center p-[1.5px] rounded-full mb-6 overflow-hidden group cursor-default hover:scale-105 transition-transform duration-300 shadow-sm">
+                    <span class="absolute inset-[-1000%] animate-[spinSlow_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#c084fc_0%,#3b82f6_50%,#c084fc_100%)]"></span>
+                    <span class="relative bg-[#F3F5F7] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-gray-800 w-full h-full flex items-center justify-center">
+                        Testimonials
+                    </span>
+                </div>
+                <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
+                    User stories: find out why so many <br> people love PeopleXplus!
+                </h2>
+            </div>
+
+            <!-- Testimonials Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Card 1 -->
+                <div class="bg-white rounded-[32px] p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex gap-1 text-purple-600">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <div class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center">
+                            <i data-lucide="command" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-8">
+                        "As a small business owner, your service has been a lifesaver in managing payroll and optimizing financial strategies. It has truly exceeded my expectations."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://placehold.co/100x100/333/FFF?text=DS" alt="User" class="w-10 h-10 rounded-full object-cover">
+                        <span class="font-bold text-sm text-gray-900">Darrell Steward</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-[32px] p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex gap-1 text-purple-600">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <div class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center">
+                            <i data-lucide="command" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-8">
+                        "The automated tax filing feature is absolutely incredible! I've been able to process compliance for my international team in minutes instead of hours."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://placehold.co/100x100/444/FFF?text=SJ" alt="User" class="w-10 h-10 rounded-full object-cover">
+                        <span class="font-bold text-sm text-gray-900">Sarah Johnson</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-[32px] p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex gap-1 text-purple-600">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <div class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center">
+                            <i data-lucide="command" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-8">
+                        "This technology has revolutionized our HR operations. The quality is so realistic that our employees can't tell the difference from our internal admin team."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://placehold.co/100x100/555/FFF?text=MC" alt="User" class="w-10 h-10 rounded-full object-cover">
+                        <span class="font-bold text-sm text-gray-900">Michael Chen</span>
+                    </div>
+                </div>
+                
+                 <!-- Card 4 -->
+                <div class="bg-white rounded-[32px] p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex gap-1 text-purple-600">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <div class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center">
+                            <i data-lucide="command" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-8">
+                        "As a global manager, this tool has been invaluable for creating contracts in multiple languages. My team loves the transparency!"
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://placehold.co/100x100/666/FFF?text=ER" alt="User" class="w-10 h-10 rounded-full object-cover">
+                        <span class="font-bold text-sm text-gray-900">Emma Rodriguez</span>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="bg-white rounded-[32px] p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex gap-1 text-purple-600">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <div class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center">
+                            <i data-lucide="command" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-8">
+                        "The accuracy and speed of report generation is mind-blowing. We've reduced our audit preparation time by 80% while maintaining exceptional quality standards."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://placehold.co/100x100/777/FFF?text=DK" alt="User" class="w-10 h-10 rounded-full object-cover">
+                        <span class="font-bold text-sm text-gray-900">David Kim</span>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="bg-white rounded-[32px] p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex gap-1 text-purple-600">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <div class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center">
+                            <i data-lucide="command" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-8">
+                        "This platform has transformed how we handle benefits. The integration is so seamless that our employees are completely engaged throughout the entire experience."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://placehold.co/100x100/888/FFF?text=LT" alt="User" class="w-10 h-10 rounded-full object-cover">
+                        <span class="font-bold text-sm text-gray-900">Lisa Thompson</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: FAQ Accordion -->
+    <section class="px-2 md:px-4 lg:px-6 pb-32 bg-white">
+        <!-- Gray Container -->
+        <div class="w-full mx-auto bg-[#F3F5F7] rounded-[40px] md:rounded-[60px] p-8 md:p-20 relative overflow-hidden">
+            <div class="max-w-3xl mx-auto">
+                
+                <!-- Header -->
+                <div class="text-center mb-16">
+                    <div class="relative inline-flex items-center justify-center p-[1.5px] rounded-full mb-6 overflow-hidden group cursor-default hover:scale-105 transition-transform duration-300 shadow-sm">
+                        <span class="absolute inset-[-1000%] animate-[spinSlow_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#c084fc_0%,#3b82f6_50%,#c084fc_100%)]"></span>
+                        <span class="relative bg-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-gray-800 w-full h-full flex items-center justify-center">
+                            FAQ
+                        </span>
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6">
+                        All the essential information you <br> need to understand.
+                    </h2>
+                    <p class="text-gray-500 text-lg">
+                        By offering concise and informative responses, this section helps users find solutions without the need to contact customer support, saving time.
+                    </p>
+                </div>
+
+                <!-- Accordion Items -->
+                <div class="space-y-4">
+                    <!-- Item 1 -->
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden transition-all duration-300">
+                        <button class="faq-trigger w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:text-black transition-colors">
+                            <span>What is the primary role of a business agency?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform duration-300 transform"></i>
+                        </button>
+                        <div class="faq-content h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0">
+                            <div class="p-6 pt-0 text-gray-500 text-sm leading-relaxed border-t border-gray-100 mt-2">
+                                A business agency acts as a strategic partner, helping companies identify growth opportunities, optimize operations, and execute marketing strategies to achieve tangible business results.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden transition-all duration-300">
+                        <button class="faq-trigger w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:text-black transition-colors">
+                            <span>What kinds of services should I anticipate from a business agency?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform duration-300 transform"></i>
+                        </button>
+                        <div class="faq-content h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0">
+                            <div class="p-6 pt-0 text-gray-500 text-sm leading-relaxed border-t border-gray-100 mt-2">
+                                Expect a comprehensive suite of services including digital marketing, brand development, financial consulting, HR management, and IT infrastructure support tailored to your specific industry.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden transition-all duration-300">
+                        <button class="faq-trigger w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:text-black transition-colors">
+                            <span>How often should I consider updating my website?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform duration-300 transform"></i>
+                        </button>
+                        <div class="faq-content h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0">
+                            <div class="p-6 pt-0 text-gray-500 text-sm leading-relaxed border-t border-gray-100 mt-2">
+                                It's generally recommended to refresh your website design every 2-3 years to stay current with design trends and technology, though content updates should happen much more frequently.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 (Expanded by default logic handled in JS) -->
+                    <div class="faq-item bg-white rounded-2xl overflow-hidden transition-all duration-300">
+                        <button class="faq-trigger w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:text-black transition-colors">
+                            <span>How often is it recommended to refresh my website?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform duration-300 transform"></i>
+                        </button>
+                        <div class="faq-content h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0">
+                            <div class="p-6 pt-0 text-gray-500 text-sm leading-relaxed border-t border-gray-100 mt-2">
+                                When collaborating with a business agency, you can generally expect an extensive array of services designed to not only support your current operations but also to foster growth and innovation within your business. These services often include strategic planning, marketing solutions, financial consulting, and operational improvements.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: Footer -->
+    <footer class="bg-[#0a0a0a] text-white pt-24 pb-12 relative overflow-hidden">
+        <!-- Top Blue Glow Effect -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-20">
+                
+                <!-- Brand Column -->
+                <div class="lg:col-span-4">
+                    <div class="flex items-center gap-2 mb-6">
+                        <img src="./pxp-logo.png" alt="People X Plus Logo" class="h-10 w-auto filter invert brightness-0">
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 max-w-xs">
+                        Ready to upgrade your company's operations? Let's discuss your custom software requirements today.
+                    </p>
+                    <div class="flex gap-6">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="dribbble" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+
+                <!-- Spacer to push columns to right -->
+                <div class="hidden lg:block lg:col-span-2"></div>
+
+                <!-- Links Column 1: Company -->
+                <div class="lg:col-span-2">
+                    <h4 class="font-medium text-lg mb-6">Company</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Career</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Case Studies</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Links Column 2: Support -->
+                <div class="lg:col-span-2">
+                    <h4 class="font-medium text-lg mb-6">Support</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Tutorial</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
+                    </ul>
+                </div>
+
+                <!-- Links Column 3: Legal -->
+                <div class="lg:col-span-2">
+                    <h4 class="font-medium text-lg mb-6">Legal Policies</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Terms & Conditions</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Refund Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">GDPR Compliance</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Affiliate Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright Bar -->
+            <div class="border-t border-white/10 pt-8 text-center">
+                <p class="text-gray-500 text-sm">
+                    Copyright © 2024 PeopleXplus – smart application for modern business
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Additional Styles for Arrow Animation & Customization Motion Graphics -->
+    <style>
+        @keyframes flowRight {
+            0%, 100% { transform: translateX(-2px); opacity: 0.6; }
+            50% { transform: translateX(3px); opacity: 1; }
+        }
+        @keyframes flowDown {
+            0%, 100% { transform: translateY(-2px); opacity: 0.6; }
+            50% { transform: translateY(3px); opacity: 1; }
+        }
+        .animate-arrow-flow {
+            animation: flowRight 1.5s ease-in-out infinite;
+        }
+        .animate-arrow-flow-down {
+            animation: flowDown 1.5s ease-in-out infinite;
+        }
+
+        /* Customization Process Animations */
+        @keyframes typeLine {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes typeLineShort {
+            from { width: 0; }
+            to { width: 66%; }
+        }
+        @keyframes sendButtonPress {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.9); }
+            100% { transform: scale(1); background-color: #22c55e; } /* Turns green */
+        }
+        @keyframes flyAway {
+            0% { transform: rotate(45deg) translate(0, 0); opacity: 1; }
+            100% { transform: rotate(45deg) translate(20px, -20px); opacity: 0; }
+        }
+        @keyframes pulseOpacity {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+        @keyframes fillProgress {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes moveKanbanCard {
+            0% { transform: translate(0, 0) rotate(0); z-index: 20; }
+            30% { transform: translate(20px, -20px) rotate(5deg); z-index: 30; }
+            70% { transform: translate(60px, -10px) rotate(-2deg); z-index: 30; }
+            100% { transform: translate(95px, 20px) rotate(0); z-index: 20; }
+        }
+        @keyframes pulseBorder {
+            0%, 100% { opacity: 0; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes rocketShake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-1px); }
+            40%, 80% { transform: translateX(1px); }
+        }
+        @keyframes rocketLaunch {
+            0% { transform: translateY(48px); }
+            10% { transform: translateY(48px); }
+            100% { transform: translateY(-150px); }
+        }
+        @keyframes fireFlicker {
+            0%, 100% { transform: scaleY(1); opacity: 0.8; }
+            50% { transform: scaleY(1.2); opacity: 1; }
+        }
+        @keyframes smokeCloud {
+            0% { transform: translateY(0) scale(0.8); opacity: 0; }
+            20% { transform: translateY(-5px) scale(1.2); opacity: 1; }
+            100% { transform: translateY(-10px) scale(1.5); opacity: 0; }
+        }
+        @keyframes scaleYIn {
+            from { transform: scaleY(0); }
+            to { transform: scaleY(1); }
+        }
+        @keyframes drawPath {
+            from { stroke-dashoffset: 150; }
+            to { stroke-dashoffset: 0; }
+        }
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes spinSlowReverse {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(-360deg); }
+        }
+        @keyframes flowLeft {
+            0%, 100% { transform: translateX(48px); opacity: 0.6; }
+            50% { transform: translateX(43px); opacity: 1; }
+        }
+        @keyframes drawShield {
+            from { stroke-dashoffset: 300; }
+            to { stroke-dashoffset: 0; }
+        }
+        @keyframes lockClick {
+            0% { transform: translateY(8px); }
+            70% { transform: translateY(0); }
+            100% { transform: translateY(2px); }
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Initialize Lenis Smooth Scroll
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        })
+
+        // SCROLL REVEAL TEXT LOGIC
+        const textElement = document.getElementById('scroll-reveal-text');
+        const textContent = textElement.innerText;
+        textElement.innerHTML = textContent.split(' ').map(word => `<span class="reveal-word">${word}</span>`).join(' ');
+        const words = document.querySelectorAll('.reveal-word');
+
+        function animateScrollText() {
+            const triggerPoint = window.innerHeight * 0.75;
+            words.forEach((word) => {
+                const rect = word.getBoundingClientRect();
+                if (rect.top < triggerPoint) {
+                    const distance = triggerPoint - rect.top;
+                    let opacity = 0.2 + (distance / 150); 
+                    if (opacity > 1) opacity = 1;
+                    if (opacity < 0.2) opacity = 0.2;
+                    word.style.opacity = opacity;
+                } else {
+                    word.style.opacity = 0.2;
+                }
+            });
+        }
+
+
+        function raf(time) {
+            lenis.raf(time)
+            animateScrollText(); 
+            requestAnimationFrame(raf)
+        }
+        requestAnimationFrame(raf)
+
+        // Handle Anchor Links for Lenis Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId !== '#') {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        lenis.scrollTo(targetElement, {
+                            offset: -80, // Accounts for the floating navbar
+                            duration: 1.2
+                        });
+                    }
+                }
+            });
+        });
+
+        // General Fade Up Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
+
+        // FAQ ACCORDION LOGIC
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const trigger = item.querySelector('.faq-trigger');
+            const content = item.querySelector('.faq-content');
+            
+            trigger.addEventListener('click', () => {
+                // IMPORTANT: Select the icon *inside* the click handler because Lucide replaces <i> with <svg>
+                // This ensures we get the SVG that currently exists in the DOM
+                const icon = trigger.querySelector('svg'); 
+                const isOpen = item.classList.contains('active');
+
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                        otherItem.querySelector('.faq-content').style.height = '0';
+                        otherItem.querySelector('.faq-content').style.opacity = '0';
+                        // Also reset other icons
+                        const otherIcon = otherItem.querySelector('.faq-trigger svg');
+                        if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Toggle current item
+                if (!isOpen) {
+                    item.classList.add('active');
+                    content.style.height = content.scrollHeight + 'px';
+                    content.style.opacity = '1';
+                    if (icon) icon.style.transform = 'rotate(180deg)';
+                } else {
+                    item.classList.remove('active');
+                    content.style.height = '0';
+                    content.style.opacity = '0';
+                    if (icon) icon.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+        
+        // Open the last FAQ item by default (optional, matches screenshot style)
+        // setTimeout(() => { faqItems[3].querySelector('.faq-trigger').click(); }, 500);
+
+    </script>
+    <!-- Inline Script for Interactivity -->
+    <script>
+        // Hero Dashboard Tab Switcher
+        function switchHeroTab(tabId) {
+            // Reset tabs
+            const tabs = document.querySelectorAll('.hero-sidebar-tab');
+            tabs.forEach(t => {
+                t.classList.remove('bg-white', 'shadow-sm', 'text-gray-700');
+                t.classList.add('hover:bg-gray-100', 'text-gray-500');
+            });
+            
+            // Set active tab
+            const activeTab = document.getElementById('tab-' + tabId);
+            if(activeTab) {
+                activeTab.classList.add('bg-white', 'shadow-sm', 'text-gray-700');
+                activeTab.classList.remove('hover:bg-gray-100', 'text-gray-500');
+            }
+            
+            // Reset views
+            const views = document.querySelectorAll('.hero-tab-view');
+            views.forEach(v => {
+                v.classList.remove('opacity-100', 'z-10', 'active');
+                v.classList.add('opacity-0', 'z-0', 'pointer-events-none');
+            });
+            
+            // Set active view
+            const activeView = document.getElementById('view-' + tabId);
+            if(activeView) {
+                activeView.classList.remove('opacity-0', 'z-0', 'pointer-events-none');
+                activeView.classList.add('opacity-100', 'z-10');
+                
+                // Trigger animation state after short delay
+                setTimeout(() => {
+                    activeView.classList.add('active');
+                }, 50);
+            }
+            
+            // Handle floating cursor specifically
+            const cursor = document.getElementById('hero-cursor');
+            if(cursor) {
+                if(tabId === 'dashboard') {
+                    cursor.style.display = '';
+                } else {
+                    cursor.style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
