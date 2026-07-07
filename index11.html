@@ -1085,7 +1085,7 @@
     </section>
 
     <!-- NEW SECTION: Platform Experience (Interactive Reveal) -->
-    <section class="px-2 md:px-4 lg:px-6 pb-32 bg-white">
+    <section class="px-2 md:px-4 lg:px-6 pb-16 md:pb-32 bg-white">
         <div class="max-w-[1400px] mx-auto">
 
             <!-- Header -->
@@ -1242,6 +1242,8 @@
 
     <!-- NEW SECTION: Detailed Services Grid (Zoom Effect on Hover) -->
     <section id="services" class="px-2 md:px-4 lg:px-6 pb-32 bg-white">
+        <!-- Mobile Divider -->
+        <hr class="block md:hidden border-gray-200 mb-16 mx-2" />
         <div class="max-w-[1400px] mx-auto">
 
             <!-- Header -->
@@ -1265,29 +1267,93 @@
             </div>
 
             <!-- Bento Grid Layout -->
+            <style>
+                .service-card-reveal {
+                    opacity: 0;
+                    transform: translateY(40px);
+                    transition: all 1000ms ease-out;
+                }
+                .service-card-reveal.active {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
+                /* Auto-play motion graphics on mobile continuously in a loop */
+                @media (max-width: 767px) {
+                    /* Buttons and Generic */
+                    .service-card-reveal.simulated-hover .group-hover\:translate-x-1 { transform: translateX(0.25rem) !important; }
+                    .service-card-reveal.simulated-hover .group-hover\:max-w-\[150px\] { max-width: 150px !important; }
+                    .service-card-reveal.simulated-hover .group-hover\:opacity-100 { opacity: 1 !important; }
+                    .service-card-reveal.simulated-hover .group-hover\:-translate-y-1 { transform: translateY(-0.25rem) !important; }
+                    .service-card-reveal.simulated-hover .group-hover\:scale-110 { transform: scale(1.1) !important; }
+                    .service-card-reveal.simulated-hover .group-hover\:-translate-y-2 { transform: translateY(-0.5rem) !important; }
+                    .service-card-reveal.simulated-hover .group-hover\:translate-x-0 { transform: translateX(0) !important; }
+                    
+                    /* Card 1 Animated Bars */
+                    .service-card-reveal.simulated-hover .group-hover\:h-\[70\%\] { height: 70% !important; }
+                    .service-card-reveal.simulated-hover .group-hover\:h-\[90\%\] { height: 90% !important; }
+                    .service-card-reveal.simulated-hover .group-hover\:h-\[60\%\] { height: 60% !important; }
+                    .service-card-reveal.simulated-hover .group-hover\:h-\[80\%\] { height: 80% !important; }
+                    .service-card-reveal.simulated-hover .group-hover\:h-\[100\%\] { height: 100% !important; }
+                    .service-card-reveal.simulated-hover .group-hover\:h-\[50\%\] { height: 50% !important; }
+
+                    /* Card 2 Mail Server */
+                    .service-card-reveal.simulated-hover .group-hover\:translate-y-\[60px\] { transform: translateY(60px) !important; }
+                    .service-card-reveal.simulated-hover .group-hover\:translate-y-0 { transform: translateY(0) !important; }
+                    .service-card-reveal.simulated-hover .group-hover\:translate-x-0\.5 { transform: translateX(0.125rem) !important; }
+                    .service-card-reveal.simulated-hover .group-hover\:-translate-y-0\.5 { transform: translateY(-0.125rem) !important; }
+
+                    /* Card 3 Payroll Engine */
+                    .service-card-reveal.simulated-hover .group-hover\:scale-105 { transform: scale(1.05) !important; }
+                }
+            </style>
+            
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const serviceCards = document.querySelectorAll('.service-card-reveal');
+                    let currentCardIndex = 0;
+                    
+                    // Continuously cycle the hover effect on mobile
+                    setInterval(() => {
+                        if (window.innerWidth <= 768 && serviceCards.length > 0) {
+                            // Remove from all
+                            serviceCards.forEach(card => card.classList.remove('simulated-hover'));
+                            
+                            // Add to current card
+                            serviceCards[currentCardIndex].classList.add('simulated-hover');
+                            
+                            // Move to next card
+                            currentCardIndex = (currentCardIndex + 1) % serviceCards.length;
+                        } else {
+                            // Clean up if resized back to PC
+                            serviceCards.forEach(card => card.classList.remove('simulated-hover'));
+                        }
+                    }, 1000); // Triggers the next card every 1 second
+                });
+            </script>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 <!-- Card 1 (Full Width): Seamless Global Payroll -->
                 <div
-                    class="md:col-span-2 bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 flex flex-col lg:flex-row items-center gap-12 group overflow-hidden border border-gray-100 relative">
+                    class="md:col-span-2 bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 flex flex-col lg:flex-row items-center gap-12 group overflow-hidden border border-gray-100 relative scroll-reveal service-card-reveal">
                     <div class="flex-1 z-40 relative">
-                        <h3 class="text-3xl font-bold mb-4 text-gray-900">PXP Workforce OS</h3>
-                        <p class="text-gray-500 mb-8 leading-relaxed text-lg max-w-md">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4 text-gray-900">PXP Workforce OS</h3>
+                        <p class="text-gray-500 mb-8 leading-relaxed text-sm md:text-lg max-w-md">
                             A complete, end-to-end human resource management system designed to eliminate manual work.
                             From hiring to retiring, manage your entire workforce in one unified dashboard.
                         </p>
 
                         <div class="flex flex-wrap items-center gap-2 mb-8">
                             <span
-                                class="bg-white px-3 py-1 rounded-md text-xs font-medium border border-gray-200">Real-Time
+                                class="bg-white px-2 py-0.5 md:px-3 md:py-1 rounded-md text-[10px] md:text-xs font-medium border border-gray-200">Real-Time
                                 Attendance</span>
                             <span
-                                class="bg-white px-3 py-1 rounded-md text-xs font-medium border border-gray-200">Automated
+                                class="bg-white px-2 py-0.5 md:px-3 md:py-1 rounded-md text-[10px] md:text-xs font-medium border border-gray-200">Automated
                                 Payroll</span>
-                            <span class="bg-white px-3 py-1 rounded-md text-xs font-medium border border-gray-200">Shift
+                            <span class="bg-white px-2 py-0.5 md:px-3 md:py-1 rounded-md text-[10px] md:text-xs font-medium border border-gray-200">Shift
                                 Rostering</span>
                             <span
-                                class="bg-white px-3 py-1 rounded-md text-xs font-medium border border-gray-200">Biometric
+                                class="bg-white px-2 py-0.5 md:px-3 md:py-1 rounded-md text-[10px] md:text-xs font-medium border border-gray-200">Biometric
                                 Sync</span>
                         </div>
 
@@ -1311,22 +1377,22 @@
 
                         <!-- Sidebar -->
                         <div
-                            class="w-16 md:w-20 bg-white border-r border-gray-100 flex flex-col items-center py-6 gap-6 relative z-10 shrink-0 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+                            class="w-12 md:w-16 lg:w-20 bg-white border-r border-gray-100 flex flex-col items-center py-4 md:py-6 gap-4 md:gap-6 relative z-10 shrink-0 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
                             <div
-                                class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white mb-4 shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-500">
-                                <i data-lucide="layers" class="w-5 h-5"></i>
+                                class="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white mb-2 md:mb-4 shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-500">
+                                <i data-lucide="layers" class="w-4 h-4 md:w-5 md:h-5"></i>
                             </div>
                             <div
-                                class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center group-hover:-translate-y-1 transition-transform duration-300 delay-100">
-                                <i data-lucide="users" class="w-5 h-5"></i>
+                                class="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center group-hover:-translate-y-1 transition-transform duration-300 delay-100">
+                                <i data-lucide="users" class="w-4 h-4 md:w-5 md:h-5"></i>
                             </div>
                             <div
-                                class="w-10 h-10 rounded-xl bg-gray-50 text-gray-400 flex items-center justify-center group-hover:-translate-y-1 transition-transform duration-300 delay-200">
-                                <i data-lucide="calendar" class="w-5 h-5"></i>
+                                class="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gray-50 text-gray-400 flex items-center justify-center group-hover:-translate-y-1 transition-transform duration-300 delay-200">
+                                <i data-lucide="calendar" class="w-4 h-4 md:w-5 md:h-5"></i>
                             </div>
                             <div
-                                class="w-10 h-10 rounded-xl bg-gray-50 text-gray-400 flex items-center justify-center group-hover:-translate-y-1 transition-transform duration-300 delay-300">
-                                <i data-lucide="pie-chart" class="w-5 h-5"></i>
+                                class="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gray-50 text-gray-400 flex items-center justify-center group-hover:-translate-y-1 transition-transform duration-300 delay-300">
+                                <i data-lucide="pie-chart" class="w-4 h-4 md:w-5 md:h-5"></i>
                             </div>
                         </div>
 
@@ -1440,7 +1506,7 @@
 
                 <!-- Card 2: Automated Tax Compliance -->
                 <div
-                    class="bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 min-h-[500px] flex flex-col justify-between group overflow-hidden border border-gray-100 relative">
+                    class="bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 min-h-[500px] flex flex-col justify-between group overflow-hidden border border-gray-100 relative scroll-reveal service-card-reveal">
                     <div class="z-40 relative max-w-sm">
                         <h3 class="text-2xl font-bold mb-4 text-gray-900">Fully Branded Corporate Email</h3>
                         <p class="text-gray-500 mb-8 leading-relaxed">
@@ -1550,7 +1616,7 @@
 
                 <!-- Card 3: Payroll Engine -->
                 <div
-                    class="bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 min-h-[500px] flex flex-col justify-between group overflow-hidden border border-gray-100 relative">
+                    class="bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 min-h-[500px] flex flex-col justify-between group overflow-hidden border border-gray-100 relative scroll-reveal service-card-reveal">
                     <div class="z-40 relative max-w-sm">
                         <h3 class="text-2xl font-bold mb-4 text-gray-900">Payroll Engine</h3>
                         <p class="text-gray-500 mb-8 leading-relaxed">
@@ -1631,7 +1697,7 @@
 
                 <!-- Card 4: Technical Assessment Portal -->
                 <div
-                    class="bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 min-h-[400px] flex flex-col md:flex-row items-center gap-8 group overflow-hidden border border-gray-100">
+                    class="bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 min-h-[400px] flex flex-col md:flex-row items-center gap-8 group overflow-hidden border border-gray-100 scroll-reveal service-card-reveal">
                     <div class="flex-1">
                         <h3 class="text-2xl font-bold mb-3 text-gray-900">Technical Assessment Portal</h3>
                         <p class="text-gray-500 mb-6 text-sm">
@@ -1775,7 +1841,7 @@
 
                 <!-- Card 5: Built-in Team Chat -->
                 <div
-                    class="bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 min-h-[400px] flex flex-col md:flex-row-reverse items-center gap-8 group overflow-hidden border border-gray-100">
+                    class="bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 min-h-[400px] flex flex-col md:flex-row-reverse items-center gap-8 group overflow-hidden border border-gray-100 scroll-reveal service-card-reveal">
                     <div class="flex-1">
                         <h3 class="text-2xl font-bold mb-3 text-gray-900">Built-in Team Chat</h3>
                         <p class="text-gray-500 mb-6 text-sm">
@@ -1917,7 +1983,7 @@
 
                 <!-- Card 6 (Full Width): The PXP Guarantee -->
                 <div
-                    class="md:col-span-2 bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 flex flex-col md:flex-row items-end gap-12 group overflow-hidden border border-gray-100 relative h-[400px]">
+                    class="md:col-span-2 bg-[#F3F5F7] rounded-[40px] p-8 md:p-12 flex flex-col md:flex-row items-end gap-12 group overflow-hidden border border-gray-100 relative min-h-[600px] md:min-h-0 md:h-[400px] scroll-reveal service-card-reveal">
                     <div class="flex-1 z-40 relative mb-4">
                         <h3 class="text-3xl font-bold mb-4 text-gray-900">The PXP Guarantee</h3>
                         <p class="text-gray-500 mb-8 leading-relaxed max-w-md">
@@ -1942,7 +2008,7 @@
 
                     <!-- Motion Graphics: Deployment Engine -->
                     <div
-                        class="absolute bottom-0 right-0 w-[90%] md:w-[60%] h-[85%] md:h-[90%] rounded-tl-[32px] bg-white shadow-2xl border-t border-l border-gray-200 flex flex-col overflow-hidden group-hover:shadow-[0_0_60px_rgba(59,130,246,0.15)] transition-shadow duration-700">
+                        class="absolute bottom-0 right-0 w-[90%] md:w-[60%] h-[55%] md:h-[90%] rounded-tl-[32px] bg-white shadow-2xl border-t border-l border-gray-200 flex flex-col overflow-hidden group-hover:shadow-[0_0_60px_rgba(59,130,246,0.15)] transition-shadow duration-700">
 
                         <!-- Window Header -->
                         <div
@@ -2403,11 +2469,11 @@
                     }
                 </style>
                 <!-- 5 Steps Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-6 gap-8">
+                <div class="flex overflow-x-auto snap-x snap-mandatory flex-nowrap hide-scrollbar md:grid md:grid-cols-6 lg:grid-cols-6 gap-8 pb-6 px-4 md:px-0 w-full relative">
 
                     <!-- Step 1: Request -->
                     <div
-                        class="col-span-1 md:col-span-2 bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
+                        class="w-[85vw] sm:w-[350px] shrink-0 snap-center md:w-auto col-span-1 md:col-span-2 bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
                         <div class="z-10 relative">
                             <div
                                 class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg mb-6">
@@ -2455,7 +2521,7 @@
 
                     <!-- Step 2: Requirement Analysis (NEW) -->
                     <div
-                        class="col-span-1 md:col-span-2 bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
+                        class="w-[85vw] sm:w-[350px] shrink-0 snap-center md:w-auto col-span-1 md:col-span-2 bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
                         <div class="z-10 relative">
                             <div
                                 class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg mb-6">
@@ -2498,7 +2564,7 @@
 
                     <!-- Step 3: Quick Alignment -->
                     <div
-                        class="col-span-1 md:col-span-2 bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
+                        class="w-[85vw] sm:w-[350px] shrink-0 snap-center md:w-auto col-span-1 md:col-span-2 bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
                         <div class="z-10 relative">
                             <div
                                 class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-lg mb-6">
@@ -2536,7 +2602,7 @@
 
                     <!-- Step 4: Rapid Development (Bottom Row Centered) -->
                     <div
-                        class="col-span-1 md:col-span-3 lg:col-span-2 lg:col-start-2 md:col-start-auto bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
+                        class="w-[85vw] sm:w-[350px] shrink-0 snap-center md:w-auto col-span-1 md:col-span-3 lg:col-span-2 lg:col-start-2 md:col-start-auto bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
                         <div class="z-10 relative">
                             <div
                                 class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-lg mb-6">
@@ -2584,7 +2650,7 @@
 
                     <!-- Step 5: Seamless Deployment -->
                     <div
-                        class="col-span-1 md:col-span-3 lg:col-span-2 md:col-start-auto bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
+                        class="w-[85vw] sm:w-[350px] shrink-0 snap-center md:w-auto col-span-1 md:col-span-3 lg:col-span-2 md:col-start-auto bg-white rounded-[32px] p-8 flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden relative group min-h-[450px]">
                         <div class="z-10 relative">
                             <div
                                 class="w-10 h-10 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center font-bold text-lg mb-6">
@@ -2668,11 +2734,24 @@
             </div>
 
             <!-- Cards Container -->
-            <div class="flex flex-col md:flex-row items-center justify-center gap-6 relative">
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const buildCards = document.querySelectorAll('.what-we-build-card');
+                    let currentBuildCard = 0;
+                    setInterval(() => {
+                        if (buildCards.length > 0) {
+                            buildCards.forEach(card => card.classList.remove('auto-play'));
+                            buildCards[currentBuildCard].classList.add('auto-play');
+                            currentBuildCard = (currentBuildCard + 1) % buildCards.length;
+                        }
+                    }, 2000); // 2 seconds per card
+                });
+            </script>
+            <div class="flex overflow-x-auto snap-x snap-mandatory flex-nowrap hide-scrollbar items-center justify-start md:justify-center gap-6 pb-6 relative w-full px-4 md:px-0">
 
                 <!-- Card 1: Static Sites -->
                 <div
-                    class="bg-[#d4f877] rounded-[32px] p-8 w-full md:w-1/3 h-[400px] flex flex-col items-center text-center relative group hover:scale-[1.02] transition-transform duration-500 overflow-hidden">
+                    class="what-we-build-card bg-[#d4f877] rounded-[32px] p-6 md:p-8 w-[85vw] sm:w-[350px] md:w-1/3 shrink-0 snap-center h-[280px] md:h-[400px] flex flex-col items-center text-center relative group hover:scale-[1.02] group-[.auto-play]:scale-[1.02] transition-transform duration-500 overflow-hidden">
                     <div class="z-10 relative flex flex-col items-center">
                         <h3 class="text-xl font-bold mb-3 text-black">Static Websites</h3>
                         <p class="text-black/60 text-sm leading-relaxed max-w-[220px]">
@@ -2683,7 +2762,7 @@
                     <!-- Motion Graphic: Building Webpage -->
                     <div class="absolute bottom-0 left-0 w-full h-[55%] flex items-end justify-center p-6">
                         <div
-                            class="w-full max-w-[200px] bg-white rounded-t-xl shadow-lg border border-black/10 overflow-hidden flex flex-col transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+                            class="w-full max-w-[200px] bg-white rounded-t-xl shadow-lg border border-black/10 overflow-hidden flex flex-col transform translate-y-8 group-hover:translate-y-0 group-[.auto-play]:translate-y-0 transition-transform duration-500">
                             <!-- Browser Bar -->
                             <div class="h-4 border-b border-gray-100 flex items-center px-2 gap-1 bg-gray-50">
                                 <div class="w-1.5 h-1.5 rounded-full bg-red-400"></div>
@@ -2694,23 +2773,23 @@
                                 <!-- Skeleton Elements -->
                                 <div class="w-full h-8 bg-gray-100 rounded-md overflow-hidden relative">
                                     <div
-                                        class="absolute top-0 left-0 h-full bg-[#d4f877] w-0 group-hover:animate-[fillProgress_1s_ease-out_forwards_0.3s]">
+                                        class="absolute top-0 left-0 h-full bg-[#d4f877] w-0 group-hover:animate-[fillProgress_1s_ease-out_forwards_0.3s] group-[.auto-play]:animate-[fillProgress_1s_ease-out_forwards_0.3s]">
                                     </div>
                                 </div>
                                 <div class="flex gap-2 h-10">
                                     <div class="w-1/2 h-full bg-gray-100 rounded-md overflow-hidden relative">
                                         <div
-                                            class="absolute top-0 left-0 h-full w-full bg-gray-200 transform scale-y-0 origin-bottom group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_1s]">
+                                            class="absolute top-0 left-0 h-full w-full bg-gray-200 transform scale-y-0 origin-bottom group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_1s] group-[.auto-play]:animate-[scaleYIn_0.5s_ease-out_forwards_1s]">
                                         </div>
                                     </div>
                                     <div class="w-1/2 h-full bg-gray-100 rounded-md overflow-hidden relative">
                                         <div
-                                            class="absolute top-0 left-0 h-full w-full bg-gray-200 transform scale-y-0 origin-bottom group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_1.2s]">
+                                            class="absolute top-0 left-0 h-full w-full bg-gray-200 transform scale-y-0 origin-bottom group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_1.2s] group-[.auto-play]:animate-[scaleYIn_0.5s_ease-out_forwards_1.2s]">
                                         </div>
                                     </div>
                                 </div>
                                 <div
-                                    class="w-3/4 h-2 bg-gray-200 rounded-full opacity-0 group-hover:animate-[fadeIn_0.3s_ease-out_forwards_1.6s]">
+                                    class="w-3/4 h-2 bg-gray-200 rounded-full opacity-0 group-hover:animate-[fadeIn_0.3s_ease-out_forwards_1.6s] group-[.auto-play]:animate-[fadeIn_0.3s_ease-out_forwards_1.6s]">
                                 </div>
                             </div>
                         </div>
@@ -2719,18 +2798,16 @@
 
                 <!-- Animated Arrow 1 -->
                 <div
-                    class="z-20 -my-4 md:my-0 md:-mx-10 bg-white p-2 rounded-full shadow-lg border border-gray-100 flex-shrink-0 relative">
+                    class="z-20 -mx-3 md:-mx-10 bg-white p-2 rounded-full shadow-lg border border-gray-100 shrink-0 relative">
                     <div class="w-10 h-10 bg-[#F3F5F7] rounded-full flex items-center justify-center">
                         <i data-lucide="chevron-right"
-                            class="w-5 h-5 text-black md:block hidden animate-arrow-flow"></i>
-                        <i data-lucide="chevron-down"
-                            class="w-5 h-5 text-black md:hidden block animate-arrow-flow-down"></i>
+                            class="w-5 h-5 text-black block animate-arrow-flow"></i>
                     </div>
                 </div>
 
                 <!-- Card 2: Dynamic Web Apps -->
                 <div
-                    class="bg-[#F3F5F7] rounded-[32px] p-8 w-full md:w-1/3 h-[400px] flex flex-col items-center text-center relative group hover:scale-[1.02] transition-transform duration-500 overflow-hidden">
+                    class="what-we-build-card bg-[#F3F5F7] rounded-[32px] p-6 md:p-8 w-[85vw] sm:w-[350px] md:w-1/3 shrink-0 snap-center h-[280px] md:h-[400px] flex flex-col items-center text-center relative group hover:scale-[1.02] group-[.auto-play]:scale-[1.02] transition-transform duration-500 overflow-hidden">
                     <div class="z-10 relative flex flex-col items-center">
                         <h3 class="text-xl font-bold mb-3 text-black">Dynamic Web Apps</h3>
                         <p class="text-gray-500 text-sm leading-relaxed max-w-[220px]">
@@ -2741,34 +2818,34 @@
                     <!-- Motion Graphic: Dashboard -->
                     <div class="absolute bottom-0 left-0 w-full h-[55%] flex items-end justify-center p-6">
                         <div
-                            class="w-full max-w-[200px] bg-white rounded-t-xl shadow-lg border border-gray-200 overflow-hidden flex flex-col transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500 p-3 gap-3">
+                            class="w-full max-w-[200px] bg-white rounded-t-xl shadow-lg border border-gray-200 overflow-hidden flex flex-col transform translate-y-8 group-hover:translate-y-0 group-[.auto-play]:translate-y-0 transition-transform duration-500 p-3 gap-3">
                             <div
                                 class="w-full flex justify-between items-end h-16 border-b border-gray-100 pb-2 relative">
                                 <!-- Chart Bars -->
                                 <div
-                                    class="w-3 bg-blue-100 rounded-t-sm h-4 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_0.3s]">
+                                    class="w-3 bg-blue-100 rounded-t-sm h-4 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_0.3s] group-[.auto-play]:animate-[scaleYIn_0.5s_ease-out_forwards_0.3s]">
                                 </div>
                                 <div
-                                    class="w-3 bg-blue-200 rounded-t-sm h-8 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_0.5s]">
+                                    class="w-3 bg-blue-200 rounded-t-sm h-8 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_0.5s] group-[.auto-play]:animate-[scaleYIn_0.5s_ease-out_forwards_0.5s]">
                                 </div>
                                 <div
-                                    class="w-3 bg-blue-300 rounded-t-sm h-6 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_0.7s]">
+                                    class="w-3 bg-blue-300 rounded-t-sm h-6 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_0.7s] group-[.auto-play]:animate-[scaleYIn_0.5s_ease-out_forwards_0.7s]">
                                 </div>
                                 <div
-                                    class="w-3 bg-blue-400 rounded-t-sm h-12 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_0.9s]">
+                                    class="w-3 bg-blue-400 rounded-t-sm h-12 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_0.9s] group-[.auto-play]:animate-[scaleYIn_0.5s_ease-out_forwards_0.9s]">
                                 </div>
                                 <div
-                                    class="w-3 bg-blue-500 rounded-t-sm h-10 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_1.1s]">
+                                    class="w-3 bg-blue-500 rounded-t-sm h-10 transform origin-bottom scale-y-0 group-hover:animate-[scaleYIn_0.5s_ease-out_forwards_1.1s] group-[.auto-play]:animate-[scaleYIn_0.5s_ease-out_forwards_1.1s]">
                                 </div>
                                 <!-- Rising Line -->
                                 <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100"
                                     preserveAspectRatio="none">
                                     <path d="M0,80 L25,60 L50,70 L75,20 L100,30" fill="none" stroke="#3b82f6"
                                         stroke-width="3"
-                                        class="stroke-dasharray-[150] stroke-dashoffset-[150] group-hover:animate-[drawPath_1s_ease-out_forwards_1.3s]">
+                                        class="stroke-dasharray-[150] stroke-dashoffset-[150] group-hover:animate-[drawPath_1s_ease-out_forwards_1.3s] group-[.auto-play]:animate-[drawPath_1s_ease-out_forwards_1.3s]">
                                     </path>
                                     <circle cx="75" cy="20" r="3" fill="#3b82f6"
-                                        class="opacity-0 group-hover:animate-[fadeIn_0.3s_forwards_2.3s]"></circle>
+                                        class="opacity-0 group-hover:animate-[fadeIn_0.3s_forwards_2.3s] group-[.auto-play]:animate-[fadeIn_0.3s_forwards_2.3s]"></circle>
                                 </svg>
                             </div>
                             <div class="flex gap-2">
@@ -2781,18 +2858,16 @@
 
                 <!-- Animated Arrow 2 -->
                 <div
-                    class="z-20 -my-4 md:my-0 md:-mx-10 bg-white p-2 rounded-full shadow-lg border border-gray-100 flex-shrink-0 relative">
+                    class="z-20 -mx-3 md:-mx-10 bg-white p-2 rounded-full shadow-lg border border-gray-100 shrink-0 relative">
                     <div class="w-10 h-10 bg-[#F3F5F7] rounded-full flex items-center justify-center">
                         <i data-lucide="chevron-right"
-                            class="w-5 h-5 text-black md:block hidden animate-arrow-flow"></i>
-                        <i data-lucide="chevron-down"
-                            class="w-5 h-5 text-black md:hidden block animate-arrow-flow-down"></i>
+                            class="w-5 h-5 text-black block animate-arrow-flow"></i>
                     </div>
                 </div>
 
                 <!-- Card 3: Custom Tools -->
                 <div
-                    class="bg-[#d4f877] rounded-[32px] p-8 w-full md:w-1/3 h-[400px] flex flex-col items-center text-center relative group hover:scale-[1.02] transition-transform duration-500 overflow-hidden">
+                    class="what-we-build-card bg-[#d4f877] rounded-[32px] p-6 md:p-8 w-[85vw] sm:w-[350px] md:w-1/3 shrink-0 snap-center h-[280px] md:h-[400px] flex flex-col items-center text-center relative group hover:scale-[1.02] group-[.auto-play]:scale-[1.02] transition-transform duration-500 overflow-hidden">
                     <div class="z-10 relative flex flex-col items-center">
                         <h3 class="text-xl font-bold mb-3 text-black">Custom Tools & APIs</h3>
                         <p class="text-black/60 text-sm leading-relaxed max-w-[220px]">
@@ -2806,40 +2881,40 @@
                             <!-- Server Stack -->
                             <div class="w-20 flex flex-col gap-1.5 absolute left-4 bottom-2">
                                 <div
-                                    class="w-full h-4 bg-white rounded-sm shadow-sm border border-black/10 relative overflow-hidden group-hover:-translate-y-1 transition-transform duration-300">
+                                    class="w-full h-4 bg-white rounded-sm shadow-sm border border-black/10 relative overflow-hidden group-hover:-translate-y-1 group-[.auto-play]:-translate-y-1 transition-transform duration-300">
                                     <div
-                                        class="absolute left-1 top-1.5 w-1 h-1 rounded-full bg-green-500 group-hover:animate-[pulseOpacity_1s_infinite]">
+                                        class="absolute left-1 top-1.5 w-1 h-1 rounded-full bg-green-500 group-hover:animate-[pulseOpacity_1s_infinite] group-[.auto-play]:animate-[pulseOpacity_1s_infinite]">
                                     </div>
                                 </div>
                                 <div
-                                    class="w-full h-4 bg-white rounded-sm shadow-sm border border-black/10 relative overflow-hidden group-hover:-translate-y-1 transition-transform duration-300 delay-75">
+                                    class="w-full h-4 bg-white rounded-sm shadow-sm border border-black/10 relative overflow-hidden group-hover:-translate-y-1 group-[.auto-play]:-translate-y-1 transition-transform duration-300 delay-75">
                                     <div
-                                        class="absolute left-1 top-1.5 w-1 h-1 rounded-full bg-green-500 group-hover:animate-[pulseOpacity_1s_infinite_0.2s]">
+                                        class="absolute left-1 top-1.5 w-1 h-1 rounded-full bg-green-500 group-hover:animate-[pulseOpacity_1s_infinite_0.2s] group-[.auto-play]:animate-[pulseOpacity_1s_infinite_0.2s]">
                                     </div>
                                 </div>
                                 <div
-                                    class="w-full h-4 bg-white rounded-sm shadow-sm border border-black/10 relative overflow-hidden group-hover:-translate-y-1 transition-transform duration-300 delay-150">
+                                    class="w-full h-4 bg-white rounded-sm shadow-sm border border-black/10 relative overflow-hidden group-hover:-translate-y-1 group-[.auto-play]:-translate-y-1 transition-transform duration-300 delay-150">
                                     <div
-                                        class="absolute left-1 top-1.5 w-1 h-1 rounded-full bg-green-500 group-hover:animate-[pulseOpacity_1s_infinite_0.4s]">
+                                        class="absolute left-1 top-1.5 w-1 h-1 rounded-full bg-green-500 group-hover:animate-[pulseOpacity_1s_infinite_0.4s] group-[.auto-play]:animate-[pulseOpacity_1s_infinite_0.4s]">
                                     </div>
                                 </div>
                             </div>
                             <!-- API Gears -->
                             <div class="absolute right-6 top-4 flex relative">
                                 <i data-lucide="settings"
-                                    class="w-10 h-10 text-black/80 group-hover:animate-[spinSlow_3s_linear_infinite]"></i>
+                                    class="w-10 h-10 text-black/80 group-hover:animate-[spinSlow_3s_linear_infinite] group-[.auto-play]:animate-[spinSlow_3s_linear_infinite]"></i>
                                 <i data-lucide="settings"
-                                    class="w-6 h-6 text-black/60 absolute -bottom-2 -left-3 group-hover:animate-[spinSlowReverse_3s_linear_infinite]"></i>
+                                    class="w-6 h-6 text-black/60 absolute -bottom-2 -left-3 group-hover:animate-[spinSlowReverse_3s_linear_infinite] group-[.auto-play]:animate-[spinSlowReverse_3s_linear_infinite]"></i>
                             </div>
                             <!-- Data Flow Line -->
                             <div class="absolute bottom-6 left-20 w-12 h-0.5 bg-black/20 overflow-hidden">
                                 <div
-                                    class="w-4 h-full bg-black transform -translate-x-full group-hover:animate-[flowRight_1s_linear_infinite]">
+                                    class="w-4 h-full bg-black transform -translate-x-full group-hover:animate-[flowRight_1s_linear_infinite] group-[.auto-play]:animate-[flowRight_1s_linear_infinite]">
                                 </div>
                             </div>
                             <div class="absolute bottom-10 left-20 w-12 h-0.5 bg-black/20 overflow-hidden">
                                 <div
-                                    class="w-4 h-full bg-black transform translate-x-[48px] group-hover:animate-[flowLeft_1s_linear_infinite]">
+                                    class="w-4 h-full bg-black transform translate-x-[48px] group-hover:animate-[flowLeft_1s_linear_infinite] group-[.auto-play]:animate-[flowLeft_1s_linear_infinite]">
                                 </div>
                             </div>
                         </div>
