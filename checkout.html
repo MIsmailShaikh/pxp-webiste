@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | PeopleXplus</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAFAFA;
+            color: #111;
+        }
+        /* Hide number input arrows */
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-black selection:text-white">
+
+    <!-- Minimal Header -->
+    <header class="w-full bg-white border-b border-gray-100 flex items-center justify-between px-6 py-4 shadow-sm sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <a href="index11.html" class="flex items-center gap-2 group">
+                <img src="./pxp-logo.png" alt="People X Plus Logo" class="h-8 w-auto">
+                <span class="font-bold text-lg tracking-tight text-gray-900 hidden sm:block group-hover:text-blue-600 transition-colors">People X Plus</span>
+            </a>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="#" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1">
+                <i data-lucide="help-circle" class="w-4 h-4"></i> Support
+            </a>
+            <div class="hidden sm:flex items-center text-sm font-medium text-green-600 bg-green-50 px-3 py-1.5 rounded-full border border-green-100">
+                <i data-lucide="lock" class="w-3.5 h-3.5 mr-1"></i> Secure Checkout
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Checkout Container -->
+    <main class="max-w-7xl mx-auto px-4 py-10 lg:py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+            
+            <!-- Left Column: Cart & Add-ons -->
+            <div class="lg:col-span-8 flex flex-col gap-6">
+                <h1 class="text-2xl font-bold text-gray-900 mb-2">Your cart</h1>
+                
+                <!-- Main Product Card -->
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-4 mb-8">
+                        <div class="w-12 h-12 bg-gray-50 border border-gray-100 rounded-xl flex items-center justify-center shrink-0">
+                            <i id="plan-icon-display" data-lucide="mail" class="w-6 h-6 text-gray-600"></i>
+                        </div>
+                        <div>
+                            <h2 id="plan-name-display" class="text-lg font-bold text-gray-900">Standard Business plan</h2>
+                            <p id="plan-category-display" class="text-sm text-gray-500">Corporate Email</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+                        <div class="md:col-span-5 flex flex-col gap-2">
+                            <label class="text-xs font-semibold text-gray-900">Period</label>
+                            <div class="relative">
+                                <select id="period-selector" class="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer transition-shadow">
+                                    <option value="48">48 months</option>
+                                    <option value="24">24 months</option>
+                                    <option value="12">12 months</option>
+                                    <option value="1">1 month</option>
+                                </select>
+                                <i data-lucide="chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none"></i>
+                            </div>
+                        </div>
+
+                        <div class="md:col-span-3 flex flex-col gap-2">
+                            <label id="quantity-label" class="text-xs font-semibold text-gray-900">Mailboxes</label>
+                            <div class="flex items-center justify-between border border-gray-300 rounded-lg p-1 bg-white">
+                                <button id="btn-minus" class="w-8 h-8 flex items-center justify-center rounded bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors">
+                                    <i data-lucide="minus" class="w-4 h-4"></i>
+                                </button>
+                                <input type="number" id="qty-display" class="text-sm font-medium text-gray-900 px-1 w-16 text-center bg-transparent border-none focus:outline-none focus:ring-0 appearance-none m-0 p-0" min="1" max="1000" value="1">
+                                <button id="btn-plus" class="w-8 h-8 flex items-center justify-center rounded bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors">
+                                    <i data-lucide="plus" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="md:col-span-4 flex flex-col items-end gap-0.5 justify-end h-full">
+                            <div class="text-gray-400 line-through text-sm font-medium transition-all">
+                                <span id="base-price-display">₹150</span>/mo
+                            </div>
+                            <div class="text-2xl font-bold text-gray-900 transition-all">
+                                <span id="discount-price-display">₹45</span>/mo
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-sm text-gray-500 border-t border-gray-100 pt-4">
+                        Renews at <span id="renew-price" class="font-medium">₹150</span>/mo. Cancel anytime.
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- Right Column: Order Summary -->
+            <div class="lg:col-span-4 relative">
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 shadow-sm sticky top-24">
+                    <h2 class="text-xl font-bold text-gray-900 mb-6">Order summary</h2>
+                    
+                    <div class="mb-4">
+                        <div id="summary-plan-name" class="text-sm font-bold text-gray-900">Standard Business plan</div>
+                        <div class="flex justify-between items-center mt-1">
+                            <div class="text-sm text-gray-500"><span id="summary-period">48-month period</span>, <span id="summary-qty">1 mailbox</span></div>
+                            <div class="text-right">
+                                <div class="text-xs text-gray-400 line-through transition-all"><span id="summary-base-total">₹7,200</span></div>
+                                <div class="text-sm font-bold text-gray-900 transition-all"><span id="summary-discount-total">₹2,160</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center py-4 border-t border-gray-100 mt-2">
+                        <div class="text-sm text-gray-500 flex items-center gap-1">Taxes <i data-lucide="help-circle" class="w-3.5 h-3.5"></i></div>
+                        <div class="text-sm font-bold text-gray-900 transition-all"><span id="summary-taxes">₹388.80</span></div>
+                    </div>
+
+                    <div class="flex justify-between items-end py-4 border-t border-b border-gray-100 mb-6">
+                        <div class="text-lg font-bold text-gray-900">Total</div>
+                        <div class="text-right">
+                            <div class="text-xs text-gray-400 line-through mb-0.5 transition-all"><span id="summary-final-base">₹7,200.00</span></div>
+                            <div class="text-xl font-black text-gray-900 transition-all"><span id="summary-final-total">₹2,548.80</span></div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors block mb-6 inline-block">Have a coupon code?</a>
+
+                    <button class="w-full bg-blue-600 text-white rounded-full py-3.5 font-bold text-base hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 mb-6 hover:-translate-y-0.5">
+                        Continue
+                    </button>
+
+                    <div class="flex flex-col items-center justify-center gap-3 bg-gray-50 rounded-xl p-4">
+                        <div class="flex items-center gap-1.5 text-xs font-semibold text-gray-700">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-green-600"></i> 30-day money-back guarantee
+                        </div>
+                        
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="text-xs font-bold text-gray-900">Excellent</span>
+                            <div class="flex">
+                                <div class="w-4 h-4 bg-[#00B67A] flex items-center justify-center ml-0.5"><i data-lucide="star" class="w-2.5 h-2.5 text-white fill-white"></i></div>
+                                <div class="w-4 h-4 bg-[#00B67A] flex items-center justify-center ml-0.5"><i data-lucide="star" class="w-2.5 h-2.5 text-white fill-white"></i></div>
+                                <div class="w-4 h-4 bg-[#00B67A] flex items-center justify-center ml-0.5"><i data-lucide="star" class="w-2.5 h-2.5 text-white fill-white"></i></div>
+                                <div class="w-4 h-4 bg-[#00B67A] flex items-center justify-center ml-0.5"><i data-lucide="star" class="w-2.5 h-2.5 text-white fill-white"></i></div>
+                                <div class="w-4 h-4 bg-[#00B67A] flex items-center justify-center ml-0.5"><i data-lucide="star" class="w-2.5 h-2.5 text-white fill-white"></i></div>
+                            </div>
+                        </div>
+                        <div class="text-[10px] text-gray-500">69,939 reviews on <span class="font-bold text-gray-900">★ Trustpilot</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const planParam = urlParams.get('plan') || 'email-standard';
+
+        const planConfig = {
+            'email-starter': {
+                name: 'Starter Plan', category: 'Corporate Email', icon: 'mail',
+                baseMonthly: 80, taxRate: 0.18, periods: [48, 24, 12, 1], defaultPeriod: '48',
+                discounts: { '48': 20, '24': 50, '12': 65, '1': 80 },
+                label: 'Mailbox', labelPlural: 'Mailboxes'
+            },
+            'email-standard': {
+                name: 'Standard Business Plan', category: 'Corporate Email', icon: 'mail',
+                baseMonthly: 150, taxRate: 0.18, periods: [48, 24, 12, 1], defaultPeriod: '48',
+                discounts: { '48': 45, '24': 90, '12': 120, '1': 150 },
+                label: 'Mailbox', labelPlural: 'Mailboxes'
+            },
+            'email-pro': {
+                name: 'Pro Business Plan', category: 'Corporate Email', icon: 'mail',
+                baseMonthly: 599, taxRate: 0.18, periods: [48, 24, 12, 1], defaultPeriod: '48',
+                discounts: { '48': 299, '24': 399, '12': 499, '1': 599 },
+                label: 'Mailbox', labelPlural: 'Mailboxes'
+            },
+            'workforce-essential': {
+                name: 'Essential Plan', category: 'Workforce OS', icon: 'layers',
+                baseMonthly: 140, taxRate: 0.18, periods: [12, 1], defaultPeriod: '12',
+                discounts: { '12': 112, '1': 140 },
+                label: 'Employee', labelPlural: 'Employees'
+            },
+            'workforce-growth': {
+                name: 'Growth Plan', category: 'Workforce OS', icon: 'layers',
+                baseMonthly: 220, taxRate: 0.18, periods: [12, 1], defaultPeriod: '12',
+                discounts: { '12': 176, '1': 220 },
+                label: 'Employee', labelPlural: 'Employees'
+            },
+            'assessment-pro': {
+                name: 'Pro Plan', category: 'Assessment Portal', icon: 'code',
+                baseMonthly: 12000, taxRate: 0.18, periods: [24, 12, 1], defaultPeriod: '1',
+                discounts: { '24': 8400, '12': 9600, '1': 12000 },
+                label: 'Assessment', labelPlural: 'Assessments'
+            },
+            'interview-pro': {
+                name: 'Pro Plan', category: 'Interview Portal', icon: 'video',
+                baseMonthly: 4999, taxRate: 0.18, periods: [1], defaultPeriod: '1',
+                discounts: { '1': 4999 },
+                label: 'License', labelPlural: 'Licenses'
+            },
+            'all-in-one': {
+                name: 'The PXP Business Suite', category: 'All-in-One Plan', icon: 'sparkles',
+                baseMonthly: 12000, taxRate: 0.18, periods: [1], defaultPeriod: '1',
+                discounts: { '1': 12000 },
+                label: 'Suite', labelPlural: 'Suites'
+            }
+        };
+
+        const config = planConfig[planParam] || planConfig['email-standard'];
+
+        // Populate DOM elements based on config
+        document.getElementById('plan-name-display').textContent = config.name;
+        document.getElementById('summary-plan-name').textContent = config.name;
+        document.getElementById('plan-category-display').textContent = config.category;
+        document.getElementById('quantity-label').textContent = config.labelPlural;
+        
+        const iconEl = document.getElementById('plan-icon-display');
+        iconEl.setAttribute('data-lucide', config.icon);
+
+
+
+        const periodSelector = document.getElementById('period-selector');
+        periodSelector.innerHTML = '';
+        config.periods.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p;
+            opt.textContent = p + (p === 1 ? ' month' : ' months');
+            periodSelector.appendChild(opt);
+        });
+
+        // Initialize variables
+        const baseMonthly = config.baseMonthly;
+        const discountRates = config.discounts;
+        const taxRate = config.taxRate;
+        
+        let currentQty = 1;
+        let currentPeriod = config.defaultPeriod;
+        periodSelector.value = currentPeriod;
+
+        const qtyDisplay = document.getElementById('qty-display');
+        const btnMinus = document.getElementById('btn-minus');
+        const btnPlus = document.getElementById('btn-plus');
+
+        const basePriceDisplay = document.getElementById('base-price-display');
+        const discountPriceDisplay = document.getElementById('discount-price-display');
+        const renewPrice = document.getElementById('renew-price');
+
+        const sumPeriod = document.getElementById('summary-period');
+        const sumQty = document.getElementById('summary-qty');
+        const sumBaseTotal = document.getElementById('summary-base-total');
+        const sumDiscountTotal = document.getElementById('summary-discount-total');
+        const sumTaxes = document.getElementById('summary-taxes');
+        const sumFinalBase = document.getElementById('summary-final-base');
+        const sumFinalTotal = document.getElementById('summary-final-total');
+
+        function formatCurrency(num) {
+            return new Intl.NumberFormat('en-IN', { maximumFractionDigits: 2 }).format(num);
+        }
+
+        function updateCart() {
+            const months = parseInt(currentPeriod);
+            const discountedMonthly = discountRates[currentPeriod];
+
+            // Left panel updates
+            basePriceDisplay.textContent = '₹' + formatCurrency(baseMonthly);
+            discountPriceDisplay.textContent = '₹' + formatCurrency(discountedMonthly);
+            renewPrice.textContent = '₹' + formatCurrency(baseMonthly);
+
+            // Summary text updates
+            sumPeriod.textContent = `${months}-month period`;
+            sumQty.textContent = `${currentQty} ${currentQty > 1 ? config.labelPlural : config.label}`;
+
+            // Math
+            const totalBase = baseMonthly * months * currentQty;
+            const totalDiscount = discountedMonthly * months * currentQty;
+            const taxes = totalDiscount * taxRate;
+            const finalTotal = totalDiscount + taxes;
+
+            sumBaseTotal.textContent = '₹' + formatCurrency(totalBase);
+            sumDiscountTotal.textContent = '₹' + formatCurrency(totalDiscount);
+            sumTaxes.textContent = '₹' + formatCurrency(taxes);
+            
+            sumFinalBase.textContent = '₹' + formatCurrency(totalBase) + (totalBase % 1 === 0 ? '.00' : '');
+            sumFinalTotal.textContent = '₹' + formatCurrency(finalTotal);
+
+            // Hide strikethroughs if no discount
+            if (months === 1 || baseMonthly === discountedMonthly) {
+                basePriceDisplay.parentElement.classList.add('hidden');
+                sumBaseTotal.parentElement.classList.add('hidden');
+                sumFinalBase.parentElement.classList.add('hidden');
+            } else {
+                basePriceDisplay.parentElement.classList.remove('hidden');
+                sumBaseTotal.parentElement.classList.remove('hidden');
+                sumFinalBase.parentElement.classList.remove('hidden');
+            }
+        }
+
+        periodSelector.addEventListener('change', (e) => {
+            currentPeriod = e.target.value;
+            updateCart();
+        });
+
+        btnMinus.addEventListener('click', () => {
+            if (currentQty > 1) {
+                currentQty--;
+                qtyDisplay.value = currentQty;
+                updateCart();
+            }
+        });
+
+        qtyDisplay.addEventListener('input', (e) => {
+            let val = parseInt(e.target.value);
+            if (val >= 1 && val <= 1000) {
+                currentQty = val;
+                updateCart();
+            }
+        });
+        
+        btnPlus.addEventListener('click', () => {
+            if (currentQty < 1000) {
+                currentQty++;
+                qtyDisplay.value = currentQty;
+                updateCart();
+            }
+        });
+
+        // Initialize
+        lucide.createIcons();
+        updateCart();
+
+    </script>
+</body>
+</html>

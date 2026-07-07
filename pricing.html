@@ -20,6 +20,9 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', sans-serif;
             background-color: #ffffff;
@@ -142,6 +145,42 @@
         .animate-float-x {
             animation: floatX 2s ease-in-out infinite;
         }
+
+        /* Tooltip Animations */
+        @keyframes typewriter {
+            0%, 20% { width: 0; opacity: 1; }
+            40%, 80% { width: 100%; opacity: 1; }
+            100% { width: 0; opacity: 0; }
+        }
+        @keyframes logoChange {
+            0%, 30% { background-color: #94a3b8; border-radius: 4px; transform: scale(0.9); }
+            40%, 80% { background-color: #f97316; border-radius: 10px; transform: scale(1.1); box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.3); } 
+            100% { background-color: #94a3b8; border-radius: 4px; transform: scale(0.9); }
+        }
+        .animate-typewriter {
+            animation: typewriter 5s steps(20) infinite;
+        }
+        .animate-logo-change {
+            animation: logoChange 5s ease-in-out infinite;
+        }
+        @keyframes brandSwapLogo {
+            0%, 30% { background-color: #94a3b8; border-radius: 2px; transform: scale(1); }
+            40%, 80% { background-color: #ec4899; border-radius: 4px; transform: scale(1.1); box-shadow: 0 1px 2px rgba(236,72,153,0.3); }
+            100% { background-color: #94a3b8; border-radius: 2px; transform: scale(1); }
+        }
+        @keyframes brandSwapName {
+            0%, 30% { background-color: #e5e7eb; width: 40%; }
+            40%, 80% { background-color: #ec4899; width: 70%; }
+            100% { background-color: #e5e7eb; width: 40%; }
+        }
+        @keyframes themeSweep {
+            0%, 30% { opacity: 0; transform: translateX(-100%); }
+            40%, 80% { opacity: 0.8; transform: translateX(100%); }
+            100% { opacity: 0; transform: translateX(100%); }
+        }
+        .animate-brand-logo { animation: brandSwapLogo 5s ease-in-out infinite; }
+        .animate-brand-name { animation: brandSwapName 5s ease-in-out infinite; }
+        .animate-theme-sweep { animation: themeSweep 5s ease-in-out infinite; }
     
         /* Pricing Animations */
         @keyframes gradientPulse {
@@ -207,6 +246,31 @@
             animation: gradientPulse 3s linear infinite;
         }
 
+        html.hide-default-tab .service-tab[data-target="workforce"] { background-color: rgba(255,255,255,0.1) !important; color: white !important; box-shadow: none !important; }
+        html.show-email .service-tab[data-target="email"],
+        html.show-assessment .service-tab[data-target="assessment"],
+        html.show-interview .service-tab[data-target="interview"] { background-color: white !important; color: black !important; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1) !important; }
+        html.show-allinone .service-tab[data-target="allinone"] { transform: scale(1.05) !important; box-shadow: 0 0 15px rgba(59,130,246,0.5) !important; }
+    </style>
+    <script>
+        const hash = window.location.hash.substring(1);
+        const validHashes = ['workforce', 'email', 'assessment', 'interview', 'allinone'];
+        if (hash && validHashes.includes(hash) && hash !== 'workforce') {
+            document.documentElement.classList.add('hide-default-tab');
+            document.documentElement.classList.add('show-' + hash);
+        }
+    </script>
+    <style>
+        html.hide-default-tab #content-workforce { display: none !important; }
+        html.show-email #content-email { display: block !important; }
+        html.show-assessment #content-assessment { display: block !important; }
+        html.show-interview #content-interview { display: block !important; }
+        html.show-allinone #content-allinone { display: block !important; }
+        html.hide-default-tab .service-tab[data-target="workforce"] { background-color: rgba(255,255,255,0.1) !important; color: white !important; box-shadow: none !important; }
+        html.show-email .service-tab[data-target="email"],
+        html.show-assessment .service-tab[data-target="assessment"],
+        html.show-interview .service-tab[data-target="interview"] { background-color: white !important; color: black !important; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1) !important; }
+        html.show-allinone .service-tab[data-target="allinone"] { transform: scale(1.05) !important; box-shadow: 0 0 15px rgba(59,130,246,0.5) !important; }
     </style>
 </head>
 <body class="antialiased selection:bg-black selection:text-white">
@@ -279,29 +343,55 @@
             </a>
         </div>
     </nav>
-    <!-- Pricing Hero & Toggle -->
-    <div class="pt-32 pb-16 bg-[#FAFAFA] text-center">
-        <h1 class="text-5xl font-bold tracking-tight text-gray-900 mb-8 font-inter">Pricing</h1>
+    <!-- Pricing Hero & Tabs -->
+    <div class="pt-32 pb-16 bg-[#0a0a0a] text-center rounded-b-[40px] md:rounded-b-[60px] text-white shadow-xl relative z-20">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 font-inter">Choose a service – get started today</h1>
         
-        <!-- Toggle Switch -->
-        <div class="flex items-center justify-center gap-4">
-            <span class="text-sm font-medium text-gray-600">Pay monthly</span>
-            <button id="billing-toggle" class="relative inline-flex h-8 w-14 items-center rounded-full bg-orange-500 transition-colors focus:outline-none">
-                <span class="sr-only">Toggle billing</span>
-                <span id="toggle-circle" class="inline-block h-6 w-6 translate-x-7 rounded-full bg-white transition-transform shadow-sm"></span>
+        <!-- Service Tabs -->
+        <div class="flex flex-wrap items-center justify-center gap-3 px-4 max-w-5xl mx-auto" id="service-tabs">
+            <button onclick="switchService('workforce')" class="service-tab active px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-white text-black shadow-md" data-target="workforce">
+                <i data-lucide="layers" class="w-4 h-4 inline-block mr-1 align-text-bottom"></i> Workforce OS
             </button>
-            <div class="flex flex-col text-left">
-                <span class="text-sm font-medium text-gray-900">Pay yearly</span>
-                <span class="text-xs font-bold text-orange-500">Save 20%</span>
-            </div>
+            <button onclick="switchService('email')" class="service-tab px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-white/20 border border-white/10" data-target="email">
+                <i data-lucide="mail" class="w-4 h-4 inline-block mr-1 align-text-bottom"></i> Corporate Email
+            </button>
+            <button onclick="switchService('assessment')" class="hidden service-tab px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-white/20 border border-white/10" data-target="assessment">
+                <i data-lucide="check-square" class="w-4 h-4 inline-block mr-1 align-text-bottom"></i> Assessment Portal
+            </button>
+            <button onclick="switchService('interview')" class="hidden service-tab px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-white/20 border border-white/10" data-target="interview">
+                <i data-lucide="video" class="w-4 h-4 inline-block mr-1 align-text-bottom"></i> Interview Portal
+            </button>
+            <button onclick="switchService('allinone')" class="hidden service-tab px-5 py-2.5 rounded-full text-sm font-bold transition-all bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-[0_0_15px_rgba(59,130,246,0.5)] border border-blue-400/30 hover:scale-105" data-target="allinone">
+                <i data-lucide="sparkles" class="w-4 h-4 inline-block mr-1 align-text-bottom"></i> All-in-One Plan
+            </button>
         </div>
     </div>
 
-    <!-- Pricing Cards Section -->
-    <section class="px-4 py-8 bg-[#FAFAFA]">
-        <div class="max-w-[1200px] mx-auto">
+    <!-- Pricing Content Section -->
+    <section class="px-4 py-12 bg-[#FAFAFA] min-h-[80vh]">
+        
+        <div class="text-center mb-10">
+            <h2 id="service-title" class="text-3xl font-bold text-gray-900 mb-6">Workforce OS</h2>
             
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 relative">
+            <!-- Toggle Switch -->
+            <div id="billing-toggle-container" class="flex items-center justify-center gap-4">
+                <span class="text-sm font-medium text-gray-600">Pay monthly</span>
+                <button id="billing-toggle" class="relative inline-flex h-8 w-14 items-center rounded-full bg-orange-500 transition-colors focus:outline-none">
+                    <span class="sr-only">Toggle billing</span>
+                    <span id="toggle-circle" class="inline-block h-6 w-6 translate-x-7 rounded-full bg-white transition-transform shadow-sm"></span>
+                </button>
+                <div class="flex flex-col text-left">
+                    <span class="text-sm font-medium text-gray-900">Pay yearly</span>
+                    <span class="text-xs font-bold text-orange-500">Save 20%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-[1200px] mx-auto relative">
+            
+            <!-- WORKFORCE OS CONTENT -->
+            <div id="content-workforce" class="service-content">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 relative">
                 
                 <!-- Essential Card -->
                 <div class="bg-white border border-gray-200 p-10 flex flex-col hover:shadow-xl transition-shadow duration-300 relative z-10 md:border-r-0">
@@ -324,7 +414,7 @@
                         <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Data Integrity</li>
                     </ul>
                     
-                    <button class="w-full bg-gray-900 text-white rounded-full py-4 mt-10 font-medium hover:bg-gray-800 transition-colors">Get started</button>
+                    <button class="w-full bg-gray-900 text-white rounded-full py-4 mt-10 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=workforce-essential'">Get started</button>
                 </div>
 
                 <!-- Growth Card -->
@@ -354,7 +444,7 @@
                         <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Automatic Biometric Sync</li>
                     </ul>
                     
-                    <button class="w-full bg-gray-900 text-white rounded-full py-4 mt-10 font-medium hover:bg-gray-800 transition-colors">Get started</button>
+                    <button class="w-full bg-gray-900 text-white rounded-full py-4 mt-10 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=workforce-growth'">Get started</button>
                 </div>
                 <!-- Enterprise Card -->
                 <div class="bg-white border border-gray-200 p-10 flex flex-col hover:shadow-xl transition-shadow duration-300 relative z-10 lg:border-l-0">
@@ -374,58 +464,358 @@
                         <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Enterprise SLA</li>
                     </ul>
                     
-                    <button class="w-full bg-gray-900 text-white rounded-full py-4 mt-10 font-medium hover:bg-gray-800 transition-colors">Get in touch</button>
+                    <button class="w-full bg-gray-900 text-white rounded-full py-4 mt-10 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=workforce-enterprise'">Get in touch</button>
                 </div>
 
             </div>
 
-            <!-- Add-ons Minimal Rows -->
-            <div class="mt-16 mb-8">
-                <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Customize with Add-ons</h3>
-                <div class="max-w-2xl mx-auto space-y-0 border border-gray-200 bg-white">
-                    
-                    <div class="flex items-center justify-between p-5 border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                        <div class="flex items-center gap-4">
-                            <i data-lucide="video" class="w-5 h-5 text-gray-400"></i>
-                            <div>
-                                <h4 class="font-medium text-gray-900">Interview Portal</h4>
-                                <p class="text-xs text-gray-500 mt-0.5">Streamline your hiring and scheduling process.</p>
+            </div> <!-- End content-workforce -->
+
+            <!-- CORPORATE EMAIL CONTENT -->
+            <div id="content-email" class="service-content hidden">
+                
+                <!-- Term Selector -->
+                <div class="flex justify-center mb-10">
+                    <div class="bg-white border border-gray-200 rounded-full p-1 inline-flex items-center shadow-sm">
+                        <button class="email-term-btn active px-6 py-2 rounded-full text-sm font-semibold bg-orange-500 text-white transition-colors" data-term="48">48 Months (Save up to 75%)</button>
+                        <button class="email-term-btn px-6 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors" data-term="24">24 Months</button>
+                        <button class="email-term-btn px-6 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors" data-term="12">12 Months</button>
+                        <button class="email-term-btn px-6 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors" data-term="1">1 Month</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-0 relative">
+                    <!-- Starter Email -->
+                    <div class="bg-white border border-gray-200 p-10 flex flex-col hover:shadow-xl transition-shadow duration-300 relative z-10 md:border-r-0">
+                        <div class="absolute top-4 right-4 text-xs font-bold text-orange-500 hidden discount-badge" id="starter-discount">75% off</div>
+                        <h3 class="text-3xl font-semibold text-gray-900 mb-3 tracking-tight">Starter</h3>
+                        <p class="text-gray-500 mb-8 text-sm h-10">Best for solo entrepreneurs and small teams.</p>
+                        
+                        <div class="flex items-start gap-1 mb-8 relative">
+                            <div class="absolute -top-4 left-0 text-gray-400 line-through text-xs font-medium base-price" id="starter-base">₹80</div>
+                            <span class="text-5xl font-bold text-gray-900 tracking-tighter" id="starter-price">₹20</span>
+                            <div class="flex flex-col text-xs text-gray-500 font-medium ml-1 mt-1">
+                                <span>per mailbox</span>
+                                <span>per month</span>
                             </div>
                         </div>
-                        <div class="text-right">
-                            <span class="block font-medium text-gray-900">+₹40</span>
-                            <span class="text-[10px] text-gray-500">/emp/mo</span>
-                        </div>
+
+                        <div class="mb-4 text-sm font-medium text-gray-900">Top Features</div>
+                        <ul class="space-y-4 text-sm text-gray-600 flex-grow">
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> 1 mailbox included</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> 5 GB Email Storage</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> 5 forwarding rules</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> 5 Email Aliases</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Anti-spam & Anti-virus</li>
+                        </ul>
+                        
+                        <a href="#compare-features" class="text-[13px] font-semibold text-blue-600 hover:text-blue-700 hover:underline mt-4 block">See all features <i data-lucide="chevron-down" class="w-3 h-3 inline align-middle"></i></a>
+                        
+                        <div class="text-[10px] text-gray-400 mt-6 mb-4 term-text" id="starter-term-text">For 48-month term.</div>
+                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=email-starter'">Choose Plan</button>
                     </div>
 
-                    <div class="flex items-center justify-between p-5 border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                        <div class="flex items-center gap-4">
-                            <i data-lucide="message-square" class="w-5 h-5 text-gray-400"></i>
-                            <div>
-                                <h4 class="font-medium text-gray-900">Messaging Tool</h4>
-                                <p class="text-xs text-gray-500 mt-0.5">Internal chat and secure communication module.</p>
+                    <!-- Standard Email -->
+                    <div class="bg-white border border-gray-200 p-10 flex flex-col hover:shadow-xl transition-shadow duration-300 relative z-20">
+                        <div class="absolute -top-[1px] -left-[1px] -right-[1px] border-t-4 border-blue-500"></div>
+                        <div class="absolute top-4 right-4 text-xs font-bold text-blue-600 flex items-center gap-1">
+                            Most popular <i data-lucide="star" class="w-3 h-3 fill-blue-600"></i>
+                        </div>
+                        <div class="absolute top-4 right-28 text-xs font-bold text-orange-500 hidden discount-badge" id="standard-discount">70% off</div>
+                        
+                        <h3 class="text-3xl font-semibold text-gray-900 mb-3 tracking-tight">Standard</h3>
+                        <p class="text-gray-500 mb-8 text-sm h-10">Best for small businesses ready to scale.</p>
+                        
+                        <div class="flex items-start gap-1 mb-8 relative">
+                            <div class="absolute -top-4 left-0 text-gray-400 line-through text-xs font-medium base-price" id="standard-base">₹150</div>
+                            <span class="text-5xl font-bold text-gray-900 tracking-tighter" id="standard-price">₹45</span>
+                            <div class="flex flex-col text-xs text-gray-500 font-medium ml-1 mt-1">
+                                <span>per mailbox</span>
+                                <span>per month</span>
                             </div>
                         </div>
-                        <div class="text-right">
-                            <span class="block font-medium text-gray-900">+₹30</span>
-                            <span class="text-[10px] text-gray-500">/emp/mo</span>
-                        </div>
+
+                        <div class="mb-4 text-sm font-medium text-gray-900">Everything in Starter, plus</div>
+                        <ul class="space-y-4 text-sm text-gray-600 flex-grow">
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> 20 GB Email Storage</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> 20 forwarding rules</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> 10 Email Aliases</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Smart AI Reply & Summarize</li>
+                        </ul>
+                        
+                        <a href="#compare-features" class="text-[13px] font-semibold text-blue-600 hover:text-blue-700 hover:underline mt-4 block">See all features <i data-lucide="chevron-down" class="w-3 h-3 inline align-middle"></i></a>
+                        
+                        <div class="text-[10px] text-gray-400 mt-6 mb-4 term-text" id="standard-term-text">For 48-month term.</div>
+                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=email-standard'">Choose Plan</button>
                     </div>
 
-                    <div class="flex items-center justify-between p-5 hover:bg-gray-50 transition-colors">
-                        <div class="flex items-center gap-4">
-                            <i data-lucide="hard-drive" class="w-5 h-5 text-gray-400"></i>
-                            <div>
-                                <h4 class="font-medium text-gray-900">IT Inventory Management Tool</h4>
-                                <p class="text-xs text-gray-500 mt-0.5">Track laptops, assets, and software licenses.</p>
+                    <!-- Pro Email -->
+                    <div class="bg-white border border-gray-200 p-10 flex flex-col hover:shadow-xl transition-shadow duration-300 relative z-10 xl:border-l-0">
+                        <div class="absolute top-4 right-4 text-xs font-bold text-orange-500 hidden discount-badge" id="pro-discount">64% off</div>
+                        <h3 class="text-3xl font-semibold text-gray-900 mb-3 tracking-tight">Pro</h3>
+                        <p class="text-gray-500 mb-8 text-sm h-10">Perfect for growing businesses that need professional branding.</p>
+                        
+                        <div class="flex items-start gap-1 mb-8 relative">
+                            <div class="absolute -top-4 left-0 text-gray-400 line-through text-xs font-medium base-price" id="pro-base">₹599</div>
+                            <span class="text-5xl font-bold text-gray-900 tracking-tighter" id="pro-price">₹299</span>
+                            <div class="flex flex-col text-xs text-gray-500 font-medium ml-1 mt-1">
+                                <span>per mailbox</span>
+                                <span>per month</span>
                             </div>
                         </div>
-                        <div class="text-right">
-                            <span class="block font-medium text-gray-900">+₹50</span>
-                            <span class="text-[10px] text-gray-500">/emp/mo</span>
-                        </div>
+
+                        <div class="mb-4 text-sm font-medium text-gray-900">Everything in Standard, plus</div>
+                        <ul class="space-y-4 text-sm text-gray-600 flex-grow">
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> 50 GB Email Storage</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> 50 forwarding rules</li>
+                            <li class="group flex items-start gap-3 relative cursor-help">
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> 
+                                <span class="border-b border-dashed border-gray-400 hover:text-blue-600 transition-colors">Own Branding (Webmail)</span>
+                                
+                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-[260px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 bg-white rounded-xl shadow-2xl border border-gray-100 p-4 pointer-events-none">
+                                    <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-b border-r border-gray-100 transform rotate-45"></div>
+                                    <div class="relative z-10 flex flex-col gap-3">
+                                        <div class="text-xs font-semibold text-gray-900 text-center">Webmail Custom Branding</div>
+                                        <div class="w-full bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm flex h-[110px]">
+                                            <!-- Sidebar -->
+                                            <div class="w-1/3 bg-gray-50 border-r border-gray-100 flex flex-col">
+                                                <!-- Brand Header -->
+                                                <div class="p-2 border-b border-gray-200 flex items-center gap-1.5 bg-white overflow-hidden relative">
+                                                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-blue-50 to-transparent opacity-0 animate-theme-sweep"></div>
+                                                    <div class="w-4 h-4 animate-brand-logo flex items-center justify-center text-[6px] text-white font-bold relative z-10 shrink-0">★</div>
+                                                    <div class="h-1.5 animate-brand-name rounded relative z-10"></div>
+                                                </div>
+                                                <!-- Nav Items -->
+                                                <div class="p-2 space-y-1.5 mt-1 relative">
+                                                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-blue-50 to-transparent opacity-0 animate-theme-sweep"></div>
+                                                    <div class="h-1 w-full bg-blue-100 rounded relative z-10"></div>
+                                                    <div class="h-1 w-3/4 bg-gray-200 rounded relative z-10"></div>
+                                                    <div class="h-1 w-5/6 bg-gray-200 rounded relative z-10"></div>
+                                                </div>
+                                            </div>
+                                            <!-- Main Content -->
+                                            <div class="w-2/3 flex flex-col relative overflow-hidden">
+                                                <!-- Top bar -->
+                                                <div class="h-6 border-b border-gray-100 flex items-center px-2 justify-between bg-white relative z-10">
+                                                    <div class="h-1.5 w-12 bg-gray-200 rounded"></div>
+                                                    <div class="w-3 h-3 rounded-full bg-gray-200"></div>
+                                                </div>
+                                                <!-- Emails -->
+                                                <div class="p-2 space-y-2 relative z-10">
+                                                    <div class="flex gap-2 items-center">
+                                                        <div class="w-3 h-3 rounded-full bg-gray-200 shrink-0"></div>
+                                                        <div class="space-y-1 flex-1">
+                                                            <div class="h-1 w-full bg-gray-200 rounded"></div>
+                                                            <div class="h-1 w-2/3 bg-gray-100 rounded"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex gap-2 items-center">
+                                                        <div class="w-3 h-3 rounded-full bg-gray-200 shrink-0"></div>
+                                                        <div class="space-y-1 flex-1">
+                                                            <div class="h-1 w-11/12 bg-gray-200 rounded"></div>
+                                                            <div class="h-1 w-1/2 bg-gray-100 rounded"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Theming animation overlay -->
+                                                <div class="absolute inset-0 bg-gradient-to-br from-transparent via-blue-50 to-orange-50 opacity-0 animate-theme-sweep z-0 pointer-events-none"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="group flex items-start gap-3 relative cursor-help">
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> 
+                                <span class="border-b border-dashed border-gray-400 hover:text-blue-600 transition-colors">mail.yourdomain.com</span>
+                                
+                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-[260px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 bg-white rounded-xl shadow-2xl border border-gray-100 p-4 pointer-events-none">
+                                    <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-b border-r border-gray-100 transform rotate-45"></div>
+                                    <div class="relative z-10 flex flex-col gap-3">
+                                        <div class="text-xs font-semibold text-gray-900 text-center">Custom Domain</div>
+                                        
+                                        <div class="w-full bg-gray-50 rounded-lg overflow-hidden border border-gray-200 shadow-inner">
+                                            <div class="bg-gray-200 px-2 py-1.5 flex items-center gap-1.5 border-b border-gray-200">
+                                                <div class="flex gap-1">
+                                                    <div class="w-2 h-2 rounded-full bg-red-400"></div>
+                                                    <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
+                                                    <div class="w-2 h-2 rounded-full bg-green-400"></div>
+                                                </div>
+                                                <div class="ml-1 bg-white text-[9px] px-2 py-0.5 rounded text-gray-500 font-mono w-full truncate overflow-hidden relative flex items-center">
+                                                    <i data-lucide="lock" class="w-2 h-2 mr-1"></i>
+                                                    <div class="animate-typewriter border-r border-gray-500 pr-0.5 inline-block overflow-hidden whitespace-nowrap text-left text-blue-600">mail.yourdomain.com</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-white p-4 flex flex-col gap-3 items-center justify-center min-h-[90px] relative overflow-hidden">
+                                                <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-orange-50 opacity-50"></div>
+                                                <div class="w-10 h-10 animate-logo-change flex items-center justify-center text-[14px] font-bold text-white shadow-sm relative z-10">
+                                                    ★
+                                                </div>
+                                                <div class="flex flex-col gap-1.5 w-full items-center relative z-10">
+                                                    <div class="w-16 h-1.5 bg-gray-200 rounded-full animate-pulse"></div>
+                                                    <div class="w-10 h-1 bg-gray-100 rounded-full"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <a href="#compare-features" class="text-[13px] font-semibold text-blue-600 hover:text-blue-700 hover:underline mt-4 block">See all features <i data-lucide="chevron-down" class="w-3 h-3 inline align-middle"></i></a>
+                        
+                        <div class="text-[10px] text-gray-400 mt-6 mb-4 term-text" id="pro-term-text">For 48-month term.</div>
+                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=email-pro'">Choose Plan</button>
                     </div>
 
+                    <!-- Enterprise Email -->
+                    <div class="bg-white border border-gray-200 p-10 flex flex-col hover:shadow-xl transition-shadow duration-300 relative z-10 xl:border-l-0">
+                        <h3 class="text-3xl font-semibold text-gray-900 mb-3 tracking-tight">Enterprise</h3>
+                        <p class="text-gray-500 mb-8 text-sm h-10">Transform your business with a custom-tailored solution built for scale.</p>
+                        
+                        <div class="flex items-start gap-1 mb-8 relative">
+                            <span class="text-5xl font-bold text-gray-900 tracking-tighter">Custom</span>
+                        </div>
+
+                        <div class="mb-4 text-sm font-medium text-gray-900">Everything in Pro, plus</div>
+                        <ul class="space-y-4 text-sm text-gray-600 flex-grow">
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Unlimited Accounts</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Advanced Rules & Domain Blocking</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Priority Support & 99.99% SLA</li>
+                        </ul>
+                        
+                        <a href="#compare-features" class="text-[13px] font-semibold text-blue-600 hover:text-blue-700 hover:underline mt-4 block">See all features <i data-lucide="chevron-down" class="w-3 h-3 inline align-middle"></i></a>
+                        
+                        <div class="text-[10px] text-gray-400 mt-6 mb-4 term-text">Tailored specifically to your organization's needs.</div>
+                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html'">Contact Sales</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TECH ASSESSMENT CONTENT -->
+            <div id="content-assessment" class="service-content hidden">
+                <!-- Term Selector -->
+                <div class="flex justify-center mb-10">
+                    <div class="bg-white border border-gray-200 rounded-full p-1 inline-flex items-center shadow-sm">
+                        <button class="assessment-term-btn active px-6 py-2 rounded-full text-sm font-semibold bg-orange-500 text-white transition-colors" data-term="24">24 Months (Save up to 30%)</button>
+                        <button class="assessment-term-btn px-6 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors" data-term="12">12 Months (Save 20%)</button>
+                        <button class="assessment-term-btn px-6 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors" data-term="1">1 Month</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-0 relative max-w-5xl mx-auto">
+                    <!-- Standard Assessment -->
+                    <div class="bg-white border border-gray-200 p-10 flex flex-col hover:shadow-xl transition-shadow duration-300 relative z-20 md:border-r-0">
+                        <div class="absolute -top-[1px] -left-[1px] -right-[1px] border-t-4 border-blue-500"></div>
+                        <div class="absolute top-4 right-4 text-xs font-bold text-blue-600 flex items-center gap-1">
+                            Most popular <i data-lucide="star" class="w-3 h-3 fill-blue-600"></i>
+                        </div>
+                        <div class="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="code" class="w-8 h-8 text-blue-500"></i>
+                        </div>
+                        <h3 class="text-3xl font-semibold text-gray-900 mb-3 tracking-tight">Pro</h3>
+                        <p class="text-gray-500 mb-8 text-sm h-10">Evaluate candidates with coding challenges and MCQs in a proctored environment.</p>
+                        
+                        <div class="flex items-start gap-1 mb-8 relative">
+                            <div class="absolute -top-4 left-0 text-gray-400 line-through text-xs font-medium base-price" id="assessment-base">₹12,000</div>
+                            <span class="text-5xl font-bold text-gray-900 tracking-tighter" id="assessment-price">₹8,400</span>
+                            <div class="flex flex-col text-xs text-gray-500 font-medium ml-1 mt-1">
+                                <span>per month</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 text-sm font-medium text-gray-900">Features included</div>
+                        <ul class="space-y-4 text-sm text-gray-600 flex-grow">
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Unlimited technical MCQs</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Interactive Coding Challenges</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Automated Grading & Reports</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Proctoring (Anti-cheat measures)</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Custom Test Creation</li>
+                        </ul>
+                        
+                        <div class="text-[10px] text-gray-400 mt-6 mb-4 term-text" id="assessment-term-text">For 24-month term.</div>
+                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=assessment-pro'">Start Testing</button>
+                    </div>
+
+                    <!-- Enterprise Assessment -->
+                    <div class="bg-white border border-gray-200 p-10 flex flex-col hover:shadow-xl transition-shadow duration-300 relative z-10">
+                        <div class="w-16 h-16 bg-gray-50 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="building" class="w-8 h-8 text-gray-500"></i>
+                        </div>
+                        <h3 class="text-3xl font-semibold text-gray-900 mb-3 tracking-tight">Enterprise</h3>
+                        <p class="text-gray-500 mb-8 text-sm h-10">Fully custom experience tailored to your organization's brand.</p>
+                        
+                        <div class="flex items-start gap-1 mb-8 relative">
+                            <span class="text-5xl font-bold text-gray-900 tracking-tighter">Custom</span>
+                        </div>
+
+                        <div class="mb-4 text-sm font-medium text-gray-900">Everything in Pro, plus</div>
+                        <ul class="space-y-4 text-sm text-gray-600 flex-grow">
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Your Domain (e.g. assess.yourcompany.com)</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Your own custom page</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Your own custom theme</li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Dedicated Account Manager</li>
+                        </ul>
+                        
+                        <div class="text-[10px] text-gray-400 mt-6 mb-4 term-text">Tailored specifically to your organization's needs.</div>
+                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html'">Contact Sales</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INTERVIEW PORTAL CONTENT -->
+            <div id="content-interview" class="service-content hidden">
+                 <div class="text-center py-12 bg-white rounded-2xl border border-gray-200">
+                    <div class="w-16 h-16 bg-purple-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="video" class="w-8 h-8 text-purple-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Interview Portal</h3>
+                    <p class="text-gray-500 mb-6 max-w-lg mx-auto">Seamless video interviews with built-in whiteboard, code editor, and AI transcription.</p>
+                    <div class="flex justify-center gap-4">
+                        <div class="text-left bg-gray-50 p-6 rounded-xl border border-gray-100 min-w-[250px]">
+                            <div class="text-sm text-gray-500 font-medium mb-1">Pro Plan</div>
+                            <div class="text-3xl font-bold text-gray-900 mb-4">₹4,999 <span class="text-sm font-normal text-gray-500">/month</span></div>
+                            <ul class="text-xs text-gray-600 space-y-2 mb-6">
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-gray-900"></i> Up to 50 interviews/mo</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-gray-900"></i> Recording & Transcripts</li>
+                            </ul>
+                            <button class="w-full bg-black text-white rounded-full py-2.5 text-sm font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=interview-pro'">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ALL IN ONE CONTENT -->
+            <div id="content-allinone" class="service-content hidden">
+                 <div class="bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-3xl p-1 relative overflow-hidden shadow-2xl max-w-5xl mx-auto">
+                    <!-- Animated border simulation with inner padding -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-30 animate-gradient-pulse"></div>
+                    <div class="bg-gray-900 rounded-[22px] p-8 md:p-12 relative z-10 flex flex-col md:flex-row gap-8 items-center">
+                        <div class="flex-1 text-white text-left">
+                            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold mb-4 border border-blue-500/30">
+                                <i data-lucide="crown" class="w-3.5 h-3.5"></i> Ultimate Value
+                            </div>
+                            <h3 class="text-3xl md:text-4xl font-bold mb-4">The PXP Business Suite</h3>
+                            <p class="text-gray-400 mb-6 line-clamp-3 md:line-clamp-none">Get complete access to the entire PeopleXplus ecosystem. Workforce OS, Corporate Email, Assessment & Interview portals all unified in one powerful platform for a fraction of the cost.</p>
+                            
+                            <div class="flex items-baseline gap-2 mb-8">
+                                <span class="text-5xl font-black">₹12,000</span>
+                                <span class="text-gray-400 font-medium">/month</span>
+                            </div>
+
+                            <button class="bg-white text-black hover:bg-gray-100 font-bold py-3.5 px-8 rounded-full transition-transform hover:scale-105" onclick="window.location.href='checkout.html?plan=all-in-one'">Claim All-in-One Plan</button>
+                        </div>
+                        
+                        <div class="flex-1 bg-white/5 border border-white/10 rounded-2xl p-6 w-full text-left">
+                            <h4 class="text-lg font-semibold text-white mb-4">Everything Included:</h4>
+                            <ul class="space-y-4">
+                                <li class="flex items-center gap-3 text-gray-300"><div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0"><i data-lucide="layers" class="w-4 h-4 text-blue-400"></i></div> <b>Workforce OS (Growth Plan)</b></li>
+                                <li class="flex items-center gap-3 text-gray-300"><div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center shrink-0"><i data-lucide="mail" class="w-4 h-4 text-purple-400"></i></div> <b>Pro Corporate Email (50GB)</b></li>
+                                <li class="flex items-center gap-3 text-gray-300"><div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><i data-lucide="check-square" class="w-4 h-4 text-green-400"></i></div> <b>Unlimited Assessments</b></li>
+                                <li class="flex items-center gap-3 text-gray-300"><div class="w-8 h-8 rounded-full bg-orange-500/20 flex items-center justify-center shrink-0"><i data-lucide="video" class="w-4 h-4 text-orange-400"></i></div> <b>Unlimited Interviews</b></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -433,13 +823,13 @@
     </section>
 
     <!-- Expanded Comparison Table -->
-    <section class="px-4 py-24 bg-white border-t border-gray-100">
+    <section id="compare-features" class="px-4 py-24 bg-white border-t border-gray-100">
         <div class="max-w-[1000px] mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold tracking-tight text-gray-900 mb-4">Compare features</h2>
             </div>
 
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto" id="table-workforce">
                 <table class="w-full text-left border-collapse min-w-[800px]">
                     <thead>
                         <tr>
@@ -491,7 +881,7 @@
                         </tr>
                         <tr class="border-b border-gray-100 hover:bg-gray-50">
                             <td class="px-4 py-4 font-medium">Document Storage</td>
-                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                            <td class="px-4 py-4 text-center"><span class="text-gray-300">—</span></td>
                             <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
                             <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
                         </tr>
@@ -533,7 +923,7 @@
                         <tr class="border-b border-gray-100 hover:bg-gray-50">
                             <td class="px-4 py-4 font-medium">Shift Scheduling</td>
                             <td class="px-4 py-4 text-center"><span class="text-gray-300">—</span></td>
-                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                            <td class="px-4 py-4 text-center"><span class="text-gray-300">—</span></td>
                             <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
                         </tr>
 
@@ -583,6 +973,194 @@
                             <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
                         </tr>
                         
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Corporate Email Compare Table -->
+            <div class="overflow-x-auto hidden" id="table-email">
+                <table class="w-full text-left border-collapse min-w-[800px]">
+                    <thead>
+                        <tr>
+                            <th class="p-4 border-b border-gray-200 text-sm font-medium text-transparent w-[30%]">Features</th>
+                            <th class="p-4 border-b border-gray-200 text-sm font-bold text-gray-900 text-center w-[17.5%]">Starter</th>
+                            <th class="p-4 border-b border-gray-200 text-sm font-bold text-gray-900 text-center w-[17.5%]">Standard</th>
+                            <th class="p-4 border-b border-gray-200 text-sm font-bold text-gray-900 text-center w-[17.5%]">Pro</th>
+                            <th class="p-4 border-b border-gray-200 text-sm font-bold text-gray-900 text-center w-[17.5%]">Enterprise</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-[13px] text-gray-800">
+                        <tr class="bg-[#F3F4F6]">
+                            <td colspan="5" class="px-4 py-3 font-semibold text-gray-900">Overview</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="px-4 py-4 font-medium">Mailboxes Included</td>
+                            <td class="px-4 py-4 text-center">1</td>
+                            <td class="px-4 py-4 text-center">1</td>
+                            <td class="px-4 py-4 text-center">1</td>
+                            <td class="px-4 py-4 text-center">Unlimited</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="px-4 py-4 font-medium">Email Storage</td>
+                            <td class="px-4 py-4 text-center">5 GB</td>
+                            <td class="px-4 py-4 text-center">20 GB</td>
+                            <td class="px-4 py-4 text-center">50 GB</td>
+                            <td class="px-4 py-4 text-center">Unlimited</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="px-4 py-4 font-medium">Forwarding Rules</td>
+                            <td class="px-4 py-4 text-center">5</td>
+                            <td class="px-4 py-4 text-center">20</td>
+                            <td class="px-4 py-4 text-center">50</td>
+                            <td class="px-4 py-4 text-center">Unlimited</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="px-4 py-4 font-medium">Email Aliases</td>
+                            <td class="px-4 py-4 text-center">5</td>
+                            <td class="px-4 py-4 text-center">10</td>
+                            <td class="px-4 py-4 text-center">25</td>
+                            <td class="px-4 py-4 text-center">Unlimited</td>
+                        </tr>
+                        <tr class="bg-[#F3F4F6]">
+                            <td colspan="5" class="px-4 py-3 font-semibold text-gray-900">Security & AI</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="px-4 py-4 font-medium">Anti-spam & Anti-virus</td>
+                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="px-4 py-4 font-medium flex items-center gap-1">Smart AI Reply & Summarize <i data-lucide="info" class="w-3 h-3 text-gray-400"></i></td>
+                            <td class="px-4 py-4 text-center"><span class="text-gray-300">—</span></td>
+                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="px-4 py-4 font-medium">Advanced Rules & Domain Blocking</td>
+                            <td class="px-4 py-4 text-center"><span class="text-gray-300">—</span></td>
+                            <td class="px-4 py-4 text-center"><span class="text-gray-300">—</span></td>
+                            <td class="px-4 py-4 text-center"><span class="text-gray-300">—</span></td>
+                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                        </tr>
+                        <tr class="bg-[#F3F4F6]">
+                            <td colspan="5" class="px-4 py-3 font-semibold text-gray-900">Customization & Support</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="px-4 py-4 font-medium">
+                                <div class="group inline-flex items-center gap-1 relative cursor-help">
+                                    <span class="border-b border-dashed border-gray-400 hover:text-blue-600 transition-colors">Own Branding (Webmail)</span>
+                                    
+                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-[260px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 bg-white rounded-xl shadow-2xl border border-gray-100 p-4 pointer-events-none">
+                                        <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-b border-r border-gray-100 transform rotate-45"></div>
+                                        <div class="relative z-10 flex flex-col gap-3">
+                                            <div class="text-xs font-semibold text-gray-900 text-center">Webmail Custom Branding</div>
+                                            <div class="w-full bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm flex h-[110px]">
+                                                <!-- Sidebar -->
+                                                <div class="w-1/3 bg-gray-50 border-r border-gray-100 flex flex-col">
+                                                    <!-- Brand Header -->
+                                                    <div class="p-2 border-b border-gray-200 flex items-center gap-1.5 bg-white overflow-hidden relative">
+                                                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-blue-50 to-transparent opacity-0 animate-theme-sweep"></div>
+                                                        <div class="w-4 h-4 animate-brand-logo flex items-center justify-center text-[6px] text-white font-bold relative z-10 shrink-0">★</div>
+                                                        <div class="h-1.5 animate-brand-name rounded relative z-10"></div>
+                                                    </div>
+                                                    <!-- Nav Items -->
+                                                    <div class="p-2 space-y-1.5 mt-1 relative">
+                                                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-blue-50 to-transparent opacity-0 animate-theme-sweep"></div>
+                                                        <div class="h-1 w-full bg-blue-100 rounded relative z-10"></div>
+                                                        <div class="h-1 w-3/4 bg-gray-200 rounded relative z-10"></div>
+                                                        <div class="h-1 w-5/6 bg-gray-200 rounded relative z-10"></div>
+                                                    </div>
+                                                </div>
+                                                <!-- Main Content -->
+                                                <div class="w-2/3 flex flex-col relative overflow-hidden">
+                                                    <!-- Top bar -->
+                                                    <div class="h-6 border-b border-gray-100 flex items-center px-2 justify-between bg-white relative z-10">
+                                                        <div class="h-1.5 w-12 bg-gray-200 rounded"></div>
+                                                        <div class="w-3 h-3 rounded-full bg-gray-200"></div>
+                                                    </div>
+                                                    <!-- Emails -->
+                                                    <div class="p-2 space-y-2 relative z-10">
+                                                        <div class="flex gap-2 items-center">
+                                                            <div class="w-3 h-3 rounded-full bg-gray-200 shrink-0"></div>
+                                                            <div class="space-y-1 flex-1">
+                                                                <div class="h-1 w-full bg-gray-200 rounded"></div>
+                                                                <div class="h-1 w-2/3 bg-gray-100 rounded"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex gap-2 items-center">
+                                                            <div class="w-3 h-3 rounded-full bg-gray-200 shrink-0"></div>
+                                                            <div class="space-y-1 flex-1">
+                                                                <div class="h-1 w-11/12 bg-gray-200 rounded"></div>
+                                                                <div class="h-1 w-1/2 bg-gray-100 rounded"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Theming animation overlay -->
+                                                    <div class="absolute inset-0 bg-gradient-to-br from-transparent via-blue-50 to-orange-50 opacity-0 animate-theme-sweep z-0 pointer-events-none"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-4 text-center"><span class="text-gray-300">—</span></td>
+                            <td class="px-4 py-4 text-center"><span class="text-gray-300">—</span></td>
+                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="px-4 py-4 font-medium">
+                                <div class="group inline-flex items-center gap-1 relative cursor-help">
+                                    <span class="border-b border-dashed border-gray-400 hover:text-blue-600 transition-colors">Custom Domain (mail.yourdomain.com)</span>
+                                    
+                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-[260px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 bg-white rounded-xl shadow-2xl border border-gray-100 p-4 pointer-events-none">
+                                        <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-b border-r border-gray-100 transform rotate-45"></div>
+                                        <div class="relative z-10 flex flex-col gap-3">
+                                            <div class="text-xs font-semibold text-gray-900 text-center">Custom Domain</div>
+                                            
+                                            <div class="w-full bg-gray-50 rounded-lg overflow-hidden border border-gray-200 shadow-inner">
+                                                <div class="bg-gray-200 px-2 py-1.5 flex items-center gap-1.5 border-b border-gray-200">
+                                                    <div class="flex gap-1">
+                                                        <div class="w-2 h-2 rounded-full bg-red-400"></div>
+                                                        <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
+                                                        <div class="w-2 h-2 rounded-full bg-green-400"></div>
+                                                    </div>
+                                                    <div class="ml-1 bg-white text-[9px] px-2 py-0.5 rounded text-gray-500 font-mono w-full truncate overflow-hidden relative flex items-center">
+                                                        <i data-lucide="lock" class="w-2 h-2 mr-1"></i>
+                                                        <div class="animate-typewriter border-r border-gray-500 pr-0.5 inline-block overflow-hidden whitespace-nowrap text-left text-blue-600">mail.yourdomain.com</div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="bg-white p-4 flex flex-col gap-3 items-center justify-center min-h-[90px] relative overflow-hidden">
+                                                    <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-orange-50 opacity-50"></div>
+                                                    <div class="w-10 h-10 animate-logo-change flex items-center justify-center text-[14px] font-bold text-white shadow-sm relative z-10">
+                                                        ★
+                                                    </div>
+                                                    <div class="flex flex-col gap-1.5 w-full items-center relative z-10">
+                                                        <div class="w-16 h-1.5 bg-gray-200 rounded-full animate-pulse"></div>
+                                                        <div class="w-10 h-1 bg-gray-100 rounded-full"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-4 text-center"><span class="text-gray-300">—</span></td>
+                            <td class="px-4 py-4 text-center"><span class="text-gray-300">—</span></td>
+                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="px-4 py-4 font-medium">Priority Support & 99.99% SLA</td>
+                            <td class="px-4 py-4 text-center"><span class="text-gray-300">—</span></td>
+                            <td class="px-4 py-4 text-center"><span class="text-gray-300">—</span></td>
+                            <td class="px-4 py-4 text-center"><span class="text-gray-300">—</span></td>
+                            <td class="px-4 py-4 text-center"><i data-lucide="check" class="w-4 h-4 mx-auto text-gray-900"></i></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -713,6 +1291,257 @@
             });
             // Init
             updatePrices();
+        }
+
+        // Service Tabs Logic
+        const serviceTabs = document.querySelectorAll('.service-tab');
+        const serviceContents = document.querySelectorAll('.service-content');
+        const serviceTitle = document.getElementById('service-title');
+        
+        const serviceNames = {
+            'workforce': 'Workforce OS',
+            'email': 'Corporate Email',
+            'assessment': 'Assessment Portal',
+            'interview': 'Interview Portal',
+            'allinone': 'All-in-One Business Plan'
+        };
+
+        function switchService(targetId) {
+            // Clean up anti-FOUC classes
+            document.documentElement.classList.remove('hide-default-tab', 'show-email', 'show-assessment', 'show-interview', 'show-allinone');
+            // Update tabs UI
+            serviceTabs.forEach(tab => {
+                const isAllInOne = tab.dataset.target === 'allinone';
+                
+                if (tab.dataset.target === targetId) {
+                    tab.classList.add('active');
+                    if (isAllInOne) {
+                        tab.classList.add('scale-105', 'ring-2', 'ring-white', 'ring-offset-2', 'ring-offset-[#0a0a0a]');
+                    } else {
+                        tab.classList.remove('bg-white/10', 'text-white', 'border-white/10', 'hover:bg-white/20');
+                        tab.classList.add('bg-white', 'text-black', 'shadow-md');
+                    }
+                } else {
+                    tab.classList.remove('active');
+                    if (isAllInOne) {
+                        tab.classList.remove('scale-105', 'ring-2', 'ring-white', 'ring-offset-2', 'ring-offset-[#0a0a0a]');
+                    } else {
+                        tab.classList.add('bg-white/10', 'text-white', 'border-white/10', 'hover:bg-white/20');
+                        tab.classList.remove('bg-white', 'text-black', 'shadow-md');
+                    }
+                }
+            });
+
+            // Update Title
+            if (serviceTitle) {
+                serviceTitle.textContent = serviceNames[targetId];
+            }
+
+            // Update Billing Toggle Visibility
+            const billingContainer = document.getElementById('billing-toggle-container');
+            if (billingContainer) {
+                if (targetId === 'workforce') {
+                    billingContainer.style.display = 'flex';
+                } else {
+                    billingContainer.style.display = 'none';
+                }
+            }
+
+            // Update Compare Features Section Visibility
+            const compareSection = document.getElementById('compare-features');
+            const tableWorkforce = document.getElementById('table-workforce');
+            const tableEmail = document.getElementById('table-email');
+            
+            if (compareSection) {
+                if (targetId === 'workforce' || targetId === 'email') {
+                    compareSection.style.display = 'block';
+                    if (targetId === 'workforce') {
+                        if (tableWorkforce) tableWorkforce.classList.remove('hidden');
+                        if (tableEmail) tableEmail.classList.add('hidden');
+                    } else if (targetId === 'email') {
+                        if (tableWorkforce) tableWorkforce.classList.add('hidden');
+                        if (tableEmail) tableEmail.classList.remove('hidden');
+                    }
+                } else {
+                    compareSection.style.display = 'none';
+                }
+            }
+
+            // Update Content Visibility
+            serviceContents.forEach(content => {
+                if (content.id === `content-${targetId}`) {
+                    content.classList.remove('hidden');
+                    // simple animation
+                    content.style.opacity = '0';
+                    content.style.transform = 'translateY(10px)';
+                    setTimeout(() => {
+                        content.style.transition = 'all 0.4s ease';
+                        content.style.opacity = '1';
+                        content.style.transform = 'translateY(0)';
+                    }, 50);
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+            
+            // Re-render icons for new content
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+            
+            // Update URL hash without scrolling
+            if(history.pushState) {
+                history.pushState(null, null, '#' + targetId);
+            }
+        }
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && serviceNames[hash]) {
+                switchService(hash);
+            }
+        });
+
+
+        // Corporate Email Term Logic
+        const emailTermBtns = document.querySelectorAll('.email-term-btn');
+        const starterPrice = document.getElementById('starter-price');
+        const starterBase = document.getElementById('starter-base');
+        const starterDiscount = document.getElementById('starter-discount');
+        const starterTermText = document.getElementById('starter-term-text');
+        
+        const standardPrice = document.getElementById('standard-price');
+        const standardBase = document.getElementById('standard-base');
+        const standardDiscount = document.getElementById('standard-discount');
+        const standardTermText = document.getElementById('standard-term-text');
+        
+        const proPrice = document.getElementById('pro-price');
+        const proBase = document.getElementById('pro-base');
+        const proDiscount = document.getElementById('pro-discount');
+        const proTermText = document.getElementById('pro-term-text');
+        
+        // Removed enterprise dynamic logic as it is now custom pricing
+
+        const emailPricing = {
+            '48': {
+                starter: { price: 20, base: 80, discount: '75% off' },
+                standard: { price: 45, base: 150, discount: '70% off' },
+                pro: { price: 299, base: 599, discount: '50% off' },
+                enterprise: { price: '45,000', base: '60,000', discount: '25% off' }
+            },
+            '24': {
+                starter: { price: 50, base: 80, discount: '37% off' },
+                standard: { price: 90, base: 150, discount: '40% off' },
+                pro: { price: 399, base: 599, discount: '33% off' },
+                enterprise: { price: '50,000', base: '60,000', discount: '16% off' }
+            },
+            '12': {
+                starter: { price: 65, base: 80, discount: '18% off' },
+                standard: { price: 120, base: 150, discount: '20% off' },
+                pro: { price: 499, base: 599, discount: '17% off' },
+                enterprise: { price: '55,000', base: '60,000', discount: '8% off' }
+            },
+            '1': {
+                starter: { price: 80, base: 80, discount: '' },
+                standard: { price: 150, base: 150, discount: '' },
+                pro: { price: 599, base: 599, discount: '' },
+                enterprise: { price: '60,000', base: '60,000', discount: '' }
+            }
+        };
+
+        if(emailTermBtns.length > 0) {
+            emailTermBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    // UI update
+                    emailTermBtns.forEach(b => {
+                        b.classList.remove('bg-orange-500', 'text-white', 'active');
+                        b.classList.add('text-gray-600', 'hover:text-gray-900');
+                    });
+                    e.target.classList.remove('text-gray-600', 'hover:text-gray-900');
+                    e.target.classList.add('bg-orange-500', 'text-white', 'active');
+
+                    const term = e.target.dataset.term;
+                    const data = emailPricing[term];
+
+                    // Update Starter
+                    starterPrice.textContent = '₹' + data.starter.price;
+                    if(term === '1') {
+                        starterBase.classList.add('hidden');
+                        starterDiscount.classList.add('hidden');
+                        starterTermText.textContent = 'Price per mailbox. For 1-month term.';
+                    } else {
+                        starterBase.classList.remove('hidden');
+                        starterDiscount.classList.remove('hidden');
+                        starterDiscount.textContent = data.starter.discount;
+                        starterTermText.textContent = `Price per mailbox. For ${term}-month term.`;
+                    }
+
+                    // Update Standard
+                    standardPrice.textContent = '₹' + data.standard.price;
+                    if(term === '1') {
+                        standardBase.classList.add('hidden');
+                        standardDiscount.classList.add('hidden');
+                        standardTermText.textContent = 'Price per mailbox. For 1-month term.';
+                    } else {
+                        standardBase.classList.remove('hidden');
+                        standardDiscount.classList.remove('hidden');
+                        standardDiscount.textContent = data.standard.discount;
+                        standardTermText.textContent = `Price per mailbox. For ${term}-month term.`;
+                    }
+
+                    // Update Pro
+                    proPrice.textContent = '₹' + data.pro.price;
+                    if(term === '1') {
+                        proBase.classList.add('hidden');
+                        proDiscount.classList.add('hidden');
+                        proTermText.textContent = 'Price per mailbox. For 1-month term.';
+                    } else {
+                        proBase.classList.remove('hidden');
+                        proDiscount.classList.remove('hidden');
+                        proDiscount.textContent = data.pro.discount;
+                        proTermText.textContent = `Price per mailbox. For ${term}-month term.`;
+                    }
+
+                    // Enterprise is static 'Custom' pricing
+                });
+            });
+        }
+
+        // Assessment Portal Term Logic
+        const assessmentTermBtns = document.querySelectorAll('.assessment-term-btn');
+        const assessmentPrice = document.getElementById('assessment-price');
+        const assessmentBase = document.getElementById('assessment-base');
+        const assessmentTermText = document.getElementById('assessment-term-text');
+
+        const assessmentPricing = {
+            '24': { price: '8,400', discountText: 'For 24-month term.' },
+            '12': { price: '9,600', discountText: 'For 12-month term.' },
+            '1': { price: '12,000', discountText: 'For 1-month term.' }
+        };
+
+        if(assessmentTermBtns.length > 0) {
+            assessmentTermBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    assessmentTermBtns.forEach(b => {
+                        b.classList.remove('bg-orange-500', 'text-white', 'active');
+                        b.classList.add('text-gray-600', 'hover:text-gray-900');
+                    });
+                    e.target.classList.remove('text-gray-600', 'hover:text-gray-900');
+                    e.target.classList.add('bg-orange-500', 'text-white', 'active');
+
+                    const term = e.target.dataset.term;
+                    const data = assessmentPricing[term];
+
+                    assessmentPrice.textContent = '₹' + data.price;
+                    assessmentTermText.textContent = data.discountText;
+                    
+                    if(term === '1') {
+                        assessmentBase.classList.add('hidden');
+                    } else {
+                        assessmentBase.classList.remove('hidden');
+                    }
+                });
+            });
         }
 
     </script>
