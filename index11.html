@@ -3491,67 +3491,70 @@
         </div>
 
         <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-20">
-
+            <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 mb-12 md:mb-20">
+                
                 <!-- Brand Column -->
-                <div class="lg:col-span-4">
-                    <div class="flex items-center gap-2 mb-6">
+                <div class="w-full lg:w-4/12 flex flex-col items-center lg:items-start text-center lg:text-left">
+                    <div class="flex items-center gap-2 mb-4 md:mb-6">
                         <img src="./pxp-logo.png" alt="People X Plus Logo"
-                            class="h-10 w-auto filter invert brightness-0">
+                            class="h-8 md:h-10 w-auto filter invert brightness-0">
                     </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-8 max-w-xs">
+                    <p class="text-gray-400 text-xs md:text-sm leading-relaxed mb-6 max-w-xs">
                         Ready to upgrade your company's operations? Let's discuss your custom software requirements
                         today.
                     </p>
-                    <div class="flex gap-6">
+                    <div class="flex gap-4 md:gap-6">
                         <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="facebook"
-                                class="w-5 h-5"></i></a>
+                                class="w-4 h-4 md:w-5 md:h-5"></i></a>
                         <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="instagram"
-                                class="w-5 h-5"></i></a>
+                                class="w-4 h-4 md:w-5 md:h-5"></i></a>
                         <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="youtube"
-                                class="w-5 h-5"></i></a>
+                                class="w-4 h-4 md:w-5 md:h-5"></i></a>
                         <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="linkedin"
-                                class="w-5 h-5"></i></a>
+                                class="w-4 h-4 md:w-5 md:h-5"></i></a>
                         <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="dribbble"
-                                class="w-5 h-5"></i></a>
+                                class="w-4 h-4 md:w-5 md:h-5"></i></a>
                     </div>
                 </div>
 
-                <!-- Spacer to push columns to right -->
-                <div class="hidden lg:block lg:col-span-2"></div>
+                <!-- Spacer -->
+                <div class="hidden lg:block lg:w-1/12"></div>
 
-                <!-- Links Column 1: Company -->
-                <div class="lg:col-span-2">
-                    <h4 class="font-medium text-lg mb-6">Company</h4>
-                    <ul class="space-y-4 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Career</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Case Studies</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
-                    </ul>
-                </div>
+                <!-- Links Grid (3 columns side-by-side on all screens) -->
+                <div class="w-full lg:w-7/12 grid grid-cols-3 gap-2 sm:gap-6 text-left">
+                    <!-- Links Column 1: Company -->
+                    <div>
+                        <h4 class="font-medium text-[11px] sm:text-sm md:text-lg mb-3 md:mb-6 text-gray-200">Company</h4>
+                        <ul class="space-y-2 md:space-y-4 text-[9px] sm:text-[11px] md:text-sm text-gray-400">
+                            <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Career</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Case Studies</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                        </ul>
+                    </div>
 
-                <!-- Links Column 2: Support -->
-                <div class="lg:col-span-2">
-                    <h4 class="font-medium text-lg mb-6">Support</h4>
-                    <ul class="space-y-4 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Tutorial</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
-                    </ul>
-                </div>
+                    <!-- Links Column 2: Support -->
+                    <div>
+                        <h4 class="font-medium text-[11px] sm:text-sm md:text-lg mb-3 md:mb-6 text-gray-200">Support</h4>
+                        <ul class="space-y-2 md:space-y-4 text-[9px] sm:text-[11px] md:text-sm text-gray-400">
+                            <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Tutorial</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
+                        </ul>
+                    </div>
 
-                <!-- Links Column 3: Legal -->
-                <div class="lg:col-span-2">
-                    <h4 class="font-medium text-lg mb-6">Legal Policies</h4>
-                    <ul class="space-y-4 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-white transition-colors">Terms & Conditions</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Refund Policy</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">GDPR Compliance</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Affiliate Policy</a></li>
-                    </ul>
+                    <!-- Links Column 3: Legal -->
+                    <div>
+                        <h4 class="font-medium text-[11px] sm:text-sm md:text-lg mb-3 md:mb-6 text-gray-200">Legal Policies</h4>
+                        <ul class="space-y-2 md:space-y-4 text-[9px] sm:text-[11px] md:text-sm text-gray-400">
+                            <li><a href="#" class="hover:text-white transition-colors">Terms & Conditions</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Refund Policy</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">GDPR Compliance</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Affiliate Policy</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
