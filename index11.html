@@ -549,6 +549,17 @@
         .delay-3000 {
             animation-delay: 3s;
         }
+    
+        @media (max-width:768px){
+            .glass-nav{height:64px;padding:0 16px;}
+            h1{line-height:1.1!important;}
+            section{overflow:hidden;}
+            .folder-stack.active .folder-card.left{transform:translateX(-70px) rotate(-8deg) scale(.88);}
+            .folder-stack.active .folder-card.right{transform:translateX(70px) rotate(8deg) scale(.88);}
+            .w-\[350px\],.w-\[450px\],.w-\[500px\]{width:100%!important;}
+            .h-\[200px\],.h-\[300px\]{height:auto!important;min-height:180px;}
+            .rounded-3xl{border-radius:24px;}
+        }
     </style>
 </head>
 
@@ -632,7 +643,7 @@
     </nav>
 
     <!-- Wrapper for Top Hero Section -->
-    <div class="px-2 md:px-4 lg:px-6 pt-24 md:pt-28 pb-6 relative z-10 bg-white">
+    <div class="px-2 md:px-4 lg:px-6 pt-20 md:pt-28 pb-4 md:pb-6 relative z-10 bg-white">
 
         <!-- Main Gray Container -->
         <!-- Container is w-full (full width) but content inside is constrained -->
@@ -644,9 +655,9 @@
             <div class="connector-dot top-1/2 right-0 translate-x-1/2"></div>
 
             <!-- Hero Text Content -->
-            <div class="text-center max-w-4xl px-6 relative z-10 mt-32 mb-16">
-                <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-8 reveal-text leading-[1.1]">
-                    Your Corporate Software, <br />
+            <div class="text-center max-w-4xl px-2 md:px-6 relative z-10 mt-12 md:mt-32 mb-10 md:mb-16">
+                <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-4 md:mb-8 reveal-text leading-[1.1]">
+                    Your Corporate Software, <br class="hidden md:block" />
                     <span class="text-gray-900">Built Exactly How You Want It.</span>
                 </h1>
                 <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-10 reveal-text reveal-delay-1 leading-relaxed">
@@ -672,69 +683,69 @@
             <div
                 class="w-full max-w-6xl px-4 md:px-12 relative z-10 reveal-text reveal-delay-3 mt-auto group/hero cursor-default">
                 <div
-                    class="w-full h-[400px] md:h-[600px] rounded-t-3xl overflow-hidden relative shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1)] bg-[#f8fafc] flex border border-gray-200 border-b-0 transition-shadow duration-500 p-2 md:p-4 pb-0 group-hover/hero:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)]">
+                    class="w-full aspect-square md:aspect-auto md:h-[600px] rounded-t-3xl overflow-hidden relative shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1)] bg-[#f8fafc] flex border border-gray-200 border-b-0 transition-shadow duration-500 p-2 md:p-4 pb-0 group-hover/hero:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)]">
                     <!-- Inner Container -->
                     <div
                         class="w-full h-full bg-white rounded-t-2xl shadow-sm border border-gray-100 border-b-0 flex overflow-hidden relative z-10">
 
                         <!-- Sidebar -->
                         <div
-                            class="w-24 md:w-48 bg-gray-50 border-r border-gray-100 flex flex-col items-center py-6 md:py-10 gap-6 md:gap-10 shrink-0 z-20">
+                            class="w-16 md:w-48 bg-gray-50 border-r border-gray-100 flex flex-col items-center py-4 md:py-10 gap-4 md:gap-10 shrink-0 z-20">
                             <!-- Animated PXP Logo -->
                             <div
                                 class="relative group-hover/hero:scale-110 transition-transform duration-700 drop-shadow-md">
-                                <img src="./pxp-logo.png" alt="PXP Logo" class="h-10 md:h-14 w-auto object-contain">
+                                <img src="./pxp-logo.png" alt="PXP Logo" class="h-6 md:h-14 w-auto object-contain">
                                 <!-- Glow behind logo -->
                                 <div
                                     class="absolute inset-0 bg-blue-400/20 blur-2xl -z-10 rounded-full transform scale-150">
                                 </div>
                             </div>
                             <div
-                                class="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest -mt-4 md:-mt-6">
+                                class="text-[8px] md:text-xs font-bold text-gray-400 uppercase tracking-widest -mt-2 md:-mt-6">
                                 Dashboard</div>
 
                             <!-- Menu Items -->
-                            <div class="w-full flex flex-col gap-2 px-3 md:px-6 mt-4 relative z-50">
+                            <div class="w-full flex flex-col gap-1.5 md:gap-2 px-1.5 md:px-6 mt-2 md:mt-4 relative z-50">
                                 <div id="tab-dashboard" onclick="switchHeroTab('dashboard')"
-                                    class="hero-sidebar-tab w-full bg-white shadow-sm border border-gray-100 rounded-lg md:rounded-xl p-2 md:p-3 flex items-center gap-3 text-xs md:text-sm font-semibold text-gray-700 cursor-pointer">
+                                    class="hero-sidebar-tab w-full bg-white shadow-sm border border-gray-100 rounded-md md:rounded-xl p-1.5 md:p-3 flex items-center gap-2 md:gap-3 text-[10px] md:text-sm font-semibold text-gray-700 cursor-pointer">
                                     <i data-lucide="layout-dashboard"
-                                        class="w-4 h-4 text-blue-500 pointer-events-none"></i> <span
+                                        class="w-3 h-3 md:w-4 md:h-4 text-blue-500 pointer-events-none"></i> <span
                                         class="hidden md:inline pointer-events-none">Dashboard</span>
                                 </div>
                                 <div id="tab-hr" onclick="switchHeroTab('hr')"
-                                    class="hero-sidebar-tab w-full hover:bg-gray-100 rounded-lg md:rounded-xl p-2 md:p-3 flex items-center gap-3 text-xs md:text-sm font-medium text-gray-500 transition-colors cursor-pointer">
-                                    <i data-lucide="bar-chart-2" class="w-4 h-4 pointer-events-none"></i> <span
+                                    class="hero-sidebar-tab w-full hover:bg-gray-100 rounded-md md:rounded-xl p-1.5 md:p-3 flex items-center gap-2 md:gap-3 text-[10px] md:text-sm font-medium text-gray-500 transition-colors cursor-pointer">
+                                    <i data-lucide="bar-chart-2" class="w-3 h-3 md:w-4 md:h-4 pointer-events-none"></i> <span
                                         class="hidden md:inline pointer-events-none">HR Analytics</span>
                                 </div>
                                 <div id="tab-mail" onclick="switchHeroTab('mail')"
-                                    class="hero-sidebar-tab w-full hover:bg-gray-100 rounded-lg md:rounded-xl p-2 md:p-3 flex items-center gap-3 text-xs md:text-sm font-medium text-gray-500 transition-colors cursor-pointer">
-                                    <i data-lucide="mail" class="w-4 h-4 pointer-events-none"></i> <span
+                                    class="hero-sidebar-tab w-full hover:bg-gray-100 rounded-md md:rounded-xl p-1.5 md:p-3 flex items-center gap-2 md:gap-3 text-[10px] md:text-sm font-medium text-gray-500 transition-colors cursor-pointer">
+                                    <i data-lucide="mail" class="w-3 h-3 md:w-4 md:h-4 pointer-events-none"></i> <span
                                         class="hidden md:inline pointer-events-none">Mail Server</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Main Dashboard Area -->
-                        <div class="flex-1 bg-white p-4 md:p-10 flex flex-col gap-4 md:gap-6 overflow-hidden relative">
+                        <div class="flex-1 bg-white p-2.5 md:p-10 flex flex-col gap-2.5 md:gap-6 overflow-hidden relative">
                             <!-- Header -->
                             <div
-                                class="flex justify-between items-center border-b border-gray-100 pb-2 md:pb-4 shrink-0">
+                                class="flex justify-between items-center border-b border-gray-100 pb-1.5 md:pb-4 shrink-0">
                                 <div>
-                                    <h4 class="text-2xl md:text-3xl font-bold text-gray-900 mb-1 md:mb-2">Welcome, Sarah
+                                    <h4 class="text-sm md:text-3xl font-bold text-gray-900 mb-0.5 md:mb-2 leading-tight">Welcome, Sarah
                                         J.</h4>
-                                    <p class="text-xs md:text-sm text-gray-400 font-medium">Enterprise Overview - Sept
+                                    <p class="text-[8px] md:text-sm text-gray-400 font-medium">Enterprise Overview - Sept
                                         2023</p>
                                 </div>
-                                <div class="flex items-center gap-4">
+                                <div class="flex items-center gap-2 md:gap-4">
                                     <div
-                                        class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-100 flex items-center justify-center relative">
-                                        <i data-lucide="bell" class="w-4 h-4 md:w-5 md:h-5 text-gray-500"></i>
+                                        class="w-6 h-6 md:w-10 md:h-10 rounded-full bg-gray-100 flex items-center justify-center relative">
+                                        <i data-lucide="bell" class="w-3 h-3 md:w-5 md:h-5 text-gray-500"></i>
                                         <div
-                                            class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white">
+                                            class="absolute top-0 right-0 w-1.5 h-1.5 md:w-2.5 md:h-2.5 bg-red-500 rounded-full border border-white md:border-2">
                                         </div>
                                     </div>
                                     <div
-                                        class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-tr from-blue-100 to-purple-100 rounded-full border-2 border-gray-200">
+                                        class="w-7 h-7 md:w-12 md:h-12 bg-gradient-to-tr from-blue-100 to-purple-100 rounded-full border border-gray-200 md:border-2">
                                     </div>
                                 </div>
                             </div>
@@ -744,45 +755,45 @@
 
                                 <!-- DASHBOARD VIEW (Default) -->
                                 <div id="view-dashboard"
-                                    class="hero-tab-view group/hero-tab absolute inset-0 flex flex-col gap-4 md:gap-6 transition-opacity duration-500 opacity-100 z-10 active">
+                                    class="hero-tab-view group/hero-tab absolute inset-0 flex flex-col gap-2.5 md:gap-6 transition-opacity duration-500 opacity-100 z-10 active">
                                     <!-- KPIs -->
-                                    <div class="grid grid-cols-3 gap-4 md:gap-6 shrink-0">
+                                    <div class="grid grid-cols-3 gap-2 md:gap-6 shrink-0">
                                         <div
-                                            class="bg-gray-50 rounded-2xl p-4 md:p-6 border border-gray-100 group-hover/hero:-translate-y-2 transition-transform duration-700 delay-100">
-                                            <div class="text-xs md:text-sm text-gray-500 font-medium mb-2">Total
+                                            class="bg-gray-50 rounded-xl md:rounded-2xl p-2 md:p-6 border border-gray-100 group-hover/hero:-translate-y-2 transition-transform duration-700 delay-100">
+                                            <div class="text-[8px] sm:text-xs md:text-sm text-gray-500 font-medium mb-1 md:mb-2 leading-tight">Total
                                                 Employees</div>
-                                            <div class="flex flex-col xl:flex-row xl:items-end gap-1 xl:gap-3">
-                                                <div class="text-2xl md:text-4xl font-bold text-gray-900">1,850</div>
+                                            <div class="flex flex-col xl:flex-row xl:items-end gap-0.5 xl:gap-3">
+                                                <div class="text-sm sm:text-xl md:text-4xl font-bold text-gray-900 leading-none">1,850</div>
                                                 <div
-                                                    class="text-[10px] md:text-xs bg-green-100 text-green-600 px-2 py-1 rounded-md font-bold w-fit">
+                                                    class="text-[7px] sm:text-[10px] md:text-xs bg-green-100 text-green-600 px-1 py-0.5 md:px-2 md:py-1 rounded-[4px] md:rounded-md font-bold w-fit mt-1 md:mt-0">
                                                     +4.2% ↑</div>
                                             </div>
                                         </div>
                                         <div
-                                            class="bg-gray-50 rounded-2xl p-4 md:p-6 border border-gray-100 group-hover/hero:-translate-y-2 transition-transform duration-700 delay-200">
-                                            <div class="text-xs md:text-sm text-gray-500 font-medium mb-2">Employee
+                                            class="bg-gray-50 rounded-xl md:rounded-2xl p-2 md:p-6 border border-gray-100 group-hover/hero:-translate-y-2 transition-transform duration-700 delay-200">
+                                            <div class="text-[8px] sm:text-xs md:text-sm text-gray-500 font-medium mb-1 md:mb-2 leading-tight">Employee
                                                 Attrition</div>
-                                            <div class="flex flex-col xl:flex-row xl:items-end gap-1 xl:gap-3">
-                                                <div class="text-2xl md:text-4xl font-bold text-gray-900">3.1%</div>
+                                            <div class="flex flex-col xl:flex-row xl:items-end gap-0.5 xl:gap-3">
+                                                <div class="text-sm sm:text-xl md:text-4xl font-bold text-gray-900 leading-none">3.1%</div>
                                                 <div
-                                                    class="text-[10px] md:text-xs bg-red-100 text-red-600 px-2 py-1 rounded-md font-bold w-fit">
+                                                    class="text-[7px] sm:text-[10px] md:text-xs bg-red-100 text-red-600 px-1 py-0.5 md:px-2 md:py-1 rounded-[4px] md:rounded-md font-bold w-fit mt-1 md:mt-0">
                                                     -0.5% ↓</div>
                                             </div>
                                         </div>
                                         <div
-                                            class="bg-gray-50 rounded-2xl p-4 md:p-6 border border-gray-100 group-hover/hero:-translate-y-2 transition-transform duration-700 delay-300">
-                                            <div class="text-xs md:text-sm text-gray-500 font-medium mb-2">Employee
+                                            class="bg-gray-50 rounded-xl md:rounded-2xl p-2 md:p-6 border border-gray-100 group-hover/hero:-translate-y-2 transition-transform duration-700 delay-300">
+                                            <div class="text-[8px] sm:text-xs md:text-sm text-gray-500 font-medium mb-1 md:mb-2 leading-tight">Employee
                                                 Sentiment</div>
-                                            <div class="text-2xl md:text-4xl font-bold text-gray-900">88%</div>
+                                            <div class="text-sm sm:text-xl md:text-4xl font-bold text-gray-900 leading-none mt-1 xl:mt-0">88%</div>
                                         </div>
                                     </div>
 
                                     <!-- Charts Area -->
                                     <div
-                                        class="flex-1 flex flex-col lg:flex-row gap-4 md:gap-6 mt-2 relative min-h-[150px]">
+                                        class="flex-1 flex flex-col lg:flex-row gap-2.5 md:gap-6 mt-1 md:mt-2 relative min-h-[100px] md:min-h-[150px]">
                                         <div
-                                            class="flex-[2] bg-gray-50 rounded-2xl border border-gray-100 p-4 md:p-6 relative overflow-hidden group/chart">
-                                            <div class="text-xs md:text-sm font-bold text-gray-700 mb-6">Employee Growth
+                                            class="flex-[2] bg-gray-50 rounded-xl md:rounded-2xl border border-gray-100 p-2.5 md:p-6 relative overflow-hidden group/chart">
+                                            <div class="text-[9px] md:text-sm font-bold text-gray-700 mb-2 md:mb-6">Employee Growth
                                                 (12 Months)</div>
                                             <!-- Animated Line Chart SVG Simulation -->
                                             <div class="absolute bottom-0 left-0 w-full h-[65%] flex items-end">
@@ -893,38 +904,38 @@
 
                                 <!-- HR ANALYTICS VIEW -->
                                 <div id="view-hr"
-                                    class="hero-tab-view group/hero-tab absolute inset-0 flex flex-col gap-4 md:gap-6 transition-opacity duration-500 opacity-0 pointer-events-none z-0">
+                                    class="hero-tab-view group/hero-tab absolute inset-0 flex flex-col gap-2.5 md:gap-6 transition-opacity duration-500 opacity-0 pointer-events-none z-0">
                                     <div
-                                        class="flex-1 bg-gray-50 rounded-2xl border border-gray-100 p-6 flex flex-col md:flex-row gap-8 relative overflow-hidden">
-                                        <div class="flex-1 flex flex-col justify-center gap-6 z-10">
-                                            <div class="text-sm font-bold text-gray-700">Department Distribution</div>
-                                            <div class="flex flex-col gap-3">
+                                        class="flex-1 bg-gray-50 rounded-xl md:rounded-2xl border border-gray-100 p-3 md:p-6 flex flex-row gap-2 md:gap-8 relative overflow-hidden items-center">
+                                        <div class="flex-1 flex flex-col justify-center gap-2 md:gap-6 z-10">
+                                            <div class="text-[10px] md:text-sm font-bold text-gray-700">Department Distribution</div>
+                                            <div class="flex flex-col gap-1 md:gap-3">
                                                 <div
-                                                    class="flex items-center gap-3 transform -translate-x-4 opacity-0 group-[.active]/hero-tab:translate-x-0 group-[.active]/hero-tab:opacity-100 transition-all duration-500 delay-100">
-                                                    <div class="w-3 h-3 rounded-full bg-blue-500"></div>
-                                                    <div class="text-sm font-medium text-gray-600 flex-1">Engineering
+                                                    class="flex items-center gap-1.5 md:gap-3 transform -translate-x-4 opacity-0 group-[.active]/hero-tab:translate-x-0 group-[.active]/hero-tab:opacity-100 transition-all duration-500 delay-100">
+                                                    <div class="w-1.5 h-1.5 md:w-3 md:h-3 rounded-full bg-blue-500"></div>
+                                                    <div class="text-[8px] md:text-sm font-medium text-gray-600 flex-1">Engineering
                                                     </div>
-                                                    <div class="text-sm font-bold text-gray-900">45%</div>
+                                                    <div class="text-[8px] md:text-sm font-bold text-gray-900">45%</div>
                                                 </div>
                                                 <div
-                                                    class="flex items-center gap-3 transform -translate-x-4 opacity-0 group-[.active]/hero-tab:translate-x-0 group-[.active]/hero-tab:opacity-100 transition-all duration-500 delay-200">
-                                                    <div class="w-3 h-3 rounded-full bg-purple-500"></div>
-                                                    <div class="text-sm font-medium text-gray-600 flex-1">Sales</div>
-                                                    <div class="text-sm font-bold text-gray-900">30%</div>
+                                                    class="flex items-center gap-1.5 md:gap-3 transform -translate-x-4 opacity-0 group-[.active]/hero-tab:translate-x-0 group-[.active]/hero-tab:opacity-100 transition-all duration-500 delay-200">
+                                                    <div class="w-1.5 h-1.5 md:w-3 md:h-3 rounded-full bg-purple-500"></div>
+                                                    <div class="text-[8px] md:text-sm font-medium text-gray-600 flex-1">Sales</div>
+                                                    <div class="text-[8px] md:text-sm font-bold text-gray-900">30%</div>
                                                 </div>
                                                 <div
-                                                    class="flex items-center gap-3 transform -translate-x-4 opacity-0 group-[.active]/hero-tab:translate-x-0 group-[.active]/hero-tab:opacity-100 transition-all duration-500 delay-300">
-                                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                                                    <div class="text-sm font-medium text-gray-600 flex-1">Marketing
+                                                    class="flex items-center gap-1.5 md:gap-3 transform -translate-x-4 opacity-0 group-[.active]/hero-tab:translate-x-0 group-[.active]/hero-tab:opacity-100 transition-all duration-500 delay-300">
+                                                    <div class="w-1.5 h-1.5 md:w-3 md:h-3 rounded-full bg-green-500"></div>
+                                                    <div class="text-[8px] md:text-sm font-medium text-gray-600 flex-1">Marketing
                                                     </div>
-                                                    <div class="text-sm font-bold text-gray-900">25%</div>
+                                                    <div class="text-[8px] md:text-sm font-bold text-gray-900">25%</div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="flex-1 flex items-center justify-center relative">
                                             <!-- Animated Donut Chart -->
                                             <div
-                                                class="relative w-40 h-40 md:w-56 md:h-56 transform scale-90 opacity-0 group-[.active]/hero-tab:scale-100 group-[.active]/hero-tab:opacity-100 transition-all duration-700 delay-100">
+                                                class="relative w-24 h-24 md:w-56 md:h-56 transform scale-90 opacity-0 group-[.active]/hero-tab:scale-100 group-[.active]/hero-tab:opacity-100 transition-all duration-700 delay-100">
                                                 <svg viewBox="0 0 100 100"
                                                     class="w-full h-full transform -rotate-90 drop-shadow-xl">
                                                     <!-- Background Track -->
@@ -951,10 +962,10 @@
                                                 <!-- Center Stat -->
                                                 <div class="absolute inset-0 flex items-center justify-center flex-col">
                                                     <div
-                                                        class="text-4xl font-black text-gray-900 transform scale-50 opacity-0 group-[.active]/hero-tab:scale-100 group-[.active]/hero-tab:opacity-100 transition-all duration-500 delay-[1200ms]">
+                                                        class="text-xl md:text-4xl font-black text-gray-900 transform scale-50 opacity-0 group-[.active]/hero-tab:scale-100 group-[.active]/hero-tab:opacity-100 transition-all duration-500 delay-[1200ms]">
                                                         3</div>
                                                     <div
-                                                        class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">
+                                                        class="text-[7px] md:text-[10px] text-gray-500 uppercase tracking-widest font-bold">
                                                         Depts</div>
                                                 </div>
                                             </div>
@@ -964,68 +975,68 @@
 
                                 <!-- MAIL SERVER VIEW -->
                                 <div id="view-mail"
-                                    class="hero-tab-view group/hero-tab absolute inset-0 flex flex-col gap-4 md:gap-6 transition-opacity duration-500 opacity-0 pointer-events-none z-0">
+                                    class="hero-tab-view group/hero-tab absolute inset-0 flex flex-col gap-2.5 md:gap-6 transition-opacity duration-500 opacity-0 pointer-events-none z-0">
                                     <div
-                                        class="flex-1 bg-gray-50 rounded-2xl border border-gray-100 p-4 relative overflow-hidden flex flex-col gap-3">
+                                        class="flex-1 bg-gray-50 rounded-xl md:rounded-2xl border border-gray-100 p-2 md:p-4 relative overflow-hidden flex flex-col gap-1.5 md:gap-3">
                                         <div
-                                            class="h-10 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center px-4 shrink-0 justify-between">
-                                            <div class="flex items-center gap-2">
-                                                <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
-                                                <div class="w-32 h-2 bg-gray-100 rounded-full"></div>
+                                            class="h-6 md:h-10 bg-white rounded-md md:rounded-xl shadow-sm border border-gray-100 flex items-center px-2 md:px-4 shrink-0 justify-between">
+                                            <div class="flex items-center gap-1 md:gap-2">
+                                                <i data-lucide="search" class="w-3 h-3 md:w-4 md:h-4 text-gray-400"></i>
+                                                <div class="w-16 md:w-32 h-1 md:h-2 bg-gray-100 rounded-full"></div>
                                             </div>
                                             <div
-                                                class="w-6 h-6 bg-blue-50 text-blue-500 rounded-md flex items-center justify-center">
-                                                <i data-lucide="edit-3" class="w-3 h-3"></i>
+                                                class="w-4 h-4 md:w-6 md:h-6 bg-blue-50 text-blue-500 rounded flex md:rounded-md items-center justify-center">
+                                                <i data-lucide="edit-3" class="w-2.5 h-2.5 md:w-3 md:h-3"></i>
                                             </div>
                                         </div>
 
                                         <!-- Inbox Items -->
-                                        <div class="relative flex-1">
+                                        <div class="relative flex-1 mt-1 md:mt-0">
                                             <!-- Message 1 -->
                                             <div
-                                                class="absolute top-0 left-0 w-full h-16 md:h-20 bg-white rounded-xl shadow-md shadow-purple-500/5 border-l-4 border-l-purple-500 border border-gray-100 flex items-center px-4 gap-4 transform -translate-y-[40px] opacity-0 group-[.active]/hero-tab:translate-y-0 group-[.active]/hero-tab:opacity-100 transition-all duration-700 ease-out delay-[400ms] z-30">
+                                                class="absolute top-0 left-0 w-full h-8 md:h-20 bg-white rounded-md md:rounded-xl shadow-md shadow-purple-500/5 border-l-2 md:border-l-4 border-l-purple-500 border border-gray-100 flex items-center px-2 md:px-4 gap-2 md:gap-4 transform -translate-y-[20px] md:-translate-y-[40px] opacity-0 group-[.active]/hero-tab:translate-y-0 group-[.active]/hero-tab:opacity-100 transition-all duration-700 ease-out delay-[400ms] z-30">
                                                 <div
-                                                    class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center shrink-0">
-                                                    <span class="text-sm font-bold">P</span>
+                                                    class="w-5 h-5 md:w-10 md:h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center shrink-0">
+                                                    <span class="text-[8px] md:text-sm font-bold">P</span>
                                                 </div>
                                                 <div class="flex-1">
-                                                    <div class="flex justify-between items-center mb-2">
-                                                        <div class="w-32 h-2.5 bg-gray-800 rounded-full"></div>
-                                                        <div class="w-10 h-2 bg-purple-200 rounded-full"></div>
+                                                    <div class="flex justify-between items-center mb-1 md:mb-2">
+                                                        <div class="w-16 md:w-32 h-1 md:h-2.5 bg-gray-800 rounded-full"></div>
+                                                        <div class="w-6 md:w-10 h-1 md:h-2 bg-purple-200 rounded-full"></div>
                                                     </div>
-                                                    <div class="w-[80%] h-2 bg-gray-400 rounded-full"></div>
+                                                    <div class="w-[80%] h-1 md:h-2 bg-gray-400 rounded-full"></div>
                                                 </div>
                                             </div>
 
                                             <!-- Message 2 -->
                                             <div
-                                                class="absolute top-0 left-0 w-full h-16 md:h-20 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center px-4 gap-4 transform translate-y-0 group-[.active]/hero-tab:translate-y-[76px] md:group-[.active]/hero-tab:translate-y-[92px] transition-all duration-700 ease-in-out delay-200 z-20">
+                                                class="absolute top-0 left-0 w-full h-8 md:h-20 bg-white rounded-md md:rounded-xl shadow-sm border border-gray-100 flex items-center px-2 md:px-4 gap-2 md:gap-4 transform translate-y-0 group-[.active]/hero-tab:translate-y-[38px] md:group-[.active]/hero-tab:translate-y-[92px] transition-all duration-700 ease-in-out delay-200 z-20">
                                                 <div
-                                                    class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-                                                    <span class="text-sm font-bold">X</span>
+                                                    class="w-5 h-5 md:w-10 md:h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                                                    <span class="text-[8px] md:text-sm font-bold">X</span>
                                                 </div>
                                                 <div class="flex-1">
-                                                    <div class="flex justify-between items-center mb-2">
-                                                        <div class="w-40 h-2 bg-gray-400 rounded-full"></div>
-                                                        <div class="w-10 h-1.5 bg-gray-200 rounded-full"></div>
+                                                    <div class="flex justify-between items-center mb-1 md:mb-2">
+                                                        <div class="w-20 md:w-40 h-1 md:h-2 bg-gray-400 rounded-full"></div>
+                                                        <div class="w-6 md:w-10 h-[3px] md:h-1.5 bg-gray-200 rounded-full"></div>
                                                     </div>
-                                                    <div class="w-[60%] h-1.5 bg-gray-200 rounded-full"></div>
+                                                    <div class="w-[60%] h-[3px] md:h-1.5 bg-gray-200 rounded-full"></div>
                                                 </div>
                                             </div>
 
                                             <!-- Message 3 -->
                                             <div
-                                                class="absolute top-0 left-0 w-full h-16 md:h-20 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center px-4 gap-4 transform translate-y-[76px] md:translate-y-[92px] group-[.active]/hero-tab:translate-y-[152px] md:group-[.active]/hero-tab:translate-y-[184px] transition-all duration-700 ease-in-out delay-100 z-10">
+                                                class="absolute top-0 left-0 w-full h-8 md:h-20 bg-white rounded-md md:rounded-xl shadow-sm border border-gray-100 flex items-center px-2 md:px-4 gap-2 md:gap-4 transform translate-y-[38px] md:translate-y-[92px] group-[.active]/hero-tab:translate-y-[76px] md:group-[.active]/hero-tab:translate-y-[184px] transition-all duration-700 ease-in-out delay-100 z-10">
                                                 <div
-                                                    class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0">
-                                                    <span class="text-sm font-bold">P</span>
+                                                    class="w-5 h-5 md:w-10 md:h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0">
+                                                    <span class="text-[8px] md:text-sm font-bold">P</span>
                                                 </div>
                                                 <div class="flex-1">
-                                                    <div class="flex justify-between items-center mb-2">
-                                                        <div class="w-24 h-2 bg-gray-400 rounded-full"></div>
-                                                        <div class="w-10 h-1.5 bg-gray-200 rounded-full"></div>
+                                                    <div class="flex justify-between items-center mb-1 md:mb-2">
+                                                        <div class="w-12 md:w-24 h-1 md:h-2 bg-gray-400 rounded-full"></div>
+                                                        <div class="w-6 md:w-10 h-[3px] md:h-1.5 bg-gray-200 rounded-full"></div>
                                                     </div>
-                                                    <div class="w-[70%] h-1.5 bg-gray-200 rounded-full"></div>
+                                                    <div class="w-[70%] h-[3px] md:h-1.5 bg-gray-200 rounded-full"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1056,11 +1067,11 @@
     <section class="px-2 md:px-4 lg:px-6 pb-6 bg-white">
         <!-- Container w-full, inner content constrained -->
         <div
-            class="w-full mx-auto bg-[#0a0a0a] rounded-[40px] md:rounded-[60px] py-40 px-8 md:px-20 relative overflow-hidden flex items-center justify-center min-h-[80vh]">
+            class="w-full mx-auto bg-[#0a0a0a] rounded-[30px] md:rounded-[60px] py-20 md:py-40 px-4 md:px-20 relative overflow-hidden flex items-center justify-center min-h-[40vh] md:min-h-[80vh]">
 
             <div class="max-w-5xl text-center relative z-10">
                 <h2 id="scroll-reveal-text"
-                    class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight">
+                    class="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-relaxed md:leading-tight tracking-tight">
                     We don't just sell software; we deliver solutions tailored to your DNA. Whether you need to add a
                     feature or strip away the clutter, our platforms mold to your operational needs.
                 </h2>
@@ -1089,12 +1100,29 @@
             </div>
 
             <!-- Interactive Tablet Card -->
+            <style>
+                @media (max-width: 767px) {
+                    .mobile-scroll-reveal.active .mobile-reveal-overlay {
+                        opacity: 1 !important;
+                        transition-delay: 800ms !important;
+                    }
+                    .mobile-scroll-reveal.active .mobile-reveal-btn {
+                        transform: translateY(0) !important;
+                        opacity: 1 !important;
+                        transition-delay: 1000ms !important;
+                    }
+                    .mobile-scroll-reveal.active .mobile-reveal-img {
+                        transform: scale(1.05) !important;
+                        transition-delay: 400ms !important;
+                    }
+                }
+            </style>
             <div
-                class="relative w-full aspect-[4/3] md:aspect-[16/9] lg:aspect-[2.4/1] bg-[#e5e5e5] rounded-[40px] overflow-hidden group cursor-pointer border border-gray-100 shadow-sm">
+                class="relative w-full aspect-square md:aspect-[16/9] lg:aspect-[2.4/1] bg-[#e5e5e5] rounded-[40px] overflow-hidden group cursor-pointer border border-gray-100 shadow-sm scroll-reveal mobile-scroll-reveal">
 
                 <!-- Main Image (Simulating the 3D Composition) -->
                 <div
-                    class="absolute inset-0 w-full h-full bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center p-6 md:p-12 overflow-hidden transition-transform duration-1000 ease-out group-hover:scale-105">
+                    class="mobile-reveal-img absolute inset-0 w-full h-full bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center p-6 md:p-12 overflow-hidden transition-transform duration-1000 ease-out group-hover:scale-105">
                     <!-- Decorative Background Elements -->
                     <div
                         class="absolute top-1/4 -right-20 w-96 h-96 bg-purple-400/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse">
@@ -1179,13 +1207,13 @@
 
                 <!-- Dark Overlay (Fades in on Hover) -->
                 <div
-                    class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out z-10">
+                    class="mobile-reveal-overlay absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out z-10">
                 </div>
 
                 <!-- Reveal Button (Slides up on Hover) -->
                 <div class="absolute inset-0 flex items-center justify-center z-20 overflow-hidden">
                     <a href="#services"
-                        class="bg-[#d4f877] text-black px-8 py-3.5 rounded-full font-bold text-sm flex items-center gap-2 translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out shadow-2xl hover:scale-105">
+                        class="mobile-reveal-btn bg-[#d4f877] text-black px-8 py-3.5 rounded-full font-bold text-sm flex items-center gap-2 translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out shadow-2xl hover:scale-105">
                         View details
                         <div class="bg-black/10 p-1 rounded-full">
                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
@@ -1227,7 +1255,7 @@
                         Our Services
                     </span>
                 </div>
-                <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
                     Fully customizable solutions for <br> modern enterprises.
                 </h2>
                 <p class="text-gray-500 mt-6 text-lg">
@@ -2053,7 +2081,7 @@
                             Customization on Demand
                         </span>
                     </div>
-                    <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6 leading-tight">
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6 leading-tight">
                         Built for you. <br> Customized with you.
                     </h2>
                     <p class="text-gray-500 text-lg">
@@ -2630,7 +2658,7 @@
                         What We Build
                     </span>
                 </div>
-                <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">
                     Any Software You Need.
                 </h2>
                 <p class="text-gray-500 max-w-2xl mx-auto text-lg">
@@ -2840,7 +2868,7 @@
                             Enterprise Security
                         </span>
                     </div>
-                    <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-6 leading-tight">
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6 leading-tight">
                         Bank-Grade Security & <br> Data Integrity.
                     </h2>
                     <p class="text-gray-400 text-lg mb-10 max-w-lg">
@@ -3050,7 +3078,7 @@
                         Testimonials
                     </span>
                 </div>
-                <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
                     User stories: find out why so many <br> people love PeopleXplus!
                 </h2>
             </div>
@@ -3235,7 +3263,7 @@
                             FAQ
                         </span>
                     </div>
-                    <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6">
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6">
                         All the essential information you <br> need to understand.
                     </h2>
                     <p class="text-gray-500 text-lg">
@@ -3929,6 +3957,64 @@
                 }
             }
         }
+
+        // --- Auto-cycle Hero Tabs (MOBILE ONLY) ---
+        const heroTabsList = ['dashboard', 'hr', 'mail'];
+        let currentHeroTabIndex = 0;
+        let heroTabInterval;
+
+        function startHeroTabCycle() {
+            stopHeroTabCycle(); // Prevent multiple intervals
+            
+            // STRICTLY FOR MOBILE VIEW ONLY
+            if (window.innerWidth > 768) return; 
+
+            heroTabInterval = setInterval(() => {
+                // Double check it's still mobile in case they resized the window
+                if (window.innerWidth > 768) {
+                    stopHeroTabCycle();
+                    return;
+                }
+                
+                currentHeroTabIndex = (currentHeroTabIndex + 1) % heroTabsList.length;
+                
+                // Call original logic without triggering a manual override loop
+                const nextTabId = heroTabsList[currentHeroTabIndex];
+                const activeTab = document.getElementById('tab-' + nextTabId);
+                if(activeTab) {
+                    activeTab.click(); // Trigger the onclick defined in HTML
+                }
+            }, 4000); // 4 seconds per tab
+        }
+
+        function stopHeroTabCycle() {
+            if (heroTabInterval) clearInterval(heroTabInterval);
+        }
+
+        // Intercept manual clicks to update index and reset the timer
+        const originalSwitchHeroTab = switchHeroTab;
+        switchHeroTab = function(tabId) {
+            currentHeroTabIndex = Math.max(0, heroTabsList.indexOf(tabId));
+            originalSwitchHeroTab(tabId);
+            startHeroTabCycle(); // Reset timer so it doesn't switch instantly after a click
+        };
+
+        // Start cycling (only kicks in if mobile)
+        startHeroTabCycle();
+        
+        // Handle window resize to start/stop the cycle dynamically
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                stopHeroTabCycle();
+                // Optionally reset to dashboard on PC when resizing up
+                if (currentHeroTabIndex !== 0) {
+                    currentHeroTabIndex = 0;
+                    originalSwitchHeroTab('dashboard');
+                }
+            } else if (!heroTabInterval) {
+                startHeroTabCycle();
+            }
+        });
     </script>
 </body>
 
