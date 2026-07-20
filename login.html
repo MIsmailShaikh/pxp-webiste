@@ -190,16 +190,7 @@
     <!-- Page Scripts -->
     <script>
         // Initialize Icons
-        (() => {
-    const check = setInterval(() => {
-        if (window.lucide) {
-            clearInterval(check);
-            const create = () => window['lucide'].createIcons();
-            if (window.requestIdleCallback) requestIdleCallback(create);
-            else setTimeout(create, 0);
-        }
-    }, 50);
-})();
+        lucide.createIcons();
 
         // Tab Switching Logic
         const tabIndicator = document.getElementById('tab-indicator');
@@ -271,7 +262,7 @@
     </script>
 
     <!-- Lenis Smooth Scrolling -->
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             if (typeof Lenis !== 'undefined') {

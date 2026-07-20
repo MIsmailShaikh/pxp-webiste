@@ -5,16 +5,9 @@ const hash = window.location.hash.substring(1);
             document.documentElement.classList.add('show-' + hash);
         }
 
-(() => {
-    const check = setInterval(() => {
-        if (window.lucide) {
-            clearInterval(check);
-            const create = () => window['lucide'].createIcons();
-            if (window.requestIdleCallback) requestIdleCallback(create);
-            else setTimeout(create, 0);
-        }
-    }, 50);
-})();
+window.addEventListener('load', () => {
+    if (window.lucide) window.lucide.createIcons();
+});
 
         const lenis = new Lenis({
             duration: 1.2,
@@ -166,16 +159,9 @@ const hash = window.location.hash.substring(1);
             
             // Re-render icons for new content
             if (window.lucide) {
-                (() => {
-    const check = setInterval(() => {
-        if (window.lucide) {
-            clearInterval(check);
-            const create = () => window['lucide'].createIcons();
-            if (window.requestIdleCallback) requestIdleCallback(create);
-            else setTimeout(create, 0);
-        }
-    }, 50);
-})();
+                window.addEventListener('load', () => {
+    if (window.lucide) window.lucide.createIcons();
+});
             }
             
             // Update URL hash without scrolling
@@ -352,16 +338,7 @@ const hash = window.location.hash.substring(1);
                     }, 10);
                     // Change icon to close (X)
                     mobileMenuBtn.innerHTML = '<i data-lucide="x" class="w-6 h-6 text-gray-900"></i>';
-                    (() => {
-    const check = setInterval(() => {
-        if (window.lucide) {
-            clearInterval(check);
-            const create = () => window['lucide'].createIcons();
-            if (window.requestIdleCallback) requestIdleCallback(create);
-            else setTimeout(create, 0);
-        }
-    }, 50);
-})();
+                    if (window.lucide) window.lucide.createIcons();
                 } else {
                     mobileMenu.classList.remove('opacity-100', 'scale-y-100');
                     mobileMenu.classList.add('opacity-0', 'scale-y-95');
@@ -370,16 +347,7 @@ const hash = window.location.hash.substring(1);
                     }, 300); // Wait for transition
                     // Change icon back to menu
                     mobileMenuBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6 text-gray-900"></i>';
-                    (() => {
-    const check = setInterval(() => {
-        if (window.lucide) {
-            clearInterval(check);
-            const create = () => window['lucide'].createIcons();
-            if (window.requestIdleCallback) requestIdleCallback(create);
-            else setTimeout(create, 0);
-        }
-    }, 50);
-})();
+                    if (window.lucide) window.lucide.createIcons();
                 }
             });
 

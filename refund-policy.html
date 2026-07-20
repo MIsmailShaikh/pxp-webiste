@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="js/auth-guard.js" defer></script>
+    <script src="js/auth-guard.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
@@ -331,16 +331,7 @@
     </footer>
     
     <script>
-        (() => {
-    const check = setInterval(() => {
-        if (window.lucide) {
-            clearInterval(check);
-            const create = () => window['lucide'].createIcons();
-            if (window.requestIdleCallback) requestIdleCallback(create);
-            else setTimeout(create, 0);
-        }
-    }, 50);
-})();
+        lucide.createIcons();
     </script>
 
     <!-- Fix Sidebar Navigation History -->
@@ -358,7 +349,7 @@
 
 
     <!-- Lenis Smooth Scrolling -->
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             if (typeof Lenis !== 'undefined') {
