@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="js/auth-guard.js"></script>
+    <script src="js/auth-guard.js" defer></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
@@ -358,7 +358,11 @@
     </footer>
     
     <script>
-        lucide.createIcons();
+        if (window.requestIdleCallback) {
+    requestIdleCallback(() => { if (window.lucide) lucide.createIcons(); });
+} else {
+    setTimeout(() => { if (window.lucide) lucide.createIcons(); }, 0);
+}
     </script>
 
     <!-- Fix Sidebar Navigation History -->

@@ -190,7 +190,11 @@
     <!-- Page Scripts -->
     <script>
         // Initialize Icons
-        lucide.createIcons();
+        if (window.requestIdleCallback) {
+    requestIdleCallback(() => { if (window.lucide) lucide.createIcons(); });
+} else {
+    setTimeout(() => { if (window.lucide) lucide.createIcons(); }, 0);
+}
 
         // Tab Switching Logic
         const tabIndicator = document.getElementById('tab-indicator');
