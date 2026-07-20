@@ -19,114 +19,9 @@
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: #111;
-        }
-        .glass-nav {
-            background-color: rgba(255, 255, 255, 0.85);
-            -webkit-backdrop-filter: blur(20px);
-            backdrop-filter: blur(20px);
-        }
-        .reveal-text {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal-text.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .connector-dot {
-            width: 12px;
-            height: 12px;
-            background-color: #E5E7EB;
-            border: 2px solid white;
-            border-radius: 50%;
-            border-radius: 50%;
-            position: absolute;
-            z-index: 10;
-        }
+    
 
-        /* Grid Background Pattern */
-        .grid-bg {
-            background-size: 40px 40px;
-            background-image: 
-                linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
-        }
-        
-        /* Spotlight Effect */
-        .spotlight {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), rgba(20, 184, 166, 0.15), transparent 40%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Scroll Mouse Animation */
-        .mouse {
-            width: 24px;
-            height: 36px;
-            border: 2px solid #cbd5e1;
-            border-radius: 12px;
-            position: relative;
-        }
-        .mouse::before {
-            content: '';
-            position: absolute;
-            top: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 6px;
-            background-color: #94a3b8;
-            border-radius: 2px;
-            animation: scrollWheel 1.5s infinite;
-        }
-        @keyframes scrollWheel {
-            0% { transform: translate(-50%, 0); opacity: 1; }
-            100% { transform: translate(-50%, 12px); opacity: 0; }
-        }
-
-        .flow-line {
-            stroke-dasharray: 20, 10;
-            animation: flow 20s linear infinite;
-        }
-        @keyframes flow {
-            to { stroke-dashoffset: -1000; }
-        }
-        
-        .pulse-border-blue { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); animation: pulse-b 2s infinite; }
-        .pulse-border-purple { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.4); animation: pulse-p 2s infinite; animation-delay: 0.4s; }
-        .pulse-border-yellow { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.4); animation: pulse-y 2s infinite; animation-delay: 0.8s; }
-        .pulse-border-red { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); animation: pulse-r 2s infinite; animation-delay: 1.2s; }
-        .pulse-border-green { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); animation: pulse-g 2s infinite; animation-delay: 1.6s; }
-
-        @keyframes pulse-b { 70% { box-shadow: 0 0 0 15px rgba(59, 130, 246, 0); } 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
-        @keyframes pulse-p { 70% { box-shadow: 0 0 0 15px rgba(168, 85, 247, 0); } 100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0); } }
-        @keyframes pulse-y { 70% { box-shadow: 0 0 0 15px rgba(234, 179, 8, 0); } 100% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0); } }
-        @keyframes pulse-r { 70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
-        @keyframes pulse-g { 70% { box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
-
-        .animate-pop-1 { animation: pop 10s infinite; animation-delay: 0.5s; opacity: 0; }
-        .animate-pop-2 { animation: pop 10s infinite; animation-delay: 2.5s; opacity: 0; }
-        .animate-pop-3 { animation: pop 10s infinite; animation-delay: 5s; opacity: 0; }
-        .animate-pop-4 { animation: pop 10s infinite; animation-delay: 7s; opacity: 0; }
-        .animate-pop-5 { animation: pop 10s infinite; animation-delay: 9.5s; opacity: 0; }
-
-        @keyframes pop {
-            0%, 5% { opacity: 0; transform: translateY(10px) scale(0.95); }
-            10%, 25% { opacity: 1; transform: translateY(0) scale(1); }
-            30%, 100% { opacity: 0; transform: translateY(-10px) scale(0.95); }
-        }
-    </style>
+    <link rel="stylesheet" href="css/workforce-os.css">
 </head>
 <body class="antialiased selection:bg-black selection:text-white">
 
@@ -454,42 +349,7 @@
                 </p>
             </div>
 
-            <style>
-                @keyframes featureSpin { to { transform: rotate(360deg); } }
-                @keyframes featureShiftSlide { 
-                    0%, 100% { transform: translateX(-6px); } 
-                    50% { transform: translateX(20px); } 
-                }
-                @keyframes featureCoinDrop { 
-                    0% { transform: translateY(-15px) scale(0.8); opacity: 0; } 
-                    20% { transform: translateY(5px) scale(1.1); opacity: 1; } 
-                    30% { transform: translateY(0) scale(1); opacity: 1; } 
-                    80% { transform: translateY(0) scale(1); opacity: 1; } 
-                    100% { transform: translateY(20px) scale(0.8); opacity: 0; } 
-                }
-                @keyframes featureLaserScan { 
-                    0% { top: 10%; } 
-                    100% { top: 90%; } 
-                }
-                @keyframes featurePlaneFly {
-                    0% { transform: translate(-20px, 20px) rotate(-10deg); opacity: 0; }
-                    20% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
-                    80% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
-                    100% { transform: translate(30px, -30px) rotate(15deg); opacity: 0; }
-                }
-                @keyframes featureStarPop {
-                    0%, 100% { transform: scale(0.8); color: #fbbf24; opacity: 0.5; }
-                    50% { transform: scale(1.2); color: #f59e0b; opacity: 1; filter: drop-shadow(0 0 5px rgba(245,158,11,0.5)); }
-                }
-                @keyframes featureVaultLock {
-                    0%, 20% { transform: scale(1); }
-                    50% { transform: scale(1.1) rotate(15deg); }
-                    80%, 100% { transform: scale(1) rotate(0deg); }
-                }
-                @keyframes featureBarGrow1 { 0%, 100% { height: 40%; } 50% { height: 80%; } }
-                @keyframes featureBarGrow2 { 0%, 100% { height: 60%; } 50% { height: 100%; } }
-                @keyframes featureBarGrow3 { 0%, 100% { height: 80%; } 50% { height: 40%; } }
-            </style>
+            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Feature 1 -->
                 <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-shadow group">
@@ -684,21 +544,7 @@
                                 <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-500 mt-0.5 shrink-0"></i><span><strong>Leave Workflows:</strong> Seamlessly submit and track leave requests with automated status updates.</span></li>
                             </ul>
                         </div>
-                        <style>
-                            @keyframes empFillBar {
-                                from { width: 0%; }
-                                to { width: 81.25%; }
-                            }
-                            @keyframes empPopIn {
-                                0% { transform: scale(0); opacity: 0; }
-                                70% { transform: scale(1.2); opacity: 1; }
-                                100% { transform: scale(1); opacity: 1; }
-                            }
-                            @keyframes empSpinSlow {
-                                from { transform: rotate(0deg); }
-                                to { transform: rotate(360deg); }
-                            }
-                        </style>
+                        
                         <div class="w-full max-w-4xl mx-auto rounded-3xl shadow-2xl border border-gray-200 bg-white overflow-hidden flex flex-col md:flex-row relative mt-6">
                             <!-- Sidebar -->
                             <div class="w-full md:w-64 bg-gray-50 border-r border-gray-100 p-6 flex flex-col justify-between relative z-10">
@@ -810,28 +656,7 @@
                                 <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-indigo-500 mt-0.5 shrink-0"></i><span><strong>Incentive Nominations:</strong> Directly nominate top-performing employees for financial incentives.</span></li>
                             </ul>
                         </div>
-                        <style>
-                            @keyframes slideInApprove {
-                                0% { transform: translateX(100%); opacity: 0; }
-                                15% { transform: translateX(0); opacity: 1; }
-                                45% { transform: translateX(0); opacity: 1; }
-                                55% { transform: translateX(0) scale(1.02); }
-                                65% { transform: translateX(0); opacity: 1; }
-                                85% { transform: translateX(-100%); opacity: 0; }
-                                100% { transform: translateX(-100%); opacity: 0; }
-                            }
-                            @keyframes stampIn {
-                                0% { transform: scale(3) rotate(-15deg); opacity: 0; }
-                                45% { transform: scale(3) rotate(-15deg); opacity: 0; }
-                                55% { transform: scale(1) rotate(-15deg); opacity: 1; }
-                                85% { transform: scale(1) rotate(-15deg); opacity: 1; }
-                                100% { opacity: 0; }
-                            }
-                            @keyframes mgrPulseAlert {
-                                0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-                                50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
-                            }
-                        </style>
+                        
                         <div class="w-full max-w-4xl mx-auto rounded-3xl shadow-2xl border border-slate-700 bg-slate-900 overflow-hidden flex flex-col mt-6 text-slate-300">
                             <!-- Top Stats Bar -->
                             <div class="flex justify-between items-center px-6 md:px-8 py-5 border-b border-slate-800 bg-slate-900/50 relative z-20">
@@ -930,24 +755,7 @@
                                 <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-500 mt-0.5 shrink-0"></i><span><strong>Role-Based Permissions:</strong> Granular control over exactly what data and actions each user role can access.</span></li>
                             </ul>
                         </div>
-                        <style>
-                            @keyframes terminalScroll {
-                                0% { transform: translateY(0); }
-                                100% { transform: translateY(-50%); }
-                            }
-                            @keyframes blinkCyan {
-                                0%, 100% { opacity: 0.2; }
-                                50% { opacity: 1; box-shadow: 0 0 8px rgba(6, 182, 212, 0.8); }
-                            }
-                            @keyframes blinkGreen {
-                                0%, 100% { opacity: 0.2; }
-                                50% { opacity: 1; box-shadow: 0 0 8px rgba(16, 185, 129, 0.8); }
-                            }
-                            @keyframes fillCircle {
-                                from { stroke-dashoffset: 100; }
-                                to { stroke-dashoffset: 5; }
-                            }
-                        </style>
+                        
                         <div class="w-full max-w-4xl mx-auto rounded-3xl shadow-[0_20px_50px_rgba(6,182,212,0.1)] border border-slate-800 bg-[#0a0a0a] overflow-hidden flex flex-col mt-6 font-mono text-slate-300">
                             <!-- Top Nav Bar -->
                             <div class="flex justify-between items-center px-6 py-4 border-b border-slate-800 bg-[#111] relative z-20">
@@ -1068,24 +876,7 @@
                                 <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i><span><strong>Performance Appraisals:</strong> Conduct 360-degree reviews seamlessly synced with employee KPIs.</span></li>
                             </ul>
                         </div>
-                        <style>
-                            @keyframes barGrow {
-                                from { transform: scaleY(0); }
-                                to { transform: scaleY(1); }
-                            }
-                            @keyframes floatWidget {
-                                0%, 100% { transform: translateY(0); }
-                                50% { transform: translateY(-5px); }
-                            }
-                            @keyframes softPulse {
-                                0%, 100% { opacity: 1; }
-                                50% { opacity: 0.7; }
-                            }
-                            @keyframes shimmer {
-                                0% { transform: translateX(-100%); }
-                                100% { transform: translateX(100%); }
-                            }
-                        </style>
+                        
 
                         <!-- Main Container: Light, soft shadows, rounded corners -->
                         <div class="w-full max-w-4xl mx-auto bg-[#Fdfdfd] shadow-[0_8px_40px_rgb(0,0,0,0.04)] rounded-[32px] border border-gray-100/50 flex mt-6 h-[450px] relative overflow-hidden">
@@ -1197,18 +988,7 @@
                             </ul>
                         </div>
                         
-                        <style>
-                            @keyframes slideBlock {
-                                0% { transform: translateY(-30px); opacity: 0; }
-                                20% { transform: translateY(0); opacity: 1; }
-                                80% { transform: translateY(0); opacity: 1; }
-                                100% { transform: translateY(30px); opacity: 0; }
-                            }
-                            @keyframes payPulse {
-                                0%, 100% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.4); }
-                                50% { box-shadow: 0 0 0 15px rgba(234, 179, 8, 0); }
-                            }
-                        </style>
+                        
                         <div class="w-full max-w-4xl mx-auto rounded-3xl shadow-2xl border border-yellow-100 bg-white overflow-hidden flex flex-col mt-6 relative h-[450px] md:h-[400px]">
                             <div class="absolute inset-0 bg-gradient-to-b from-yellow-50/50 to-white z-0 pointer-events-none"></div>
                             
@@ -1296,23 +1076,7 @@
                                 <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-purple-500 mt-0.5 shrink-0"></i><span><strong>Unrestricted Visibility:</strong> Has access to view absolutely everything across all departments and systems.</span></li>
                             </ul>
                         </div>
-                        <style>
-                            @keyframes drawLine {
-                                to { stroke-dashoffset: 0; }
-                            }
-                            @keyframes growBar {
-                                from { transform: scaleY(0); }
-                                to { transform: scaleY(1); }
-                            }
-                            @keyframes fadeUpIn {
-                                from { transform: translateY(10px); opacity: 0; }
-                                to { transform: translateY(0); opacity: 1; }
-                            }
-                            @keyframes dirPulse {
-                                0%, 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
-                                50% { box-shadow: 0 0 0 10px rgba(139, 92, 246, 0); }
-                            }
-                        </style>
+                        
                         <div class="w-full max-w-4xl mx-auto rounded-3xl shadow-[0_20px_50px_rgba(139,92,246,0.15)] border border-purple-500/20 bg-[#0B0F19] overflow-hidden flex flex-col md:flex-row gap-6 p-6 md:p-8 mt-6">
                             
                             <!-- Left: Main Line Graph -->
@@ -1426,21 +1190,7 @@
                 </p>
             </div>
 
-            <style>
-                @keyframes bentoCoinDrop {
-                    0% { transform: translateY(-40px); opacity: 0; }
-                    20%, 80% { opacity: 1; }
-                    100% { transform: translateY(40px); opacity: 0; }
-                }
-                @keyframes bentoScanLine {
-                    0% { transform: translateY(0); }
-                    100% { transform: translateY(80px); }
-                }
-                @keyframes bentoCardTap {
-                    0%, 100% { transform: translate(25px, 25px) rotate(-15deg); opacity: 0.3; }
-                    50% { transform: translate(5px, 5px) rotate(0deg); opacity: 1; }
-                }
-            </style>
+            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Large Left Card -->
                 <div class="md:col-span-2 bg-[#111] rounded-3xl p-8 border border-white/10 flex flex-col justify-between overflow-hidden relative group">
@@ -1540,46 +1290,7 @@
 
     <!-- Intelligent Automation Workflows Section -->
     <section class="px-2 md:px-4 lg:px-6 py-24 bg-[#F3F5F7] border-b border-gray-200">
-        <style>
-            @keyframes flowBg {
-                0% { background-position: 0 0; }
-                100% { background-position: 24px 24px; }
-            }
-            @keyframes flowLine {
-                0% { left: 0; width: 0%; opacity: 0; }
-                10% { opacity: 1; }
-                50% { width: 50%; }
-                90% { opacity: 1; }
-                100% { left: 100%; width: 0%; opacity: 0; }
-            }
-            @keyframes flowEnvelope2 {
-                0% { left: 0%; transform: translate(-50%, -50%) scale(0.5) rotate(-10deg); opacity: 0; }
-                15% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-                85% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-                100% { left: 100%; transform: translate(-50%, -50%) scale(0.5) rotate(10deg); opacity: 0; }
-            }
-            @keyframes receivePop {
-                0%, 80%, 100% { transform: scale(1); border-color: theme(colors.gray.100); }
-                90% { transform: scale(1.1); border-color: theme(colors.blue.400); box-shadow: 0 0 15px theme(colors.blue.200); }
-            }
-            @keyframes dangerLoad {
-                0% { width: 0%; }
-                20% { width: 20%; }
-                40% { width: 40%; }
-                60% { width: 80%; }
-                80%, 100% { width: 100%; }
-            }
-            @keyframes flashAlert {
-                0%, 75% { opacity: 0.5; transform: scale(0.95); }
-                80%, 100% { opacity: 1; transform: scale(1); }
-            }
-            @keyframes scrollLogs {
-                0% { transform: translateY(30px); opacity: 0; }
-                10% { opacity: 1; }
-                90% { opacity: 1; }
-                100% { transform: translateY(-50px); opacity: 0; }
-            }
-        </style>
+        
         <div class="max-w-[1400px] mx-auto">
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <span class="text-teal-600 font-bold uppercase tracking-wider text-sm mb-4 block">Smart Automation</span>
@@ -1716,19 +1427,7 @@
                 PeopleXplus plugs right into the tools you already use, keeping your data synced and your teams happy without switching tabs.
             </p>
 
-            <style>
-                @keyframes float-1 { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(15px, -20px) rotate(5deg); } }
-                @keyframes float-2 { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(-15px, 20px) rotate(-5deg); } }
-                @keyframes float-3 { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(20px, 15px) rotate(8deg); } }
-                @keyframes float-4 { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(-20px, -15px) rotate(-8deg); } }
-                @keyframes orbit-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-                @keyframes counter-rotate { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
-                @keyframes pulseRing {
-                    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
-                    70% { transform: scale(1); box-shadow: 0 0 0 30px rgba(59, 130, 246, 0); }
-                    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
-                }
-            </style>
+            
 
             <div class="relative w-full max-w-4xl mx-auto aspect-square md:aspect-[2/1] flex items-center justify-center reveal-text mt-12">
                 <!-- Orbit Rings -->
@@ -1785,15 +1484,7 @@
 
     <!-- Biometric Hardware Compatibility Marquee -->
     <section class="py-12 bg-[#0B0F19] overflow-hidden relative">
-        <style>
-            @keyframes marqueeScroll {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(-100%); }
-            }
-            .animate-marquee {
-                animation: marqueeScroll 25s linear infinite;
-            }
-        </style>
+        
 
         <div class="max-w-[1400px] mx-auto px-6 mb-8 text-center relative z-10">
             <p class="text-sm font-bold text-teal-500/80 tracking-widest uppercase">Seamlessly Integrates With Top Biometric Hardware</p>
@@ -1870,10 +1561,7 @@
 
                 <!-- Animated Security Shield Graphic -->
                 <div class="flex-1 w-full flex justify-center reveal-text">
-                    <style>
-                        @keyframes pulse-ring { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.3); opacity: 0; } }
-                        @keyframes scan-line { 0% { transform: translateY(-50px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(150px); opacity: 0; } }
-                    </style>
+                    
                     <div class="relative w-full aspect-square max-w-md flex items-center justify-center">
                         <div class="absolute w-[80%] h-[80%] border border-blue-500/30 rounded-full animate-[pulse-ring_3s_ease-out_infinite]"></div>
                         <div class="absolute w-[80%] h-[80%] border border-blue-500/30 rounded-full animate-[pulse-ring_3s_ease-out_infinite_1s]"></div>
@@ -1975,166 +1663,8 @@
     </footer>
 
     <!-- Scripts -->
-    <script>
-        lucide.createIcons();
-
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            direction: 'vertical',
-            gestureDirection: 'vertical',
-            smooth: true,
-        })
-
-        function raf(time) {
-            lenis.raf(time)
-            requestAnimationFrame(raf)
-        }
-        requestAnimationFrame(raf)
-
-        // Interactive Spotlight Logic
-        const heroSection = document.getElementById('hero-section');
-        const spotlight = document.getElementById('spotlight');
-        if (heroSection && spotlight) {
-            heroSection.addEventListener('mousemove', (e) => {
-                const rect = heroSection.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                spotlight.style.setProperty('--x', `${x}px`);
-                spotlight.style.setProperty('--y', `${y}px`);
-            });
-            // Default center position on load
-            spotlight.style.setProperty('--x', `50%`);
-            spotlight.style.setProperty('--y', `50%`);
-        }
-
-        // Tab Switching Logic
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active styling from all buttons
-                tabBtns.forEach(b => {
-                    b.classList.remove('active', 'text-gray-900', 'font-semibold');
-                    b.classList.add('text-gray-500', 'font-medium');
-                });
-                
-                // Add active styling to clicked button
-                btn.classList.add('active', 'text-gray-900', 'font-semibold');
-                btn.classList.remove('text-gray-500', 'font-medium');
-
-                // Move the sliding background pill
-                const slider = document.getElementById('tab-slider');
-                if (slider) {
-                    slider.style.width = btn.offsetWidth + 'px';
-                    slider.style.height = btn.offsetHeight + 'px';
-                    slider.style.left = btn.offsetLeft + 'px';
-                    slider.style.top = btn.offsetTop + 'px';
-                }
-
-                // Hide all contents
-                tabContents.forEach(content => {
-                    content.classList.remove('block');
-                    content.classList.add('hidden', 'pointer-events-none', 'absolute');
-                    content.style.opacity = '0';
-                });
-
-                // Show target content
-                const targetId = btn.getAttribute('data-target');
-                const targetContent = document.getElementById(targetId);
-                targetContent.classList.remove('hidden', 'pointer-events-none', 'absolute');
-                targetContent.classList.add('block');
-                
-                // Small delay for fade in effect
-                setTimeout(() => {
-                    targetContent.style.opacity = '1';
-                }, 50);
-            });
-        });
-
-        // Scroll Reveal Logic
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.15
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('revealed');
-                    observer.unobserve(entry.target); // Only reveal once
-                }
-            });
-        }, observerOptions);
-
-        // First apply reveal-text class to sections we want to animate on scroll
-        document.querySelectorAll('section > div > div:first-child, .grid > div, .tab-content').forEach(el => {
-            if(!el.classList.contains('reveal-text') && !el.classList.contains('tab-content')) {
-                el.classList.add('reveal-text');
-            }
-        });
-
-        document.querySelectorAll('.reveal-text').forEach((el) => {
-            observer.observe(el);
-        });
-
-        // Initialize tab slider position
-        function initTabSlider() {
-            const activeBtn = document.querySelector('.tab-btn.active');
-            const slider = document.getElementById('tab-slider');
-            if (activeBtn && slider) {
-                slider.style.width = activeBtn.offsetWidth + 'px';
-                slider.style.height = activeBtn.offsetHeight + 'px';
-                slider.style.left = activeBtn.offsetLeft + 'px';
-                slider.style.top = activeBtn.offsetTop + 'px';
-            }
-        }
-        window.addEventListener('load', initTabSlider);
-        window.addEventListener('resize', initTabSlider);
-        // Run once immediately in case elements are already parsed
-        initTabSlider();
     
-        // Mobile Menu Toggle Logic
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        let isMobileMenuOpen = false;
 
-        if (mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', (event) => {
-                event.stopPropagation();
-                isMobileMenuOpen = !isMobileMenuOpen;
-                if (isMobileMenuOpen) {
-                    mobileMenu.classList.remove('hidden');
-                    // Small delay to allow display block to apply before animating
-                    setTimeout(() => {
-                        mobileMenu.classList.remove('opacity-0', 'scale-y-95');
-                        mobileMenu.classList.add('opacity-100', 'scale-y-100');
-                    }, 10);
-                    // Change icon to close (X)
-                    mobileMenuBtn.innerHTML = '<i data-lucide="x" class="w-6 h-6 text-gray-900"></i>';
-                    if (window.lucide) window.lucide.createIcons();
-                } else {
-                    mobileMenu.classList.remove('opacity-100', 'scale-y-100');
-                    mobileMenu.classList.add('opacity-0', 'scale-y-95');
-                    setTimeout(() => {
-                        mobileMenu.classList.add('hidden');
-                    }, 300); // Wait for transition
-                    // Change icon back to menu
-                    mobileMenuBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6 text-gray-900"></i>';
-                    if (window.lucide) window.lucide.createIcons();
-                }
-            });
-
-            // Close mobile menu when clicking outside
-            document.addEventListener('click', (event) => {
-                // Ensure we only close if the click is outside the menu
-                if (isMobileMenuOpen && !mobileMenu.contains(event.target)) {
-                    mobileMenuBtn.click();
-                }
-            });
-        }
-</script>
+    <script src="js/workforce-os.js"></script>
 </body>
 </html>
