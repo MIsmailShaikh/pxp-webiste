@@ -335,18 +335,16 @@
     </footer>
     
     <script>
-        const initLucide = () => {
-    if (window.lucide) {
-        if (window.requestIdleCallback) {
-            requestIdleCallback(() => window.lucide.createIcons());
-        } else {
-            setTimeout(() => window.lucide.createIcons(), 0);
+        (() => {
+    const check = setInterval(() => {
+        if (window.lucide) {
+            clearInterval(check);
+            const create = () => window['lucide'].createIcons();
+            if (window.requestIdleCallback) requestIdleCallback(create);
+            else setTimeout(create, 0);
         }
-    } else {
-        setTimeout(initLucide, 50);
-    }
-};
-initLucide();
+    }, 50);
+})();
     </script>
 
     <!-- Fix Sidebar Navigation History -->
@@ -364,7 +362,7 @@ initLucide();
 
 
     <!-- Lenis Smooth Scrolling -->
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             if (typeof Lenis !== 'undefined') {
