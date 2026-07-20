@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const compression = require('compression');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
 const bcrypt = require('bcrypt');
@@ -11,12 +12,21 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
+app.use(compression()); // Gzip compress all responses for faster load times
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static frontend files (your HTML, CSS, JS)
-app.use(express.static(path.join(__dirname, '.')));
+// Serve static frontend files with aggressive browser caching
+app.use(express.static(path.join(__dirname, '.'), {
+    maxAge: '1d', // Cache files in browser for 1 day
+    setHeaders: (res, path) => {
+        if (path.endsWith('.html')) {
+            // HTML files shouldn't be cached as aggressively to ensure updates are seen
+            res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+        }
+    }
+}));
 
 // Default route to index.html (since we don't have an index.html)
 app.get('/', (req, res) => {
