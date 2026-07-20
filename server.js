@@ -18,9 +18,9 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static frontend files (your HTML, CSS, JS)
 app.use(express.static(path.join(__dirname, '.')));
 
-// Default route to index11.html (since we don't have an index.html)
+// Default route to index.html (since we don't have an index.html)
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index11.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Database Connection Pool
