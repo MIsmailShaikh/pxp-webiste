@@ -24,8 +24,23 @@
     
 
     <link rel="stylesheet" href="css/pricing.css">
-</head>
+    <script src="js/auth-guard.js"></script>
+
+    
+
+
+    
+
+
+    
+
+
+    </head>
 <body class="antialiased selection:bg-black selection:text-white">
+    
+
+    
+
 
     <!-- Floating Pill Navbar (Fixed at top-1) -->
     <nav
@@ -93,8 +108,8 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <a href="#" class="hidden sm:block text-sm font-medium hover:opacity-70 px-4">Log in</a>
-            <a href="#"
+            <a href="login.html" class="hidden sm:block text-sm font-medium hover:opacity-70 px-4">Log in</a>
+            <a href="pricing.html"
                 class="hidden sm:flex bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-gray-800 transition-all items-center gap-2 group shadow-lg shadow-black/20">
                 Get started
                 <i data-lucide="arrow-right"
@@ -124,8 +139,8 @@
                 </div>
                 <div class="w-full h-px bg-gray-100 my-1"></div>
                 <a href="pricing.html" class="px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-semibold text-gray-900 transition-colors">Pricing</a>
-                <a href="#" class="px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-semibold text-gray-900 transition-colors">Log in</a>
-                <a href="#" class="mt-2 w-full bg-black text-white px-5 py-3 rounded-xl text-sm font-medium hover:bg-gray-800 transition-all flex items-center justify-center gap-2 group shadow-lg shadow-black/20">
+                <a href="login.html" class="px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-semibold text-gray-900 transition-colors">Log in</a>
+                <a href="pricing.html" class="mt-2 w-full bg-black text-white px-5 py-3 rounded-xl text-sm font-medium hover:bg-gray-800 transition-all flex items-center justify-center gap-2 group shadow-lg shadow-black/20">
                     Get started
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform opacity-50"></i>
                 </a>
@@ -203,7 +218,7 @@
                         <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Data Integrity</li>
                     </ul>
                     
-                    <button class="w-full bg-gray-900 text-white rounded-full py-4 mt-10 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=workforce-essential'">Get started</button>
+                    <button class="w-full bg-gray-900 text-white rounded-full py-4 mt-10 font-medium hover:bg-gray-800 transition-colors" onclick="requireAuth('checkout.html?plan=workforce-essential')" >Get started</button>
                 </div>
 
                 <!-- Growth Card -->
@@ -233,7 +248,7 @@
                         <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Automatic Biometric Sync</li>
                     </ul>
                     
-                    <button class="w-full bg-gray-900 text-white rounded-full py-4 mt-10 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=workforce-growth'">Get started</button>
+                    <button class="w-full bg-gray-900 text-white rounded-full py-4 mt-10 font-medium hover:bg-gray-800 transition-colors" onclick="requireAuth('checkout.html?plan=workforce-growth')" >Get started</button>
                 </div>
                 <!-- Enterprise Card -->
                 <div class="bg-white border border-gray-200 p-10 flex flex-col hover:shadow-xl transition-shadow duration-300 relative z-10 lg:border-l-0">
@@ -253,7 +268,7 @@
                         <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-gray-900 shrink-0"></i> Enterprise SLA</li>
                     </ul>
                     
-                    <button class="w-full bg-gray-900 text-white rounded-full py-4 mt-10 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=workforce-enterprise'">Get in touch</button>
+                    <button class="w-full bg-gray-900 text-white rounded-full py-4 mt-10 font-medium hover:bg-gray-800 transition-colors" onclick="requireAuth('checkout.html?plan=workforce-enterprise')" >Get in touch</button>
                 </div>
 
             </div>
@@ -301,7 +316,7 @@
                         <a href="#compare-features" class="text-[13px] font-semibold text-blue-600 hover:text-blue-700 hover:underline mt-4 block">See all features <i data-lucide="chevron-down" class="w-3 h-3 inline align-middle"></i></a>
                         
                         <div class="text-[10px] text-gray-400 mt-6 mb-4 term-text" id="starter-term-text">For 48-month term.</div>
-                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=email-starter'">Choose Plan</button>
+                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="requireAuth('checkout.html?plan=email-starter')" >Choose Plan</button>
                     </div>
 
                     <!-- Standard Email -->
@@ -335,7 +350,7 @@
                         <a href="#compare-features" class="text-[13px] font-semibold text-blue-600 hover:text-blue-700 hover:underline mt-4 block">See all features <i data-lucide="chevron-down" class="w-3 h-3 inline align-middle"></i></a>
                         
                         <div class="text-[10px] text-gray-400 mt-6 mb-4 term-text" id="standard-term-text">For 48-month term.</div>
-                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=email-standard'">Choose Plan</button>
+                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="requireAuth('checkout.html?plan=email-standard')" >Choose Plan</button>
                     </div>
 
                     <!-- Pro Email -->
@@ -454,7 +469,7 @@
                         <a href="#compare-features" class="text-[13px] font-semibold text-blue-600 hover:text-blue-700 hover:underline mt-4 block">See all features <i data-lucide="chevron-down" class="w-3 h-3 inline align-middle"></i></a>
                         
                         <div class="text-[10px] text-gray-400 mt-6 mb-4 term-text" id="pro-term-text">For 48-month term.</div>
-                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=email-pro'">Choose Plan</button>
+                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="requireAuth('checkout.html?plan=email-pro')" >Choose Plan</button>
                     </div>
 
                     <!-- Enterprise Email -->
@@ -476,7 +491,7 @@
                         <a href="#compare-features" class="text-[13px] font-semibold text-blue-600 hover:text-blue-700 hover:underline mt-4 block">See all features <i data-lucide="chevron-down" class="w-3 h-3 inline align-middle"></i></a>
                         
                         <div class="text-[10px] text-gray-400 mt-6 mb-4 term-text">Tailored specifically to your organization's needs.</div>
-                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html'">Contact Sales</button>
+                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="requireAuth('checkout.html')" >Contact Sales</button>
                     </div>
                 </div>
             </div>
@@ -523,7 +538,7 @@
                         </ul>
                         
                         <div class="text-[10px] text-gray-400 mt-6 mb-4 term-text" id="assessment-term-text">For 24-month term.</div>
-                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=assessment-pro'">Start Testing</button>
+                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="requireAuth('checkout.html?plan=assessment-pro')" >Start Testing</button>
                     </div>
 
                     <!-- Enterprise Assessment -->
@@ -547,7 +562,7 @@
                         </ul>
                         
                         <div class="text-[10px] text-gray-400 mt-6 mb-4 term-text">Tailored specifically to your organization's needs.</div>
-                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html'">Contact Sales</button>
+                        <button class="w-full bg-gray-900 text-white rounded-full py-4 font-medium hover:bg-gray-800 transition-colors" onclick="requireAuth('checkout.html')" >Contact Sales</button>
                     </div>
                 </div>
             </div>
@@ -568,7 +583,7 @@
                                 <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-gray-900"></i> Up to 50 interviews/mo</li>
                                 <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-gray-900"></i> Recording & Transcripts</li>
                             </ul>
-                            <button class="w-full bg-black text-white rounded-full py-2.5 text-sm font-medium hover:bg-gray-800 transition-colors" onclick="window.location.href='checkout.html?plan=interview-pro'">Get Started</button>
+                            <button class="w-full bg-black text-white rounded-full py-2.5 text-sm font-medium hover:bg-gray-800 transition-colors" onclick="requireAuth('checkout.html?plan=interview-pro')" >Get Started</button>
                         </div>
                     </div>
                 </div>
@@ -592,7 +607,7 @@
                                 <span class="text-gray-400 font-medium">/month</span>
                             </div>
 
-                            <button class="bg-white text-black hover:bg-gray-100 font-bold py-3.5 px-8 rounded-full transition-transform hover:scale-105" onclick="window.location.href='checkout.html?plan=all-in-one'">Claim All-in-One Plan</button>
+                            <button class="bg-white text-black hover:bg-gray-100 font-bold py-3.5 px-8 rounded-full transition-transform hover:scale-105" onclick="requireAuth('checkout.html?plan=all-in-one')" >Claim All-in-One Plan</button>
                         </div>
                         
                         <div class="flex-1 bg-white/5 border border-white/10 rounded-2xl p-6 w-full text-left">
@@ -998,10 +1013,10 @@
                     <div>
                         <h4 class="font-medium text-[11px] sm:text-sm md:text-lg mb-3 md:mb-6 text-gray-200">Company</h4>
                         <ul class="space-y-2 md:space-y-4 text-[9px] sm:text-[11px] md:text-sm text-gray-400">
-                            <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Career</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Case Studies</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                            <li><a href="about-us.html" class="hover:text-white transition-colors">About Us</a></li>
+                            <li><a href="career.html" class="hover:text-white transition-colors">Career</a></li>
+                            <li><a href="case-studies.html" class="hover:text-white transition-colors">Case Studies</a></li>
+                            <li><a href="support.html" class="hover:text-white transition-colors">Contact Us</a></li>
                         </ul>
                     </div>
 
@@ -1009,10 +1024,10 @@
                     <div>
                         <h4 class="font-medium text-[11px] sm:text-sm md:text-lg mb-3 md:mb-6 text-gray-200">Support</h4>
                         <ul class="space-y-2 md:space-y-4 text-[9px] sm:text-[11px] md:text-sm text-gray-400">
-                            <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Tutorial</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
+                            <li><a href="index11.html#faq" class="hover:text-white transition-colors">FAQ</a></li>
+                            <li><a href="documentation.html" class="hover:text-white transition-colors">Documentation</a></li>
+                            <li><a href="tutorial.html" class="hover:text-white transition-colors">Tutorial</a></li>
+                            <li><a href="support.html" class="hover:text-white transition-colors">Support</a></li>
                         </ul>
                     </div>
 
@@ -1020,12 +1035,10 @@
                     <div>
                         <h4 class="font-medium text-[11px] sm:text-sm md:text-lg mb-3 md:mb-6 text-gray-200">Legal Policies</h4>
                         <ul class="space-y-2 md:space-y-4 text-[9px] sm:text-[11px] md:text-sm text-gray-400">
-                            <li><a href="#" class="hover:text-white transition-colors">Terms & Conditions</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Refund Policy</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">GDPR Compliance</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Affiliate Policy</a></li>
-                        </ul>
+                            <li><a href="terms-and-conditions.html" class="hover:text-white transition-colors">Terms & Conditions</a></li>
+                            <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                            <li><a href="refund-policy.html" class="hover:text-white transition-colors">Refund Policy</a></li>
+                            </ul>
                     </div>
                 </div>
             </div>
@@ -1043,5 +1056,15 @@
     
 
     <script src="js/pricing.js"></script>
-</body>
+
+    
+
+
+    
+
+
+    
+
+
+    </body>
 </html>

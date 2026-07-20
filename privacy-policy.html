@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - PeopleXplus (PXP)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="js/auth-guard.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+        
+        /* Custom scrollbar for active tab */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+
+    
+
+
+    
+
+
+    
+
+
+    
+    
+    <!-- Robust Reveal CSS -->
+    <style>
+        /* Animate standard textual elements on load */
+        .prose > *, .max-w-3xl > *, .max-w-7xl > *, .grid > div {
+            animation: robustFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        
+        /* Stagger the animations so they cascade beautifully */
+        .prose > *:nth-child(1), .max-w-3xl > *:nth-child(1) { animation-delay: 0.05s; }
+        .prose > *:nth-child(2), .max-w-3xl > *:nth-child(2) { animation-delay: 0.1s; }
+        .prose > *:nth-child(3), .max-w-3xl > *:nth-child(3) { animation-delay: 0.15s; }
+        .prose > *:nth-child(4), .max-w-3xl > *:nth-child(4) { animation-delay: 0.2s; }
+        .prose > *:nth-child(5), .max-w-3xl > *:nth-child(5) { animation-delay: 0.25s; }
+        .prose > *:nth-child(n+6), .max-w-3xl > *:nth-child(n+6) { animation-delay: 0.3s; }
+        
+        /* Ensure navbar and sidebars are excluded from global staggers if caught */
+        nav, nav *, .w-64, .w-64 * {
+            animation: none !important;
+        }
+
+        @keyframes robustFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased selection:bg-black selection:text-white min-h-screen flex flex-col">
+    
+
+    
+
+
+    <!-- NAVBAR -->
+    <nav
+        class="glass-nav fixed top-1 left-1/2 -translate-x-1/2 w-[95%] max-w-[1400px] rounded-full border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-16 md:h-20 flex items-center justify-between px-4 md:px-8 z-[100] transition-all duration-300">
+
+        <div class="flex items-center gap-2">
+            <img src="./pxp-logo.png" alt="People X Plus Logo" class="h-8 w-auto">
+            <span class="font-bold text-lg tracking-tight text-gray-900 hidden sm:block">People X Plus</span>
+        </div>
+
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-500">
+            <!-- Platform Dropdown -->
+            <div class="relative group h-full flex items-center py-5">
+                <a href="#features" class="hover:text-black transition-colors flex items-center gap-1">
+                    Platform
+                    <i data-lucide="chevron-down"
+                        class="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-200"></i>
+                </a>
+                <!-- Dropdown Menu -->
+                <div
+                    class="absolute top-14 left-1/2 -translate-x-1/2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 p-3 flex flex-col gap-1 z-[200]">
+                    <a href="workforce-os.html"
+                        class="flex flex-col px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="text-gray-900 font-bold mb-0.5">Workforce OS</span>
+                        <span class="text-xs text-gray-500">Core HR & Attendance Hub</span>
+                    </a>
+                    <a href="payroll-engine.html"
+                        class="flex flex-col px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="text-gray-900 font-bold mb-0.5">Payroll Engine</span>
+                        <span class="text-xs text-gray-500">Automated compensation</span>
+                    </a>
+                    <a href="#" class="flex flex-col px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="text-gray-900 font-bold mb-0.5">Access Control</span>
+                        <span class="text-xs text-gray-500">Hardware & security sync</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Solutions Dropdown -->
+            <div class="relative group h-full flex items-center py-5">
+                <a href="#solutions" class="hover:text-black transition-colors flex items-center gap-1">
+                    Solutions
+                    <i data-lucide="chevron-down"
+                        class="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-200"></i>
+                </a>
+                <!-- Dropdown Menu -->
+                <div
+                    class="absolute top-14 left-1/2 -translate-x-1/2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 p-3 flex flex-col gap-1 z-[200]">
+                    <a href="#" class="flex flex-col px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="text-gray-900 font-bold mb-0.5">For Enterprise</span>
+                        <span class="text-xs text-gray-500">Scale your operations</span>
+                    </a>
+                    <a href="#" class="flex flex-col px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="text-gray-900 font-bold mb-0.5">White-Label</span>
+                        <span class="text-xs text-gray-500">Brand it as your own</span>
+                    </a>
+                    <a href="#" class="flex flex-col px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="text-gray-900 font-bold mb-0.5">Custom Development</span>
+                        <span class="text-xs text-gray-500">Bespoke integrations</span>
+                    </a>
+                </div>
+            </div>
+
+            <a href="pricing.html" class="hover:text-black transition-colors flex items-center py-5">Pricing</a>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <a href="login.html" class="hidden sm:block text-sm font-medium hover:opacity-70 px-4">Log in</a>
+            <a href="pricing.html"
+                class="hidden sm:flex bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-gray-800 transition-all items-center gap-2 group shadow-lg shadow-black/20">
+                Get started
+                <i data-lucide="arrow-right"
+                    class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform opacity-50"></i>
+            </a>
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="sm:hidden p-2 rounded-full hover:bg-gray-100 transition-colors">
+                <i data-lucide="menu" class="w-6 h-6 text-gray-900"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="absolute top-[calc(100%+0.5rem)] left-0 w-full bg-white/95 backdrop-blur-xl border border-gray-100 shadow-xl rounded-3xl overflow-hidden hidden flex-col transition-all duration-300 transform origin-top opacity-0 scale-y-95">
+            <div class="p-4 flex flex-col gap-2">
+                <div class="flex flex-col gap-1">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider px-2 pt-2">Platform</span>
+                    <a href="workforce-os.html" class="px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-semibold text-gray-900 transition-colors">Workforce OS</a>
+                    <a href="payroll-engine.html" class="px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-semibold text-gray-900 transition-colors">Payroll Engine</a>
+                    <a href="#" class="px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-semibold text-gray-900 transition-colors">Access Control</a>
+                </div>
+                <div class="w-full h-px bg-gray-100 my-1"></div>
+                <div class="flex flex-col gap-1">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider px-2 pt-2">Solutions</span>
+                    <a href="#" class="px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-semibold text-gray-900 transition-colors">For Enterprise</a>
+                    <a href="#" class="px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-semibold text-gray-900 transition-colors">White-Label</a>
+                    <a href="#" class="px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-semibold text-gray-900 transition-colors">Custom Development</a>
+                </div>
+                <div class="w-full h-px bg-gray-100 my-1"></div>
+                <a href="pricing.html" class="px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-semibold text-gray-900 transition-colors">Pricing</a>
+                <a href="login.html" class="px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-semibold text-gray-900 transition-colors">Log in</a>
+                <a href="pricing.html" class="mt-2 w-full bg-black text-white px-5 py-3 rounded-xl text-sm font-medium hover:bg-gray-800 transition-all flex items-center justify-center gap-2 group shadow-lg shadow-black/20">
+                    Get started
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform opacity-50"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <div class="pt-32 pb-16 md:pt-40 md:pb-24 bg-gradient-to-br from-gray-900 to-black text-white relative overflow-hidden">
+        <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-600 rounded-full blur-[120px] opacity-30"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600 rounded-full blur-[120px] opacity-30"></div>
+        <div class="max-w-7xl mx-auto px-4 relative z-10 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Privacy Policy</h1>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg">Please read this agreement carefully, as it contains important information regarding your privacy and our data practices.</p>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="max-w-7xl mx-auto px-4 py-12 flex flex-col md:flex-row gap-8 lg:gap-16 w-full flex-grow">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <div class="w-full md:w-64 flex-shrink-0">
+            <div class="sticky top-32 flex flex-col gap-1 bg-white p-2 rounded-2xl shadow-sm border border-gray-100">
+                <a href="terms-and-conditions.html" class="px-4 py-3 rounded-xl text-sm font-semibold transition-colors text-gray-600 hover:bg-gray-50">Terms & Conditions</a>
+                <a href="privacy-policy.html" class="px-4 py-3 rounded-xl text-sm font-semibold transition-colors bg-blue-50 text-blue-700">Privacy Policy</a>
+                <a href="refund-policy.html" class="px-4 py-3 rounded-xl text-sm font-semibold transition-colors text-gray-600 hover:bg-gray-50">Refund Policy</a>
+            </div>
+        </div>
+
+        <!-- POLICY CONTENT -->
+        <div class="w-full max-w-3xl">
+            <!-- Binding Notification Box -->
+            <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6 mb-10">
+                <p class="text-sm text-blue-900 leading-relaxed">
+                    The English version of legal agreements and policies is considered as the only current and valid version of this document. Any translated version is provided for your convenience only, to facilitate reading and understanding of the English version. Any translated versions are not legally binding and cannot replace the English versions. In the event of disagreement or conflict, the English language legal agreements and policies shall prevail.
+                </p>
+            </div>
+            
+            <p class="text-sm text-gray-500 mb-8 pb-8 border-b border-gray-200">Last revised: 2026-07-20 13:30</p>
+
+            <div class="prose prose-gray max-w-none text-gray-700 space-y-6">
+<h3 class="text-xl font-bold text-black uppercase tracking-wider mt-10 mb-4">1. INTRODUCTION</h3>
+<p class="mb-4 text-gray-700">PeopleXplus group entity, the details of which are indicated in the PeopleXplus's Terms of Service, ("PeopleXplus") provides you workforce management, payroll, and related products and service.</p>
+<p class="mb-4 text-gray-700">PeopleXplus seeks to ensure the highest level of data privacy when offering its variety of quality products and services to PeopleXplus customers and subscribers ("Subscribers") (collectively, "You", or "Users").</p>
+<p class="mb-4 text-gray-700">At PeopleXplus, the privacy and security of our Users is of paramount importance. PeopleXplus is committed to protecting the data you share with us.</p>
+<p class="mb-4 text-gray-700">When this Policy mentions "PeopleXplus", "we," "us", or "our", it refers to PeopleXplus that is responsible for protection of your personal information in line with this Privacy Policy ("Data Controller").</p>
+<p class="mb-4 text-gray-700">This Privacy Policy ("Policy") explains how PeopleXplus processes information that can be used to directly or indirectly identify an individual ("Personal Data") collected on our Site, our services ("Service"), forums and our mobile applications ("Platform").</p>
+<p class="mb-4 text-gray-700">All personal data are processed in accordance with the General Data Protection Regulation (EU) 2016/679 ("GDPR").</p>
+<p class="mb-4 text-gray-700">For any questions regarding this Policy or any requests regarding the processing of personal data, please contact us at privacy@peoplexplus.com.</p>
+<h3 class="text-xl font-bold text-black uppercase tracking-wider mt-10 mb-4">2. GENERAL PRINCIPLES. CONFIDENTIALITY</h3>
+<p class="mb-4 text-gray-700">PeopleXplus shall process all Personal Data adhering to the general data processing principles:</p>
+<ul class="list-disc pl-5 space-y-2 text-gray-700">
+<li>lawfully, fairly and in a transparent manner in relation to the data subject (lawfulness, fairness, and transparency);</li>
+<li>collect and process Personal Data only for specified, explicit and legitimate purposes and not further processed in a manner that is incompatible with those purposes (purpose limitation);</li>
+<li>ensure that Personal Data is adequate, relevant and limited to what is necessary for relation to the purposes for which they are processed (data minimization);</li>
+<li>ensure that Personal Data is accurate and, where necessary, kept up to date (accuracy);</li>
+<li>ensure that Personal Data is kept in a form which permits identification of data subjects for no longer than is necessary for the purposes for which the personal data are processed (storage limitation);</li>
+</ul>
+<p class="mb-4 text-gray-700">process Personal Data in a manner that ensures appropriate security of the personal data, including protection against unauthorized or unlawful processing and against accidental loss, destruction or damage, using appropriate technical or organizational measures (integrity and confidentiality).</p>
+<p class="mb-4 text-gray-700">All and any information stored on PeopleXplus's Platform is treated as strictly confidential. All information is stored securely and is accessed by qualified and authorized personnel only.</p>
+<h3 class="text-xl font-bold text-black uppercase tracking-wider mt-10 mb-4">3. INFORMATION WE COLLECT</h3>
+<h3 class="text-xl font-bold text-black uppercase tracking-wider mt-10 mb-4">3.1. Information You provide to us.</h3>
+<p class="mb-4 text-gray-700">Information that is necessary for the use of the PeopleXplus Platform</p>
+<p class="mb-4 text-gray-700">We ask for and collect the following personal information about you when you use the PeopleXplus Platform. This information is necessary for the adequate performance of the contractual arrangement which is in place between you and us and to allow us to comply with our legal obligations. Failing to provide any of this data or decision to delete or object to the processing of any of such data may result in de-activation of your PeopleXplus Account.</p>
+<p class="mb-4 text-gray-700">Account Signup Information. When you sign up to PeopleXplus, we require you to provide minimum information - email address and password. In some particular cases we ask you to provide more information - such as your first and last name, identity verification, contact details.</p>
+<p class="mb-4 text-gray-700">Login information. We collect Login scope and Email scope from Google, and email from Facebook/Microsoft.</p>
+<p class="mb-4 text-gray-700">Identity verification information. Before the onboarding of your business or thereafter, PeopleXplus may collect identity verification information (such as images of your passport, national ID card, valid driving license or other documents as required or permitted by applicable laws or regulations).</p>
+<p class="mb-4 text-gray-700">Operational verification information. In certain operational, legal, abuse-prevention, or compliance-related situations, we may collect and process additional information and supporting documentation necessary to investigate, verify, or resolve requests and disputes.</p>
+<p class="mb-4 text-gray-700">Payment Information. To order and use features of the PeopleXplus Platform, we may require you to provide certain financial information in order to facilitate the processing of payments. We use 3rd party (payment processor) services, so we do not collect and store credit card information.</p>
+<p class="mb-4 text-gray-700">Communications, Chats, Messaging. When you communicate with PeopleXplus, we collect information about your communication and any information you choose to provide or disclose.</p>
+<p class="mb-4 text-gray-700">Job applicants' information. We also collect information that you provided to us by applying to any of the open career positions.</p>
+<p class="mb-4 text-gray-700">Participation information. When you apply to, register for, or participate in any programme, partnership, or initiative offered by PeopleXplus, we collect the information you provide.</p>
+<p class="mb-4 text-gray-700">Visitors and users of our User's websites or services. We may also collect information pertaining to visitors and users of our User's websites or services ("Users-of-Users"), solely for and on our Users' behalf.</p>
+<h3 class="text-xl font-bold text-black uppercase tracking-wider mt-10 mb-4">3.2. Information We Collect when You use the Platform</h3>
+<p class="mb-4 text-gray-700">When you use the PeopleXplus Platform or contact us directly by any communication channel, we may collect information, including personal information, about the services you use and how you use them.</p>
+<p class="mb-4 text-gray-700">Log data and Device information. We automatically collect log data and device information when you access and use the PeopleXplus Platform.</p>
+<p class="mb-4 text-gray-700">Tracking technologies and Cookies. We use cookies, beacons, tags, scripts and other similar technologies.</p>
+<p class="mb-4 text-gray-700">Usage information. We use tools to collect information about your interactions with the PeopleXplus Platform.</p>
+<p class="mb-4 text-gray-700">Geo-location data. We collect information about your approximate location as determined by data such as your IP address.</p>
+<h3 class="text-xl font-bold text-black uppercase tracking-wider mt-10 mb-4">4. HOW WE USE YOUR DATA?</h3>
+<p class="mb-4 text-gray-700">We use, store, combine and process information, including personal information, about you to provide, understand, improve, and develop the PeopleXplus Platform, create and maintain a trusted and safer environment and comply with our legal obligations.</p>
+<p class="mb-4 text-gray-700">To Identify. Personal identification information is collected and processed for the purposes of User identification.</p>
+<p class="mb-4 text-gray-700">To Create and Maintain Trusted Environment. We verify or authenticate information or identifications provided by you.</p>
+<p class="mb-4 text-gray-700">To Create Aggregated Statistical Data. To Carry out Market Research and Analysis necessary for running out our business.</p>
+<p class="mb-4 text-gray-700">To Stay Connected. We use information about data usage, devices, operating systems to diagnose problems.</p>
+<p class="mb-4 text-gray-700">To Send Service and Billing Messages. PeopleXplus may also contact you with important information regarding our Services.</p>
+<h3 class="text-xl font-bold text-black uppercase tracking-wider mt-10 mb-4">5. SECURITY</h3>
+<p class="mb-4 text-gray-700">PeopleXplus has implemented security measures designed to protect the Personal Information you share with us, including physical, electronic and procedural measures. Among other things, we offer HTTPS secure access to most areas on our Services. We also regularly monitor our systems for possible vulnerabilities and attacks.</p>
+<p class="mb-4 text-gray-700">Regardless of the measures and efforts taken by PeopleXplus, we cannot and do not guarantee the absolute protection and security of your Personal Information.</p>
+<h3 class="text-xl font-bold text-black uppercase tracking-wider mt-10 mb-4">6. YOUR RIGHTS</h3>
+<p class="mb-4 text-gray-700">You are entitled to a range of rights regarding the protection of your Personal Data, which are subject to limitations, restrictions and conditions as laid down in GDPR and applicable law. Those rights are:</p>
+<ul class="list-disc pl-5 space-y-2 text-gray-700">
+<li>the right to access the information we process about you;</li>
+<li>the right to rectify incorrect/inaccurate information about you;</li>
+<li>the right to transfer all or part of the information collected about you to you or another data controller;</li>
+<li>the right to erase any data concerning you;</li>
+<li>the right to the restriction of data processing;</li>
+</ul>
+<p class="mb-4 text-gray-700">the right to object to the processing of Personal Data.</p>
+<p class="mb-4 text-gray-700">Where the processing of your personal data is based on your consent, you can withdraw your consent at any time by contacting us at privacy@peoplexplus.com.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0a0a0a] text-white pt-24 pb-12 relative overflow-hidden">
+        <!-- Top Blue Glow Effect -->
+        <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none">
+        </div>
+
+        <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 mb-12 md:mb-20">
+                
+                <!-- Brand Column -->
+                <div class="w-full lg:w-4/12 flex flex-col items-center lg:items-start text-center lg:text-left">
+                    <div class="flex items-center gap-2 mb-4 md:mb-6">
+                        <img src="./pxp-logo.png" alt="People X Plus Logo"
+                            class="h-8 md:h-10 w-auto filter invert brightness-0">
+                    </div>
+                    <p class="text-gray-400 text-xs md:text-sm leading-relaxed mb-6 max-w-xs">
+                        Ready to upgrade your company's operations? Let's discuss your custom software requirements
+                        today.
+                    </p>
+                    <div class="flex gap-4 md:gap-6">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="facebook"
+                                class="w-4 h-4 md:w-5 md:h-5"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="instagram"
+                                class="w-4 h-4 md:w-5 md:h-5"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="youtube"
+                                class="w-4 h-4 md:w-5 md:h-5"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="linkedin"
+                                class="w-4 h-4 md:w-5 md:h-5"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="dribbble"
+                                class="w-4 h-4 md:w-5 md:h-5"></i></a>
+                    </div>
+                </div>
+
+                <!-- Spacer -->
+                <div class="hidden lg:block lg:w-1/12"></div>
+
+                <!-- Links Grid (3 columns side-by-side on all screens) -->
+                <div class="w-full lg:w-7/12 grid grid-cols-3 gap-2 sm:gap-6 text-left">
+                    <!-- Links Column 1: Company -->
+                    <div>
+                        <h4 class="font-medium text-[11px] sm:text-sm md:text-lg mb-3 md:mb-6 text-gray-200">Company</h4>
+                        <ul class="space-y-2 md:space-y-4 text-[9px] sm:text-[11px] md:text-sm text-gray-400">
+                            <li><a href="about-us.html" class="hover:text-white transition-colors">About Us</a></li>
+                            <li><a href="career.html" class="hover:text-white transition-colors">Career</a></li>
+                            <li><a href="case-studies.html" class="hover:text-white transition-colors">Case Studies</a></li>
+                            <li><a href="support.html" class="hover:text-white transition-colors">Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Links Column 2: Support -->
+                    <div>
+                        <h4 class="font-medium text-[11px] sm:text-sm md:text-lg mb-3 md:mb-6 text-gray-200">Support</h4>
+                        <ul class="space-y-2 md:space-y-4 text-[9px] sm:text-[11px] md:text-sm text-gray-400">
+                            <li><a href="index11.html#faq" class="hover:text-white transition-colors">FAQ</a></li>
+                            <li><a href="documentation.html" class="hover:text-white transition-colors">Documentation</a></li>
+                            <li><a href="tutorial.html" class="hover:text-white transition-colors">Tutorial</a></li>
+                            <li><a href="support.html" class="hover:text-white transition-colors">Support</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Links Column 3: Legal -->
+                    <div>
+                        <h4 class="font-medium text-[11px] sm:text-sm md:text-lg mb-3 md:mb-6 text-gray-200">Legal Policies</h4>
+                        <ul class="space-y-2 md:space-y-4 text-[9px] sm:text-[11px] md:text-sm text-gray-400">
+                            <li><a href="terms-and-conditions.html" class="hover:text-white transition-colors">Terms & Conditions</a></li>
+                            <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                            <li><a href="refund-policy.html" class="hover:text-white transition-colors">Refund Policy</a></li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright Bar -->
+            <div class="border-t border-white/10 pt-8 text-center">
+                <p class="text-gray-500 text-sm">
+                    Copyright © 2024 PeopleXplus – smart application for modern business
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        lucide.createIcons();
+    </script>
+
+    <!-- Fix Sidebar Navigation History -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebarLinks = document.querySelectorAll('.sticky a');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.replace(link.href);
+                });
+            });
+        });
+    </script>
+
+
+    <!-- Lenis Smooth Scrolling -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof Lenis !== 'undefined') {
+                const lenis = new Lenis({
+                    duration: 1.2,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+                    direction: 'vertical',
+                    gestureDirection: 'vertical',
+                    smooth: true,
+                    mouseMultiplier: 1,
+                    smoothTouch: false,
+                    touchMultiplier: 2,
+                    infinite: false,
+                })
+
+                function raf(time) {
+                    lenis.raf(time)
+                    requestAnimationFrame(raf)
+                }
+
+                requestAnimationFrame(raf)
+            }
+        });
+    </script>
+
+
+    
+
+
+    
+
+
+    
+
+
+    
+    </body>
+</html>

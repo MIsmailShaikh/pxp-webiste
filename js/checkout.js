@@ -217,3 +217,208 @@ lucide.createIcons();
                 }
             });
         }
+
+        // ==========================================
+        // CHECKOUT LOGIC (AUTH & PAYMENT)
+        // ==========================================
+        
+        let paymentMethod = null;
+        let isLoggedIn = localStorage.getItem('pxp_logged_in') === 'true';
+
+        // UI Elements
+        const authUnlogged = document.getElementById('auth-unlogged');
+        const authLogged = document.getElementById('auth-logged');
+        const authUserName = document.getElementById('auth-user-name');
+        const authUserEmail = document.getElementById('auth-user-email');
+        const authAvatar = document.getElementById('auth-avatar');
+        const paymentOverlay = document.getElementById('payment-overlay');
+        const authModal = document.getElementById('auth-modal');
+        const authModalContent = document.getElementById('auth-modal-content');
+        
+        function updateAuthState() {
+            if (isLoggedIn) {
+                authUnlogged.classList.add('hidden');
+                authUnlogged.classList.remove('flex', 'md:flex');
+                
+                authLogged.classList.remove('hidden');
+                authLogged.classList.add('flex');
+                
+                paymentOverlay.classList.add('opacity-0', 'pointer-events-none');
+                
+                // Populate mock user data
+                const email = localStorage.getItem('pxp_email') || 'user@example.com';
+                const name = email.split('@')[0];
+                authUserName.textContent = name.charAt(0).toUpperCase() + name.slice(1);
+                authUserEmail.textContent = email;
+                authAvatar.textContent = name.substring(0,2).toUpperCase();
+            } else {
+                authUnlogged.classList.remove('hidden');
+                authUnlogged.classList.add('flex', 'md:flex');
+                
+                authLogged.classList.add('hidden');
+                authLogged.classList.remove('flex');
+                
+                paymentOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            }
+        }
+        
+        // Initial state
+        updateAuthState();
+
+        // Payment Toggle Logic
+        window.togglePayment = function(method) {
+            if (!isLoggedIn) return; // Prevent selection if not logged in
+            
+            paymentMethod = method;
+            
+            // Elements
+            const cardAcc = document.getElementById('acc-card');
+            const cardBody = document.getElementById('body-card');
+            const cardRadio = document.getElementById('radio-card');
+            const cardIcon = document.getElementById('icon-card');
+            
+            const upiAcc = document.getElementById('acc-upi');
+            const upiBody = document.getElementById('body-upi');
+            const upiRadio = document.getElementById('radio-upi');
+            const upiIcon = document.getElementById('icon-upi');
+
+            // Reset both
+            cardAcc.classList.remove('border-blue-600', 'shadow-[0_0_0_1px_rgba(37,99,235,1)]');
+            cardAcc.classList.add('border-gray-200');
+            cardBody.classList.remove('h-[280px]', 'md:h-[220px]');
+            cardBody.classList.add('h-0');
+            cardRadio.classList.remove('border-[5px]', 'border-blue-600');
+            cardRadio.classList.add('border-gray-300', 'border');
+            if (cardIcon) cardIcon.classList.remove('rotate-180');
+            
+            upiAcc.classList.remove('border-blue-600', 'shadow-[0_0_0_1px_rgba(37,99,235,1)]');
+            upiAcc.classList.add('border-gray-200');
+            upiBody.classList.remove('h-[100px]');
+            upiBody.classList.add('h-0');
+            upiRadio.classList.remove('border-[5px]', 'border-blue-600');
+            upiRadio.classList.add('border-gray-300', 'border');
+            if (upiIcon) upiIcon.classList.remove('rotate-180');
+
+            // Activate selected
+            if (method === 'card') {
+                cardAcc.classList.add('border-blue-600', 'shadow-[0_0_0_1px_rgba(37,99,235,1)]');
+                cardAcc.classList.remove('border-gray-200');
+                cardBody.classList.add('h-[280px]', 'md:h-[220px]');
+                cardBody.classList.remove('h-0');
+                cardRadio.classList.add('border-[5px]', 'border-blue-600');
+                cardRadio.classList.remove('border-gray-300', 'border');
+                if (cardIcon) cardIcon.classList.add('rotate-180');
+            } else if (method === 'upi') {
+                upiAcc.classList.add('border-blue-600', 'shadow-[0_0_0_1px_rgba(37,99,235,1)]');
+                upiAcc.classList.remove('border-gray-200');
+                upiBody.classList.add('h-[100px]');
+                upiBody.classList.remove('h-0');
+                upiRadio.classList.add('border-[5px]', 'border-blue-600');
+                upiRadio.classList.remove('border-gray-300', 'border');
+                if (upiIcon) upiIcon.classList.add('rotate-180');
+            }
+        };
+
+        // Modal Logic
+        function openAuthModal() {
+            authModal.classList.remove('hidden');
+            setTimeout(() => {
+                authModal.classList.remove('opacity-0');
+                authModalContent.classList.remove('scale-95');
+                authModalContent.classList.add('scale-100');
+            }, 10);
+        }
+        
+        function closeAuthModal() {
+            authModal.classList.add('opacity-0');
+            authModalContent.classList.add('scale-95');
+            authModalContent.classList.remove('scale-100');
+            setTimeout(() => {
+                authModal.classList.add('hidden');
+            }, 300);
+        }
+
+        document.getElementById('btn-open-login').addEventListener('click', openAuthModal);
+        document.getElementById('btn-close-modal').addEventListener('click', closeAuthModal);
+        
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            isLoggedIn = false;
+            paymentMethod = null; // reset payment
+            localStorage.removeItem('pxp_logged_in');
+            localStorage.removeItem('pxp_email');
+            
+            // reset accordion styles
+            document.getElementById('body-card').classList.add('h-0');
+            document.getElementById('body-card').classList.remove('h-[280px]', 'md:h-[220px]');
+            document.getElementById('acc-card').classList.remove('border-blue-600', 'shadow-[0_0_0_1px_rgba(37,99,235,1)]');
+            document.getElementById('acc-card').classList.add('border-gray-200');
+            document.getElementById('radio-card').classList.remove('border-[5px]', 'border-blue-600');
+            document.getElementById('radio-card').classList.add('border-gray-300', 'border');
+
+            document.getElementById('body-upi').classList.add('h-0');
+            document.getElementById('body-upi').classList.remove('h-[100px]');
+            document.getElementById('acc-upi').classList.remove('border-blue-600', 'shadow-[0_0_0_1px_rgba(37,99,235,1)]');
+            document.getElementById('acc-upi').classList.add('border-gray-200');
+            document.getElementById('radio-upi').classList.remove('border-[5px]', 'border-blue-600');
+            document.getElementById('radio-upi').classList.add('border-gray-300', 'border');
+
+            updateAuthState();
+        });
+
+        document.getElementById('btn-submit-auth').addEventListener('click', () => {
+            const email = document.getElementById('auth-email').value;
+            const pass = document.getElementById('auth-password').value;
+            
+            if (!email || !pass) {
+                alert("Please enter both email and password.");
+                return;
+            }
+            
+            // Mock login
+            isLoggedIn = true;
+            localStorage.setItem('pxp_logged_in', 'true');
+            localStorage.setItem('pxp_email', email);
+            updateAuthState();
+            closeAuthModal();
+            
+            // Auto-select card if none selected
+            if (!paymentMethod) {
+                setTimeout(() => { togglePayment('card'); }, 300);
+            }
+        });
+
+        // Checkout Button Logic
+        document.getElementById('btn-checkout-continue').addEventListener('click', () => {
+            if (!isLoggedIn) {
+                openAuthModal();
+                return;
+            }
+            
+            if (!paymentMethod) {
+                alert("Please select a payment method.");
+                return;
+            }
+            
+            if (paymentMethod === 'card') {
+                const num = document.getElementById('cc-number').value;
+                if(num.length < 15) {
+                    alert("Please enter a valid card number.");
+                    return;
+                }
+            } else if (paymentMethod === 'upi') {
+                const upi = document.getElementById('upi-id').value;
+                if(!upi.includes('@')) {
+                    alert("Please enter a valid UPI ID.");
+                    return;
+                }
+            }
+            
+            // Proceed to Razorpay Mock
+            const loader = document.getElementById('razorpay-loader');
+            loader.classList.remove('hidden');
+            
+            setTimeout(() => {
+                alert("This is a frontend demo. The integration would now open Razorpay securely using the tokenized card details.");
+                loader.classList.add('hidden');
+            }, 2500);
+        });
