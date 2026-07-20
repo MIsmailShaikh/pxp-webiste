@@ -368,11 +368,18 @@
     </footer>
     
     <script>
+        const initLucide = () => {
+    if (window.lucide) {
         if (window.requestIdleCallback) {
-    requestIdleCallback(() => { if (window.lucide) lucide.createIcons(); });
-} else {
-    setTimeout(() => { if (window.lucide) lucide.createIcons(); }, 0);
-}
+            requestIdleCallback(() => window.lucide.createIcons());
+        } else {
+            setTimeout(() => window.lucide.createIcons(), 0);
+        }
+    } else {
+        setTimeout(initLucide, 50);
+    }
+};
+initLucide();
     </script>
 
     <!-- Fix Sidebar Navigation History -->

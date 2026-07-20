@@ -1,9 +1,16 @@
 // Initialize Lucide Icons
+        const initLucide = () => {
+    if (window.lucide) {
         if (window.requestIdleCallback) {
-    requestIdleCallback(() => { if (window.lucide) lucide.createIcons(); });
-} else {
-    setTimeout(() => { if (window.lucide) lucide.createIcons(); }, 0);
-}
+            requestIdleCallback(() => window.lucide.createIcons());
+        } else {
+            setTimeout(() => window.lucide.createIcons(), 0);
+        }
+    } else {
+        setTimeout(initLucide, 50);
+    }
+};
+initLucide();
 
         // Initialize Lenis Smooth Scroll
         const lenis = new Lenis({
@@ -184,11 +191,18 @@
                     }, 10);
                     // Change icon to close (X)
                     mobileMenuBtn.innerHTML = '<i data-lucide="x" class="w-6 h-6 text-gray-900"></i>';
-                    if (window.lucide) window.if (window.requestIdleCallback) {
-    requestIdleCallback(() => { if (window.lucide) lucide.createIcons(); });
-} else {
-    setTimeout(() => { if (window.lucide) lucide.createIcons(); }, 0);
-}
+                    if (window.lucide) window.const initLucide = () => {
+    if (window.lucide) {
+        if (window.requestIdleCallback) {
+            requestIdleCallback(() => window.lucide.createIcons());
+        } else {
+            setTimeout(() => window.lucide.createIcons(), 0);
+        }
+    } else {
+        setTimeout(initLucide, 50);
+    }
+};
+initLucide();
                 } else {
                     mobileMenu.classList.remove('opacity-100', 'scale-y-100');
                     mobileMenu.classList.add('opacity-0', 'scale-y-95');
@@ -197,11 +211,18 @@
                     }, 300); // Wait for transition
                     // Change icon back to menu
                     mobileMenuBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6 text-gray-900"></i>';
-                    if (window.lucide) window.if (window.requestIdleCallback) {
-    requestIdleCallback(() => { if (window.lucide) lucide.createIcons(); });
-} else {
-    setTimeout(() => { if (window.lucide) lucide.createIcons(); }, 0);
-}
+                    if (window.lucide) window.const initLucide = () => {
+    if (window.lucide) {
+        if (window.requestIdleCallback) {
+            requestIdleCallback(() => window.lucide.createIcons());
+        } else {
+            setTimeout(() => window.lucide.createIcons(), 0);
+        }
+    } else {
+        setTimeout(initLucide, 50);
+    }
+};
+initLucide();
                 }
             });
 
