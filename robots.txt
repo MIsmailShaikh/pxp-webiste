@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Note: This is currently blocking search engines because the site is in development.
+# When we connect the main domain, we will change 'Disallow: /' to 'Allow: /'
