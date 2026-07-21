@@ -1,14 +1,1 @@
-body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FAFAFA;
-            color: #111;
-        }
-        /* Hide number input arrows */
-        input[type="number"]::-webkit-inner-spin-button, 
-        input[type="number"]::-webkit-outer-spin-button { 
-            -webkit-appearance: none; 
-            margin: 0; 
-        }
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
+body{font-family:'Inter',sans-serif;background-color:#FAFAFA;color:#111;}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}input[type="number"]{-moz-appearance:textfield;}
