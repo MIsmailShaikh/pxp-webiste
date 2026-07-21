@@ -1,6 +1,12 @@
 // Initialize Lucide Icons
         window.addEventListener('load', () => {
-    if (window.lucide) window.lucide.createIcons();
+    if (window.lucide) {
+        if (window.requestIdleCallback) {
+            requestIdleCallback(() => window.lucide.createIcons());
+        } else {
+            setTimeout(() => window.lucide.createIcons(), 100);
+        }
+    }
 });
 
         // Initialize Lenis Smooth Scroll

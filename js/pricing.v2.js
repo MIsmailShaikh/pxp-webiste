@@ -6,7 +6,13 @@ const hash = window.location.hash.substring(1);
         }
 
 window.addEventListener('load', () => {
-    if (window.lucide) window.lucide.createIcons();
+    if (window.lucide) {
+        if (window.requestIdleCallback) {
+            requestIdleCallback(() => window.lucide.createIcons());
+        } else {
+            setTimeout(() => window.lucide.createIcons(), 100);
+        }
+    }
 });
 
         const lenis = new Lenis({
@@ -160,7 +166,13 @@ window.addEventListener('load', () => {
             // Re-render icons for new content
             if (window.lucide) {
                 window.addEventListener('load', () => {
-    if (window.lucide) window.lucide.createIcons();
+    if (window.lucide) {
+        if (window.requestIdleCallback) {
+            requestIdleCallback(() => window.lucide.createIcons());
+        } else {
+            setTimeout(() => window.lucide.createIcons(), 100);
+        }
+    }
 });
             }
             
