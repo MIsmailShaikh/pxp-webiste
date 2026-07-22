@@ -256,10 +256,10 @@
                 // Clear it so it doesn't loop
                 localStorage.removeItem('pxp_intended_url');
                 // Redirect to intended url
-                window.location.href = intendedUrl;
+                window.location.replace(intendedUrl);
             } else {
                 // Default fallback redirect to index or dashboard
-                window.location.href = 'index.html';
+                window.location.replace('index.html');
             }
         }
     </script>

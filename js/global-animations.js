@@ -27,4 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.reveal-text, .scroll-reveal').forEach((el) => {
         observer.observe(el);
     });
+
+    // Custom Back Logic for Main Page Navigation
+    document.querySelectorAll('a[href="index.html"], a[href="./index.html"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.replace(link.href);
+        });
+    });
 });

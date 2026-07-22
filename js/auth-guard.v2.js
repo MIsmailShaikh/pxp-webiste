@@ -12,11 +12,11 @@ window.requireAuth = function(intendedUrl) {
     
     if (isLoggedIn) {
         // Already logged in, go straight to the destination
-        window.location.href = intendedUrl;
+        window.location.replace(intendedUrl);
     } else {
         // Not logged in, save destination and go to login
         localStorage.setItem('pxp_intended_url', intendedUrl);
-        window.location.href = 'login.html';
+        window.location.replace('login.html');
     }
 };
 
