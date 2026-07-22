@@ -5,8 +5,11 @@ const cors = require('cors');
 const mysql = require('mysql2/promise');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const path = require('path');
+
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -105,6 +108,55 @@ app.post('/api/auth/login', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Google Sign-In
+app.post('/api/auth/google', async (req, res) => {
+    try {
+        const { credential } = req.body;
+        
+        // Verify Google token
+        const ticket = await googleClient.verifyIdToken({
+            idToken: credential,
+            audience: process.env.GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID',
+        });
+        const payload = ticket.getPayload();
+        
+        const googleId = payload['sub'];
+        const email = payload['email'];
+        const fullName = payload['name'];
+
+        // Check if user exists
+        const [users] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]);
+        let user;
+
+        if (users.length === 0) {
+            // Register new user
+            const [result] = await pool.execute(
+                'INSERT INTO users (email, full_name, google_id) VALUES (?, ?, ?)',
+                [email, fullName, googleId]
+            );
+            user = { id: result.insertId, email, full_name: fullName };
+        } else {
+            user = users[0];
+            // Update google_id if missing
+            if (!user.google_id) {
+                await pool.execute('UPDATE users SET google_id = ? WHERE id = ?', [googleId, user.id]);
+            }
+        }
+
+        // Generate token
+        const token = jwt.sign(
+            { userId: user.id, email: user.email },
+            process.env.JWT_SECRET || 'your-fallback-secret',
+            { expiresIn: '24h' }
+        );
+
+        res.json({ message: 'Google Login successful', token, user: { id: user.id, email: user.email, name: user.full_name } });
+    } catch (error) {
+        console.error(error);
+        res.status(401).json({ error: 'Invalid Google token' });
     }
 });
 
