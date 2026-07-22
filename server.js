@@ -71,10 +71,21 @@ app.post('/api/auth/register', async (req, res) => {
             [email, hashedPassword, fullName]
         );
 
-        res.status(201).json({ message: 'Registration successful', userId: result.insertId });
+        // Generate token
+        const token = jwt.sign(
+            { userId: result.insertId, email: email },
+            process.env.JWT_SECRET || 'your-fallback-secret',
+            { expiresIn: '24h' }
+        );
+
+        res.status(201).json({ 
+            message: 'Registration successful', 
+            token, 
+            user: { id: result.insertId, email: email, name: fullName } 
+        });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Server Error:', error.message);
+        res.status(500).json({ error: 'DB Error: ' + error.message });
     }
 });
 
@@ -106,8 +117,8 @@ app.post('/api/auth/login', async (req, res) => {
 
         res.json({ message: 'Login successful', token, user: { id: user.id, email: user.email, name: user.full_name } });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Server Error:', error.message);
+        res.status(500).json({ error: 'DB Error: ' + error.message });
     }
 });
 
