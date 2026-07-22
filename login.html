@@ -2,293 +2,95 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="PeopleXplus is the ultimate business OS. Empower your workforce with our suite of enterprise tools including Corporate Email, Payroll Engine, and more.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login / Sign Up - PeopleXplus (PXP)</title>
     
-    <script defer src="https://unpkg.com/lucide@latest"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/pricing.v2.css">
-    
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/pricing.v2.css">
+    <link rel="stylesheet" href="css/output.v2.css">
+    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                        'fade-in': 'fadeIn 0.8s ease-out forwards',
-                        'slide-in-right': 'slideInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' },
-                        },
-                        slideInRight: {
-                            '0%': { opacity: '0', transform: 'translateX(40px)' },
-                            '100%': { opacity: '1', transform: 'translateX(0)' },
-                        }
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-
-    
-
-
-    
-
-
-    
-
-
-        <link rel="stylesheet" href="css/output.v2.css">
     <script defer src="js/global-animations.js"></script>
 </head>
-<body class="bg-gray-50 font-inter antialiased min-h-screen flex flex-col md:flex-row">
-    
+<body class="bg-gray-50 font-inter antialiased min-h-screen relative overflow-hidden flex items-center justify-center p-4">
+    <!-- Abstract background elements -->
+    <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600 rounded-full blur-[120px] opacity-20"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600 rounded-full blur-[120px] opacity-20"></div>
+    <div class="absolute top-[20%] right-[-10%] w-[40%] h-[40%] bg-sky-400 rounded-full blur-[100px] opacity-20"></div>
 
-    
-
-
-    <!-- Left Side: Visual / Branding -->
-    <div class="hidden md:flex md:w-1/2 bg-black relative overflow-hidden flex-col justify-between p-12 text-white animate-fade-in opacity-0">
-        <!-- Abstract background elements -->
-        <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600 rounded-full blur-[120px] opacity-40"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600 rounded-full blur-[120px] opacity-40"></div>
-        
-        <div class="relative z-10">
-            <a href="index.html" class="inline-block">
-                <!-- Using image logo -->
-                <img width="400" height="157" src="./pxp-logo.png" alt="People X Plus Logo" class="h-10 w-auto">
+    <!-- Login Modal Card -->
+    <div class="bg-white/80 backdrop-blur-xl border border-white/50 rounded-3xl shadow-2xl max-w-sm w-full overflow-hidden relative z-10 p-6 md:p-8 flex flex-col gap-5">
+        <div class="text-center">
+            <a href="index.html">
+                <img width="400" height="157" src="./pxp-logo.png" alt="PXP Logo" class="h-8 w-auto mx-auto mb-4 hover:opacity-80 transition-opacity">
             </a>
+            <h3 class="text-2xl font-bold text-gray-900 mb-1">Welcome to PXP</h3>
+            <p class="text-sm text-gray-500">Login or create an account</p>
         </div>
         
-        <div class="relative z-10 max-w-md animate-fade-in-up opacity-0" style="animation-delay: 200ms;">
-            <h1 class="text-4xl md:text-5xl font-outfit font-bold leading-tight mb-6">
-                Transform your workforce management.
-            </h1>
-            <p class="text-lg text-gray-400 mb-8 font-inter">
-                Join thousands of companies using PXP to streamline payroll, automate HR, and build better teams.
-            </p>
-            
-            <div class="flex items-center gap-4">
-                <div class="flex -space-x-4">
-                    <img class="w-10 h-10 rounded-full border-2 border-black" src="https://i.pravatar.cc/100?img=1" alt="User">
-                    <img class="w-10 h-10 rounded-full border-2 border-black" src="https://i.pravatar.cc/100?img=2" alt="User">
-                    <img class="w-10 h-10 rounded-full border-2 border-black" src="https://i.pravatar.cc/100?img=3" alt="User">
-                    <div class="w-10 h-10 rounded-full border-2 border-black bg-gray-800 flex items-center justify-center text-xs font-bold">+2k</div>
-                </div>
-                <div class="text-sm text-gray-400 font-medium">
-                    Trusted by HR leaders worldwide.
-                </div>
+        <div class="flex flex-col gap-4">
+            <div>
+                <label class="text-xs font-semibold text-gray-700 mb-1 block">Email address</label>
+                <input type="email" id="auth-email" class="w-full bg-white/50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all" placeholder="name@company.com">
+            </div>
+            <div>
+                <label class="text-xs font-semibold text-gray-700 mb-1 block">Password</label>
+                <input type="password" id="auth-password" class="w-full bg-white/50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all" placeholder="••••••••">
             </div>
         </div>
         
-        <div class="relative z-10 text-sm text-gray-500 font-medium">
-            &copy; 2026 PeopleXplus. All rights reserved.
-        </div>
+        <button id="btn-submit-auth" class="w-full bg-black text-white rounded-xl py-3.5 font-bold text-sm hover:bg-gray-800 transition-all shadow-lg shadow-black/10 flex items-center justify-center">
+            Continue Securely
+        </button>
     </div>
 
-    <!-- Right Side: Form -->
-    <div class="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12 relative bg-white animate-slide-in-right opacity-0" style="animation-delay: 150ms;">
-        
-        <!-- Mobile Logo (Hidden on desktop) -->
-        <a href="index.html" class="md:hidden absolute top-6 left-6">
-            <img width="400" height="157" src="./pxp-logo.png" alt="People X Plus Logo" class="h-8 w-auto">
-        </a>
-
-        <div class="w-full max-w-md animate-fade-in-up opacity-0" style="animation-delay: 350ms;">
-            <!-- Tabs -->
-            <div class="flex items-center bg-gray-100 p-1 rounded-xl mb-8 relative">
-                <div class="absolute inset-y-1 left-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-transform duration-300 ease-out" id="tab-indicator"></div>
-                <button class="relative z-10 w-1/2 py-2.5 text-sm font-bold text-gray-900 transition-colors" id="btn-tab-login" onclick="switchTab('login')">Log in</button>
-                <button class="relative z-10 w-1/2 py-2.5 text-sm font-bold text-gray-500 transition-colors" id="btn-tab-signup" onclick="switchTab('signup')">Sign up</button>
-            </div>
-
-            <!-- Login Form -->
-            <div id="form-login" class="transition-all duration-300">
-                <h2 class="text-2xl font-bold text-gray-900 mb-2">Welcome back</h2>
-                <p class="text-sm text-gray-500 mb-8">Please enter your details to sign in.</p>
-                
-                <form id="login-form" class="space-y-4" onsubmit="handleAuth(event, 'login')">
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Email address</label>
-                        <input type="email" id="login-email" required class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all placeholder:text-gray-400" placeholder="name@company.com">
-                    </div>
-                    <div>
-                        <div class="flex items-center justify-between mb-1.5">
-                            <label class="block text-sm font-semibold text-gray-700">Password</label>
-                            <a href="#" class="text-xs font-semibold text-gray-500 hover:text-black transition-colors">Forgot password?</a>
-                        </div>
-                        <input type="password" id="login-password" required class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all placeholder:text-gray-400" placeholder="••••••••">
-                    </div>
-                    
-                    <button type="submit" class="w-full bg-black text-white rounded-xl py-3.5 font-bold text-sm hover:bg-gray-800 transition-all shadow-lg shadow-black/10 mt-6 relative overflow-hidden group">
-                        <span class="relative z-10">Sign in</span>
-                        <div class="absolute inset-0 bg-gray-800 scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-300"></div>
-                    </button>
-                </form>
-                
-                <div class="mt-8 relative flex items-center justify-center">
-                    <div class="absolute inset-x-0 h-px bg-gray-200"></div>
-                    <span class="relative bg-white px-4 text-xs font-medium text-gray-500">Or continue with</span>
-                </div>
-                
-                <div class="grid grid-cols-1 gap-4 mt-6">
-                    <button class="flex items-center justify-center gap-2 bg-white border border-gray-200 rounded-xl py-3 hover:bg-gray-50 transition-colors">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22.56 12.25C22.56 11.47 22.49 10.72 22.36 10H12V14.26H17.92C17.67 15.63 16.89 16.79 15.71 17.57V20.34H19.28C21.36 18.42 22.56 15.6 22.56 12.25Z" fill="#4285F4"/>
-                            <path d="M12 23C14.97 23 17.46 22.02 19.28 20.34L15.71 17.57C14.73 18.23 13.48 18.63 12 18.63C9.14 18.63 6.71 16.7 5.84 14.1H2.17V16.94C3.99 20.53 7.7 23 12 23Z" fill="#34A853"/>
-                            <path d="M5.84 14.1C5.62 13.44 5.49 12.74 5.49 12C5.49 11.26 5.62 10.56 5.84 9.9V7.06H2.17C1.43 8.55 1 10.22 1 12C1 13.78 1.43 15.45 2.17 16.94L5.84 14.1Z" fill="#FBBC05"/>
-                            <path d="M12 5.38C13.62 5.38 15.06 5.93 16.21 7.02L19.36 3.88C17.45 2.09 14.97 1 12 1C7.7 1 3.99 3.47 2.17 7.06L5.84 9.9C6.71 7.3 9.14 5.38 12 5.38Z" fill="#EA4335"/>
-                        </svg>
-                        <span class="text-sm font-semibold text-gray-700">Google</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Signup Form -->
-            <div id="form-signup" class="hidden transition-all duration-300 opacity-0 transform translate-x-4">
-                <h2 class="text-2xl font-bold text-gray-900 mb-2">Create an account</h2>
-                <p class="text-sm text-gray-500 mb-8">Join PXP today and transform your business.</p>
-                
-                <form id="signup-form" class="space-y-4" onsubmit="handleAuth(event, 'signup')">
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Full Name</label>
-                        <input type="text" id="signup-name" required class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all placeholder:text-gray-400" placeholder="John Doe">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Email address</label>
-                        <input type="email" id="signup-email" required class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all placeholder:text-gray-400" placeholder="name@company.com">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Password</label>
-                        <input type="password" id="signup-password" required class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all placeholder:text-gray-400" placeholder="Create a password">
-                    </div>
-                    
-                    <button type="submit" class="w-full bg-black text-white rounded-xl py-3.5 font-bold text-sm hover:bg-gray-800 transition-all shadow-lg shadow-black/10 mt-6 relative overflow-hidden group">
-                        <span class="relative z-10">Sign up now</span>
-                        <div class="absolute inset-0 bg-gray-800 scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-300"></div>
-                    </button>
-                    
-                    <p class="text-xs text-center text-gray-500 mt-4">
-                        By creating an account, you agree to our <a href="#" class="text-black font-semibold">Terms of Service</a> and <a href="#" class="text-black font-semibold">Privacy Policy</a>.
-                    </p>
-                </form>
-            </div>
-            
-        </div>
-    </div>
-
-    <!-- Page Scripts -->
     <script>
-        // Initialize Icons
-        lucide.createIcons();
-
-        // Tab Switching Logic
-        const tabIndicator = document.getElementById('tab-indicator');
-        const btnLogin = document.getElementById('btn-tab-login');
-        const btnSignup = document.getElementById('btn-tab-signup');
-        const formLogin = document.getElementById('form-login');
-        const formSignup = document.getElementById('form-signup');
-
-        function switchTab(tab) {
-            if (tab === 'login') {
-                tabIndicator.style.transform = 'translateX(0)';
-                btnLogin.classList.replace('text-gray-500', 'text-gray-900');
-                btnSignup.classList.replace('text-gray-900', 'text-gray-500');
-                
-                formSignup.classList.add('opacity-0', 'translate-x-4');
-                setTimeout(() => {
-                    formSignup.classList.add('hidden');
-                    formLogin.classList.remove('hidden');
-                    // Small delay to allow display block before animating opacity
-                    setTimeout(() => {
-                        formLogin.classList.remove('opacity-0', '-translate-x-4');
-                    }, 10);
-                }, 150);
-            } else {
-                tabIndicator.style.transform = 'translateX(100%)';
-                btnSignup.classList.replace('text-gray-500', 'text-gray-900');
-                btnLogin.classList.replace('text-gray-900', 'text-gray-500');
-                
-                formLogin.classList.add('opacity-0', '-translate-x-4');
-                setTimeout(() => {
-                    formLogin.classList.add('hidden');
-                    formSignup.classList.remove('hidden');
-                    setTimeout(() => {
-                        formSignup.classList.remove('opacity-0', 'translate-x-4');
-                    }, 10);
-                }, 150);
-            }
-        }
-
-        // Authentication Handler
-        function handleAuth(event, type) {
-            event.preventDefault(); // Prevent actual form submission
-            
-            let email = '';
-            
-            if (type === 'login') {
-                email = document.getElementById('login-email').value;
-            } else {
-                email = document.getElementById('signup-email').value;
-            }
-
-            // Simulate successful auth
-            localStorage.setItem('pxp_logged_in', 'true');
-            localStorage.setItem('pxp_email', email);
-            
-            // Check if there is an intended URL
-            const intendedUrl = localStorage.getItem('pxp_intended_url');
-            
-            if (intendedUrl) {
-                // Clear it so it doesn't loop
-                localStorage.removeItem('pxp_intended_url');
-                // Redirect to intended url
-                window.location.replace(intendedUrl);
-            } else {
-                // Default fallback redirect to index or dashboard
-                window.location.replace('index.html');
-            }
-        }
-    </script>
-
-    <!-- Lenis Smooth Scrolling -->
-    <script defer src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            if (typeof Lenis !== 'undefined') {
-                const lenis = new Lenis({
-                    duration: 1.2,
-                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-                    direction: 'vertical',
-                    gestureDirection: 'vertical',
-                    smooth: true,
-                    mouseMultiplier: 1,
-                    smoothTouch: false,
-                    touchMultiplier: 2,
-                    infinite: false,
-                })
-
-                function raf(time) {
-                    lenis.raf(time)
-                    requestAnimationFrame(raf)
-                }
-
-                requestAnimationFrame(raf)
+        // Init Lucide
+        window.addEventListener('load', () => {
+            if (window.lucide) {
+                lucide.createIcons();
             }
         });
+
+        const submitBtn = document.getElementById('btn-submit-auth');
+        
+        submitBtn.addEventListener('click', () => {
+            const email = document.getElementById('auth-email').value;
+            
+            // Show loading state
+            submitBtn.innerHTML = '<div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>';
+            
+            setTimeout(() => {
+                // Simulate successful auth
+                localStorage.setItem('pxp_logged_in', 'true');
+                if(email) localStorage.setItem('pxp_email', email);
+                
+                // Check if there is an intended URL
+                const intendedUrl = localStorage.getItem('pxp_intended_url');
+                
+                if (intendedUrl) {
+                    // Clear it so it doesn't loop
+                    localStorage.removeItem('pxp_intended_url');
+                    // Redirect to intended url
+                    window.location.replace(intendedUrl);
+                } else {
+                    // Default fallback redirect to index or dashboard
+                    window.location.replace('index.html');
+                }
+            }, 800);
+        });
     </script>
-    </body>
+</body>
 </html>
