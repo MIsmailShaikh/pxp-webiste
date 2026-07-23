@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | PeopleXplus</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        primary: '#673ab7', // Similar to the purple in the screenshots
+                        primaryHover: '#5e35b1',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Auth Guard to protect route -->
+    <script src="js/auth-guard.v2.js"></script>
+    <script>
+        // Redirect if not logged in
+        requireAuth('dashboard.html');
+    </script>
+</head>
+<body class="bg-[#f4f5f7] text-gray-800 font-sans antialiased min-h-screen flex">
+
+    <!-- Left Sidebar -->
+    <aside class="w-64 bg-[#f8f9fa] border-r border-gray-200 hidden md:flex flex-col flex-shrink-0 h-screen sticky top-0 overflow-y-auto">
+        <div class="p-4 py-6 border-b border-gray-200 mb-2">
+            <img src="./pxp-logo.png" alt="PeopleXplus Logo" class="h-8 object-contain">
+        </div>
+        
+        <nav class="flex-1 px-3 space-y-1">
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-gray-200 text-gray-900 rounded-lg font-semibold transition-colors">
+                <i data-lucide="home" class="w-5 h-5 opacity-70"></i>
+                Home
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors">
+                <i data-lucide="users" class="w-5 h-5 opacity-70"></i>
+                Workforce OS
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors">
+                <i data-lucide="mail" class="w-5 h-5 opacity-70"></i>
+                Corporate Email
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors">
+                <i data-lucide="banknote" class="w-5 h-5 opacity-70"></i>
+                Payroll Engine
+            </a>
+            
+            <div class="pt-6 pb-2">
+                <p class="px-3 text-xs font-bold text-gray-400 uppercase tracking-wider">Account</p>
+            </div>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors">
+                <i data-lucide="credit-card" class="w-5 h-5 opacity-70"></i>
+                Billing
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors">
+                <i data-lucide="settings" class="w-5 h-5 opacity-70"></i>
+                Settings
+            </a>
+        </nav>
+        
+        <div class="p-4 border-t border-gray-200">
+            <button onclick="logout()" class="flex items-center gap-3 px-3 py-2.5 w-full text-left text-red-600 hover:bg-red-50 rounded-lg font-medium transition-colors">
+                <i data-lucide="log-out" class="w-5 h-5"></i>
+                Log out
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto">
+        <!-- Top Navbar (Mobile only) -->
+        <header class="md:hidden bg-white border-b border-gray-200 p-4 flex items-center justify-between sticky top-0 z-10">
+            <img src="./pxp-logo.png" alt="Logo" class="h-6">
+            <button class="p-2 text-gray-600 rounded hover:bg-gray-100">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </header>
+
+        <!-- Page Content -->
+        <div class="p-4 md:p-10 max-w-3xl mx-auto w-full flex-1">
+            
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Manage Profile</h1>
+                <p class="text-gray-500 mt-2">Update your personal information and account settings.</p>
+            </div>
+
+            <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                <form class="flex flex-col gap-6" onsubmit="event.preventDefault(); alert('Profile updated successfully!');">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+                        <input type="text" id="profile-name" class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all" value="Loading...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                        <input type="email" id="profile-email" disabled class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium text-gray-500 cursor-not-allowed" value="Loading...">
+                        <p class="text-xs text-gray-400 mt-1.5">Your email address cannot be changed from the dashboard.</p>
+                    </div>
+                    <div class="pt-4 border-t border-gray-100 flex justify-end">
+                        <button type="submit" class="bg-primary text-white hover:bg-primaryHover font-semibold py-2.5 px-8 rounded-lg transition-colors shadow-sm">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('pxp_token');
+            if (!token) return;
+            try {
+                const response = await fetch('/api/user/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (response.ok) {
+                    const user = await response.json();
+                    document.getElementById('profile-name').value = user.full_name || '';
+                    document.getElementById('profile-email').value = user.email || '';
+                }
+            } catch (e) { console.error(e); }
+        });
+    </script>
+    <script>
+        lucide.createIcons();
+        
+        function logout() {
+            localStorage.removeItem('pxp_logged_in');
+            localStorage.removeItem('pxp_token');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,23 +1,14 @@
 // js/auth-guard.js
 
-/**
- * Checks if the user is logged in. 
- * If not, redirects to login.html and saves the intended destination.
- * If yes, redirects immediately to the intended destination.
- * 
- * @param {string} intendedUrl - The URL to go to after successful login (or immediately if already logged in).
- */
 window.requireAuth = function(intendedUrl) {
     const isLoggedIn = localStorage.getItem('pxp_logged_in') === 'true';
     
-    if (isLoggedIn) {
-        // Already logged in, go straight to the destination
-        window.location.replace(intendedUrl);
-    } else {
+    if (!isLoggedIn) {
         // Not logged in, save destination and go to login
         localStorage.setItem('pxp_intended_url', intendedUrl);
         window.location.replace('login.html');
     }
+    // If logged in, do nothing (let the protected page load)
 };
 
 /**
