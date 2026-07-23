@@ -32,11 +32,11 @@ window.updateNavbarAuthUI = function() {
     const loginLinks = document.querySelectorAll('a[href="login.html"], button[onclick*="login.html"]');
     
     if (isLoggedIn) {
-        // If logged in, maybe change "Log in" to "Dashboard" or "Logout"
+        // If logged in, change "Log in" to "Dashboard"
         loginLinks.forEach(link => {
             if (link.textContent.toLowerCase().includes('log in') || link.textContent.toLowerCase().includes('login')) {
                 link.textContent = 'Dashboard';
-                link.href = '#'; // Mock dashboard
+                link.href = 'dashboard.html';
                 if(link.tagName === 'BUTTON') link.onclick = null;
             }
         });
