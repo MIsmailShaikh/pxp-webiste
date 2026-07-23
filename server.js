@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const compression = require('compression');
 const cors = require('cors');
-const mysql = require('mysql2/promise');
+const { createClient } = require('@supabase/supabase-js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');
@@ -37,15 +37,9 @@ app.get('/', (req, res) => {
 });
 
 // Database Connection Pool
-const pool = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'pxp_database',
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-});
+const supabaseUrl = process.env.SUPABASE_URL || 'YOUR_SUPABASE_URL';
+const supabaseKey = process.env.SUPABASE_API_KEY || 'YOUR_SUPABASE_KEY';
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // ==========================================
 // 1. AUTHENTICATION ENDPOINTS
@@ -57,7 +51,8 @@ app.post('/api/auth/register', async (req, res) => {
         const { email, password, fullName } = req.body;
         
         // Check if user exists
-        const [existingUsers] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]);
+        const { data: existingUsers, error: selectError } = await supabase.from('users').select('*').eq('email', email);
+        if (selectError) throw selectError;
         if (existingUsers.length > 0) {
             return res.status(400).json({ error: 'Email already registered' });
         }
@@ -66,14 +61,14 @@ app.post('/api/auth/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Insert new user
-        const [result] = await pool.execute(
-            'INSERT INTO users (email, password_hash, full_name) VALUES (?, ?, ?)',
-            [email, hashedPassword, fullName]
-        );
+        const { data: newUser, error: insertError } = await supabase.from('users').insert([
+            { email, password_hash: hashedPassword, full_name: fullName }
+        ]).select('id').single();
+        if (insertError) throw insertError;
 
         // Generate token
         const token = jwt.sign(
-            { userId: result.insertId, email: email },
+            { userId: newUser.id, email: email },
             process.env.JWT_SECRET || 'your-fallback-secret',
             { expiresIn: '24h' }
         );
@@ -81,7 +76,7 @@ app.post('/api/auth/register', async (req, res) => {
         res.status(201).json({ 
             message: 'Registration successful', 
             token, 
-            user: { id: result.insertId, email: email, name: fullName } 
+            user: { id: newUser.id, email: email, name: fullName } 
         });
     } catch (error) {
         console.error('Server Error:', error.message);
@@ -95,7 +90,8 @@ app.post('/api/auth/login', async (req, res) => {
         const { email, password } = req.body;
 
         // Find user
-        const [users] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]);
+        const { data: users, error: selectError } = await supabase.from('users').select('*').eq('email', email);
+        if (selectError) throw selectError;
         if (users.length === 0) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
@@ -139,21 +135,23 @@ app.post('/api/auth/google', async (req, res) => {
         const fullName = payload['name'];
 
         // Check if user exists
-        const [users] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]);
+        const { data: users, error: selectError } = await supabase.from('users').select('*').eq('email', email);
+        if (selectError) throw selectError;
         let user;
 
         if (users.length === 0) {
             // Register new user
-            const [result] = await pool.execute(
-                'INSERT INTO users (email, full_name, google_id) VALUES (?, ?, ?)',
-                [email, fullName, googleId]
-            );
-            user = { id: result.insertId, email, full_name: fullName };
+            const { data: newUser, error: insertError } = await supabase.from('users').insert([
+                { email, full_name: fullName, google_id: googleId }
+            ]).select('id').single();
+            if (insertError) throw insertError;
+            user = { id: newUser.id, email, full_name: fullName };
         } else {
             user = users[0];
             // Update google_id if missing
             if (!user.google_id) {
-                await pool.execute('UPDATE users SET google_id = ? WHERE id = ?', [googleId, user.id]);
+                const { error: updateError } = await supabase.from('users').update({ google_id: googleId }).eq('id', user.id);
+                if (updateError) throw updateError;
             }
         }
 
