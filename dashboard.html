@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | PeopleXplus</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        primary: '#673ab7', // Similar to the purple in the screenshots
+                        primaryHover: '#5e35b1',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Auth Guard to protect route -->
+    <script src="js/auth-guard.v2.js"></script>
+    <script>
+        // Redirect if not logged in
+        requireAuth('dashboard.html');
+    </script>
+</head>
+<body class="bg-[#f4f5f7] text-gray-800 font-sans antialiased min-h-screen flex">
+
+    <!-- Left Sidebar -->
+    <aside class="w-64 bg-[#f8f9fa] border-r border-gray-200 hidden md:flex flex-col flex-shrink-0 h-screen sticky top-0 overflow-y-auto">
+        <div class="p-4 py-6 border-b border-gray-200 mb-2">
+            <img src="./pxp-logo.png" alt="PeopleXplus Logo" class="h-8 object-contain">
+        </div>
+        
+        <nav class="flex-1 px-3 space-y-1">
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-gray-200 text-gray-900 rounded-lg font-semibold transition-colors">
+                <i data-lucide="home" class="w-5 h-5 opacity-70"></i>
+                Home
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors">
+                <i data-lucide="users" class="w-5 h-5 opacity-70"></i>
+                Workforce OS
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors">
+                <i data-lucide="mail" class="w-5 h-5 opacity-70"></i>
+                Corporate Email
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors">
+                <i data-lucide="banknote" class="w-5 h-5 opacity-70"></i>
+                Payroll Engine
+            </a>
+            
+            <div class="pt-6 pb-2">
+                <p class="px-3 text-xs font-bold text-gray-400 uppercase tracking-wider">Account</p>
+            </div>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors">
+                <i data-lucide="credit-card" class="w-5 h-5 opacity-70"></i>
+                Billing
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors">
+                <i data-lucide="settings" class="w-5 h-5 opacity-70"></i>
+                Settings
+            </a>
+        </nav>
+        
+        <div class="p-4 border-t border-gray-200">
+            <button onclick="logout()" class="flex items-center gap-3 px-3 py-2.5 w-full text-left text-red-600 hover:bg-red-50 rounded-lg font-medium transition-colors">
+                <i data-lucide="log-out" class="w-5 h-5"></i>
+                Log out
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto">
+        <!-- Top Navbar (Mobile only) -->
+        <header class="md:hidden bg-white border-b border-gray-200 p-4 flex items-center justify-between sticky top-0 z-10">
+            <img src="./pxp-logo.png" alt="Logo" class="h-6">
+            <button class="p-2 text-gray-600 rounded hover:bg-gray-100">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </header>
+
+        <!-- Page Content -->
+        <div class="p-4 md:p-10 max-w-5xl mx-auto w-full flex-1">
+            
+            <!-- Welcome Header -->
+            <div class="mb-8 flex items-center justify-between">
+                <h1 id="welcome-message" class="text-3xl font-bold text-gray-900 tracking-tight">Loading...</h1>
+            </div>
+
+            <!-- Loader -->
+            <div id="loader" class="py-12 flex justify-center">
+                <i data-lucide="loader-2" class="w-8 h-8 text-primary animate-spin"></i>
+            </div>
+
+            <!-- Dashboard Content Container (Hidden until loaded) -->
+            <div id="dashboard-content" class="hidden flex-col gap-6">
+                
+                <!-- Active Plans Section -->
+                <div id="active-plans-section" class="flex flex-col gap-4">
+                    <h2 class="text-xl font-semibold text-gray-900">Your Services</h2>
+                    
+                    <!-- Dynamic cards will be injected here -->
+                    <div id="plans-container" class="flex flex-col gap-4"></div>
+                </div>
+
+                <!-- Recommendation / Upsell Section -->
+                <div class="mt-8 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex flex-col md:flex-row gap-6 items-center md:items-start justify-between">
+                        <div class="flex flex-col gap-2">
+                            <h3 class="text-lg font-bold text-gray-900">Get your business running – in minutes</h3>
+                            <p class="text-gray-500 text-sm max-w-xl">
+                                Expand your corporate capabilities. From intelligent HR systems to secure payroll engines and corporate emails. Upgrade your suite today.
+                            </p>
+                        </div>
+                        <a href="pricing.html" class="shrink-0 bg-gray-900 text-white hover:bg-black font-semibold py-2.5 px-6 rounded-full transition-colors whitespace-nowrap shadow-md">
+                            Browse Solutions
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+    <script>
+        lucide.createIcons();
+        
+        function logout() {
+            localStorage.removeItem('pxp_logged_in');
+            localStorage.removeItem('pxp_token');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

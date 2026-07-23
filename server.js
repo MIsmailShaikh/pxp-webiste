@@ -45,6 +45,20 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 // 1. AUTHENTICATION ENDPOINTS
 // ==========================================
 
+// Middleware for protected routes
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    
+    if (token == null) return res.status(401).json({ error: 'Unauthorized' });
+
+    jwt.verify(token, process.env.JWT_SECRET || 'your-fallback-secret', (err, user) => {
+        if (err) return res.status(403).json({ error: 'Forbidden' });
+        req.user = user;
+        next();
+    });
+};
+
 // Register a new user
 app.post('/api/auth/register', async (req, res) => {
     try {
@@ -169,6 +183,21 @@ app.post('/api/auth/google', async (req, res) => {
     }
 });
 
+
+// Get User Profile
+app.get('/api/user/me', authenticateToken, async (req, res) => {
+    try {
+        const { data: user, error } = await supabase.from('users').select('*').eq('id', req.user.userId).single();
+        if (error || !user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        delete user.password_hash; // Don't send password hash to frontend
+        res.json(user);
+    } catch (error) {
+        console.error('Server Error:', error.message);
+        res.status(500).json({ error: 'DB Error: ' + error.message });
+    }
+});
 
 // ==========================================
 // 2. PAYMENT & SUBSCRIPTION ENDPOINTS (STRIPE)
